@@ -441,7 +441,8 @@
   letter-spacing: .14em;
 }
 
-.calendar-page .tenna-auto-intro h2 {
+.calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
   margin: 0;
   color: #fff;
   font-family: var(--font-display);
@@ -450,7 +451,8 @@
   letter-spacing: -.035em;
 }
 
-.calendar-page .tenna-auto-intro h2 span {
+.calendar-page .tenna-auto-intro h2 span,
+.calendar-page .tenna-auto-intro h1 span {
   color: #d9eeff;
 }
 
@@ -1191,7 +1193,8 @@
     grid-column: auto;
   }
 
-  .calendar-page .tenna-auto-intro h2 {
+  .calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
     font-size: 1.85rem;
   }
 
@@ -1276,7 +1279,8 @@ html[data-theme='dark'] .calendar-full-add:hover {
   letter-spacing: .12em;
 }
 
-.calendar-page .tenna-auto-intro h2 {
+.calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
   font-size: clamp(1.85rem, 3vw, 2.45rem);
   letter-spacing: -.03em;
 }
@@ -1546,7 +1550,8 @@ html[data-theme='dark'] .calendar-full-add:hover {
     border-radius: 18px;
   }
 
-  .calendar-page .tenna-auto-intro h2 {
+  .calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
     font-size: 1.8rem;
   }
 
@@ -1747,14 +1752,16 @@ html[data-theme='dark'] .calendar-full-add:hover {
   letter-spacing: .13em;
 }
 
-.calendar-page .tenna-auto-intro h2 {
+.calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
   margin: 0;
   font-size: clamp(28px, 3vw, 38px);
   line-height: 1.08;
   letter-spacing: -.035em;
 }
 
-.calendar-page .tenna-auto-intro h2 span {
+.calendar-page .tenna-auto-intro h2 span,
+.calendar-page .tenna-auto-intro h1 span {
   color: #d9eeff;
 }
 
@@ -2229,7 +2236,8 @@ html[data-theme='dark'] .calendar-full-add:hover {
   font-weight: 900;
 }
 
-.calendar-page .tenna-auto-intro h2 {
+.calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
   font-size: clamp(31px, 3.2vw, 42px);
   font-weight: 800;
 }
@@ -2353,7 +2361,8 @@ html[data-theme='dark'] .calendar-full-add:hover {
 }
 
 @media (max-width: 760px) {
-  .calendar-page .tenna-auto-intro h2 {
+  .calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
     font-size: 30px;
   }
 
@@ -2521,12 +2530,14 @@ html[data-theme='dark'] .calendar-page .calendar-day-progress-track { background
 
 .calendar-page .tenna-auto-intro-copy { position: relative; z-index: 1; }
 .calendar-page .tenna-auto-kicker { color: #b9ddff; letter-spacing: .16em; }
-.calendar-page .tenna-auto-intro h2 {
+.calendar-page .tenna-auto-intro h2,
+.calendar-page .tenna-auto-intro h1 {
   font-size: clamp(30px, 3.15vw, 42px);
   line-height: 1.12;
   max-width: 670px;
 }
-.calendar-page .tenna-auto-intro h2 span { color: #d7efff; }
+.calendar-page .tenna-auto-intro h2 span,
+.calendar-page .tenna-auto-intro h1 span { color: #d7efff; }
 .calendar-page .tenna-auto-intro p {
   max-width: 630px;
   margin-top: 12px;
@@ -3827,7 +3838,8 @@ html[data-theme='dark'] .calendar-page .tenna-auto-intro {
   box-shadow: none;
 }
 html[data-theme='dark'] .calendar-page .tenna-auto-intro { background: #174b90 !important; }
-.calendar-page .tenna-auto-intro h2 span { color: #fff; }
+.calendar-page .tenna-auto-intro h2 span,
+.calendar-page .tenna-auto-intro h1 span { color: #fff; }
 
 /* Todos os dias do mês têm a mesma superfície, inclusive sábados e dias com eventos.
    As datas de outros meses e o dia selecionado mantêm seus estados próprios. */
@@ -4035,3 +4047,23 @@ html[data-theme='dark'] .tenna-activity-modal .tenna-time-part-input:focus {
   outline: none !important;
   color: #f0f7ff !important;
 }
+
+/* =========================================================
+   TENNA — acessibilidade do Calendário (WCAG 2.1 AA)
+   Contraste mínimo de 4,5:1 para texto e nenhum texto abaixo de 11px.
+   ========================================================= */
+.student-area .calendar-page .calendar-weekdays span { color: #4e6787; font-size: 11px; }
+
+/* Dias de outros meses: continuam mais discretos, mas legíveis (sem opacidade na célula). */
+.student-area .calendar-page .calendar-day.outside { opacity: 1 !important; }
+.student-area .calendar-page .calendar-day.outside .calendar-day-number { color: #5b6f88 !important; }
+
+.student-area .calendar-page .calendar-today-label { font-size: 11px !important; }
+.student-area .calendar-page .calendar-selected-head .calendar-selected-copy .calendar-selected-date { color: #53698a !important; }
+.student-area .calendar-page .calendar-empty-day p { color: #587090 !important; font-size: 12px !important; }
+
+html[data-theme='dark'] .calendar-page .tenna-auto-intro p { color: #c3d3e6; }
+html[data-theme='dark'] .student-area .calendar-page .calendar-day.outside { opacity: 1 !important; }
+html[data-theme='dark'] .student-area .calendar-page .calendar-day.outside .calendar-day-number { color: #9fb3cc !important; }
+html[data-theme='dark'] .student-area .calendar-page .calendar-empty-day strong { color: #dbe8f7 !important; }
+html[data-theme='dark'] .student-area .calendar-page .calendar-empty-day p { color: #aebfd4 !important; }

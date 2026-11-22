@@ -3313,3 +3313,66 @@ html[data-theme='dark'] .terr-page .terr-scene-bottom {
   border:1px solid rgba(255,255,255,.75);
   box-shadow:0 5px 18px rgba(58,32,16,.22);
 }
+
+/* =========================================================
+   TENNA — acessibilidade do Terrário (WCAG 2.1 AA)
+   Contraste mínimo de 4,5:1 para texto e nenhum texto abaixo de 11px.
+   ========================================================= */
+
+/* Cabeçalho: cartões translúcidos mais escuros para o texto branco ler bem
+   mesmo na ponta mais clara do degradê azul. */
+.terr-page .terr-header .terr-wallet,
+.terr-page .terr-header .terr-level {
+  background: rgba(6, 32, 78, .38);
+  border-color: rgba(255, 255, 255, .34);
+}
+.terr-page .terr-header .terr-wallet small { color: #fff; font-size: 11px; }
+.terr-page .terr-header .terr-level span { color: #e3f2ff; font-size: 11px; }
+.terr-page .terr-header .terr-eyebrow { font-size: 11px; }
+
+/* Botão "Como funciona?" e rótulos do cronômetro. */
+.terr-page .terr-scene-actions .terr-guide-trigger > span,
+html[data-theme='dark'] .terr-page .terr-scene-actions .terr-guide-trigger > span { color: #2c6638; }
+.terr-page .terr-timer-heading .terr-kicker { color: #3a6c40; font-size: 11px; }
+.terr-page .terr-timer-heading p { color: #52667e; }
+.terr-page .terr-timer-inner span { color: #4d6783; font-size: 11px; }
+.terr-page .terr-duration-value span { color: #4d6783; }
+.terr-page .terr-world-hint,
+.terr-page.is-decorating .terr-world-hint { font-size: 11px; }
+
+/* Faixa "Próxima conquista": fundo de terra um pouco mais escuro e textos claros. */
+.terr-page .terr-scene-bottom {
+  background: linear-gradient(180deg, #96623d 0%, #85532f 100%);
+}
+.terr-page .terr-journey-copy strong { color: #fff; }
+.terr-page .terr-journey-copy .terr-unlock-heading > span:first-child,
+.terr-page .terr-journey-copy small,
+.terr-page .terr-room-progress .terr-room-progress-heading,
+.terr-page .terr-room-progress .terr-room-progress-heading > strong span,
+.terr-page .terr-room-progress .terr-progress-hint { color: #fdeedb; }
+.terr-page .terr-journey-copy .terr-unlock-heading > span:first-child { font-size: 11px; }
+.terr-page .terr-journey-copy .terr-unlock-room-tag {
+  background: rgba(60, 28, 10, .34);
+  color: #fff;
+  font-size: 11px;
+}
+.terr-page .terr-room-progress .terr-progress-hint { font-size: 11px; }
+html[data-theme='dark'] .terr-page .terr-journey-copy .terr-unlock-heading > span:first-child,
+html[data-theme='dark'] .terr-page .terr-journey-copy small,
+html[data-theme='dark'] .terr-page .terr-room-progress .terr-room-progress-heading,
+html[data-theme='dark'] .terr-page .terr-room-progress .terr-room-progress-heading > strong span,
+html[data-theme='dark'] .terr-page .terr-room-progress .terr-progress-hint { color: #fbefe0; }
+
+/* Guia do Terrário. */
+.terr-page .terr-guide-skip,
+.terr-guide-skip { color: #566a84; }
+html[data-theme='dark'] .terr-guide-skip { color: #c1d5e9; }
+.terr-guide-eyebrow,
+.terr-guide-step { font-size: 11px; }
+
+/* Modo escuro: textos do cabeçalho e do cartão de sementes. */
+html[data-theme='dark'] .terr-page .terr-header-copy p { color: #e1ecf8; }
+html[data-theme='dark'] .terr-page .terr-timer-heading .terr-kicker { color: #9bc69a; }
+html[data-theme='dark'] .terr-page .terr-timer-heading p { color: #bcd5e9; }
+html[data-theme='dark'] .terr-page .terr-timer-inner span,
+html[data-theme='dark'] .terr-page .terr-duration-value span { color: #bcd5e9; }

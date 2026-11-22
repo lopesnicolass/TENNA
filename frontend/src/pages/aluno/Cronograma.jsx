@@ -1048,7 +1048,7 @@ export default function Cronograma() {
       <section className="tenna-auto-intro calendar-restored-banner">
         <div className="tenna-auto-intro-copy">
           <span className="tenna-auto-kicker">MINHA ROTINA</span>
-          <h2>Seu calendário, <span>seu ritmo.</span></h2>
+          <h1>Seu calendário, <span>seu ritmo.</span></h1>
           <p>Visualize seus compromissos, celebre cada tarefa concluída e siga firme até o Vestibulinho.</p>
         </div>
       </section>

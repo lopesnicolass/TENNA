@@ -310,8 +310,8 @@
 }
 
 .provas-page .prova-links a:first-child {
-  background: var(--accent-dark);
-  border-color: var(--accent-dark);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 
@@ -323,7 +323,7 @@
 }
 
 .provas-page .prova-links a:first-child:hover {
-  filter: brightness(1.2);
+  filter: brightness(0.98);
 }
 
 .provas-page .provas-empty {

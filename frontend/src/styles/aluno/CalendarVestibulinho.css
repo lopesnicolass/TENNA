@@ -711,3 +711,20 @@ html[data-theme='dark'] .calendar-page .calendar-task-list {
 @media (max-width: 650px) {
   .calendar-page .calendar-task-list { max-height: 255px !important; }
 }
+
+/* =========================================================
+   TENNA — acessibilidade de "Datas importantes" (WCAG 2.1 AA)
+   ========================================================= */
+.student-area .calendar-page .calendar-important-overview-kicker,
+.student-area .calendar-page .calendar-important-total { font-size: 11px; }
+.student-area .calendar-page .calendar-important-event-row .calendar-important-event-info small { color: #566d8a !important; font-size: 11px !important; }
+.student-area .calendar-page .calendar-important-event-row .calendar-important-event-chevron { color: #5d7391 !important; }
+html[data-theme='dark'] .student-area .calendar-page .calendar-important-event-row .calendar-important-event-info small { color: #adbfda !important; }
+html[data-theme='dark'] .student-area .calendar-page .calendar-important-event-row .calendar-important-event-chevron { color: #9fb3cc !important; }
+
+/* Datas que já passaram: sem opacidade no item inteiro (ela derrubava o contraste do texto). */
+.student-area .calendar-page .calendar-important-event-row.is-past,
+.student-area .calendar-page .calendar-important-event-row.is-past:not(.is-selected) { opacity: 1; }
+.student-area .calendar-page .calendar-important-event-row.is-past .calendar-important-event-info strong { color: #3f5878; }
+.student-area .calendar-page .calendar-important-event-row.is-past .calendar-important-row-icon { filter: saturate(.75); }
+html[data-theme='dark'] .student-area .calendar-page .calendar-important-event-row.is-past .calendar-important-event-info strong { color: #c5d4e6; }
