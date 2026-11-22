@@ -11,6 +11,7 @@ import Icon from '../../components/Icon.jsx';
 import RankingXP from '../../components/RankingXP.jsx';
 import { API_URL, obterToken } from '../../services/api.js';
 import { diasAteVestibulinho } from '../../utils/vestibulinho.js';
+import { usePreferenciaContagem } from '../../utils/usePreferenciaContagem.js';
 import { formatarData, obterStatusData, selecionarProximasAtividades } from '../../utils/homeAtividades.js';
 
 function obterUsuario() {
@@ -93,6 +94,8 @@ export default function Home() {
   const usuarioId = Number(
     usuario?.id || usuario?.usuarioId || 0
   );
+  const { exibirCard: exibirCardContagem, ocultarNumero, erro: erroContagem, alternarNumero } = usePreferenciaContagem(usuarioId);
+  const mostrarContagem = !ocultarNumero;
 
   useEffect(() => {
     let ativo = true;
@@ -445,24 +448,49 @@ export default function Home() {
       )}
 
       {/* ESTATÍSTICAS REAIS */}
-      <div className="home-stats-row">
-        <div className="stat-card">
-          <div className="stat-icon">
-            <Icon name="calendar" size={20} />
-          </div>
+      <div className={`home-stats-row ${exibirCardContagem ? '' : 'home-stats-row-sem-contagem'}`}>
+        {exibirCardContagem && (
+          <div
+            className={`stat-card stat-card-contagem ${mostrarContagem ? '' : 'is-oculta'}`}
+            style={{ '--stat-accent': '#2196F3' }}
+          >
+            <button
+              type="button"
+              className="stat-visibility-btn"
+              onClick={alternarNumero}
+              aria-label={mostrarContagem
+                ? 'Ocultar contagem regressiva do Vestibulinho'
+                : 'Mostrar contagem regressiva do Vestibulinho'}
+              title={mostrarContagem ? 'Ocultar contagem' : 'Mostrar contagem'}
+            >
+              <Icon name={mostrarContagem ? 'eye' : 'eyeOff'} size={16} />
+            </button>
 
-          <div className="stat-value">
-            {diasParaVestibulinho === null
-              ? '—'
-              : diasParaVestibulinho}
-          </div>
+            <div className="stat-icon">
+              <Icon name="calendar" size={20} />
+            </div>
 
-          <div className="stat-label">
-            Dias para o Vestibulinho
-          </div>
-        </div>
+            <div className="stat-value" aria-hidden={mostrarContagem ? undefined : 'true'}>
+              {!mostrarContagem
+                ? '•••'
+                : diasParaVestibulinho === null
+                  ? '—'
+                  : diasParaVestibulinho}
+            </div>
 
-        <div className="stat-card">
+            <div className="stat-label">
+              {mostrarContagem
+                ? 'Dias para o Vestibulinho'
+                : 'Contagem oculta'}
+            </div>
+
+            {erroContagem && (
+              <p className="stat-erro" role="alert">{erroContagem}</p>
+            )}
+          </div>
+        )}
+
+        <div className="stat-card" style={{ '--stat-accent': '#43A047' }}>
           <div className="stat-icon">
             <Icon name="checkSquare" size={20} />
           </div>
@@ -476,7 +504,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card" style={{ '--stat-accent': '#8E44AD' }}>
           <div className="stat-icon">
             <Icon name="chart" size={20} />
           </div>
@@ -490,7 +518,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="stat-card">
+        <div className="stat-card" style={{ '--stat-accent': '#F08A24' }}>
           <div className="stat-icon">
             <Icon name="trophy" size={20} />
           </div>
@@ -511,7 +539,7 @@ export default function Home() {
           <div className="panel-card home-performance-card">
             <div className="home-panel-heading">
               <div>
-                <h3>Progresso por matéria</h3>
+                <h2>Progresso por matéria</h2>
                 <p>
                   Acompanhe seus conteúdos revisados em cada disciplina.
                 </p>
@@ -620,7 +648,7 @@ export default function Home() {
           <div className="panel-card home-activities-card">
             <div className="home-panel-heading">
               <div>
-                <h3>Próximas atividades</h3>
+                <h2>Próximas atividades</h2>
                 <p>
                   Seus próximos compromissos de estudo.
                 </p>
@@ -725,12 +753,12 @@ export default function Home() {
 
               {resumoIndisponivel ? (
                 <>
-                  <h3>{erroResumo ? 'Próximo estudo indisponível' : 'Preparando seu próximo estudo...'}</h3>
+                  <h2>{erroResumo ? 'Próximo estudo indisponível' : 'Preparando seu próximo estudo...'}</h2>
                   <p>{erroResumo ? 'Tente novamente quando seus dados estiverem disponíveis.' : 'Buscando seus conteúdos pendentes.'}</p>
                 </>
               ) : proximoTopico ? (
                 <>
-                  <h3>{proximoTopico.nome}</h3>
+                  <h2>{proximoTopico.nome}</h2>
                   <div className="home-next-meta">
                     <span>{proximoTopico.materia}</span>
                     <span className="home-next-pending">Pendente</span>
@@ -750,7 +778,7 @@ export default function Home() {
                 </>
               ) : totalConteudos === 0 ? (
                 <>
-                  <h3>Explore os simulados</h3>
+                  <h2>Explore os simulados</h2>
                   <p>Ainda não há conteúdos cadastrados para revisão.</p>
                   <button type="button" className="home-extra-button" onClick={() => navigate('/simulados')}>
                     Explorar simulados <Icon name="arrowRight" size={17} />
@@ -758,7 +786,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <h3>Você revisou tudo!</h3>
+                  <h2>Você revisou tudo!</h2>
                   <p>
                     Continue praticando com simulados e flashcards.
                   </p>
@@ -787,15 +815,15 @@ export default function Home() {
 
               {resumoIndisponivel ? (
                 <>
-                  <h3>{erroResumo ? 'Resultado indisponível' : 'Carregando resultados...'}</h3>
+                  <h2>{erroResumo ? 'Resultado indisponível' : 'Carregando resultados...'}</h2>
                   <p>Seu histórico será exibido quando estiver disponível.</p>
                 </>
               ) : ultimoResultado ? (
                 <>
-                  <h3>
+                  <h2>
                     {ultimoResultado.simulado_nome ||
                       'Simulado realizado'}
-                  </h3>
+                  </h2>
 
                   <div className="home-result-summary">
                     <div className="home-result-summary-top">
@@ -826,7 +854,7 @@ export default function Home() {
                 </>
               ) : (
                 <>
-                  <h3>Ainda não há resultados.</h3>
+                  <h2>Ainda não há resultados.</h2>
                   <p>
                     Faça seu primeiro simulado para começar a acompanhar sua evolução.
                   </p>

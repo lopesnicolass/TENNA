@@ -159,7 +159,7 @@ export function ListaSimulados({
                     <div className="simulados-conteudo-heading">
                       <div className="simulados-conteudo-heading-main">
                         <span className="simulados-conteudo-label">Conteúdo</span>
-                        <h3>{grupo.nome}</h3>
+                        <h2>{grupo.nome}</h2>
                       </div>
                     </div>
 
@@ -176,7 +176,7 @@ export function ListaSimulados({
                                 {STATUS_LABEL[simulado.status] || 'Não iniciado'}
                               </span>
                             </div>
-                            <h2>{simulado.titulo}</h2>
+                            <h3>{simulado.titulo}</h3>
 
                             {simulado.descricao && (
                               <p className="simulado-description">

@@ -48,7 +48,7 @@
   display: block;
   margin-bottom: 5px;
   color: var(--accent-dark);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .12em;
 }
@@ -130,7 +130,7 @@
   border-radius: var(--radius-pill);
   background: var(--paper);
   color: var(--accent-dark);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -178,7 +178,7 @@
   line-height: 1.05;
 }
 .tenna-auto-pill span {
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
 }
 .tenna-auto-pill:hover {
@@ -281,7 +281,7 @@
 }
 .tenna-auto-next-info span {
   display: block;
-  font-size: 9.5px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .1em;
   color: var(--accent-dark);
@@ -305,7 +305,7 @@
   align-items: center;
   gap: 10px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
 }
 .tenna-auto-week-status b {
@@ -339,7 +339,7 @@
   border-bottom: 0;
 }
 .tenna-auto-day-name {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .04em;
   color: var(--muted);
@@ -377,7 +377,7 @@
   color: var(--text, #252a32);
 }
 .tenna-auto-day-item span {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.35;
   color: var(--muted, #737a85);
 }
@@ -394,7 +394,7 @@
 }
 .tenna-auto-day-content > span {
   color: var(--muted);
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.45;
 }
 .tenna-auto-day-content > small {
@@ -406,7 +406,7 @@
   border-radius: var(--radius-pill);
   color: var(--accent-dark);
   background: var(--paper);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 .tenna-auto-week-body > .mural-btn {
@@ -531,13 +531,13 @@
   }
   .tenna-auto-week-status {
     gap: 5px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .tenna-auto-week-title strong {
     font-size: 12px;
   }
   .tenna-auto-week-title small {
-    font-size: 10px;
+    font-size: 12px;
   }
   .tenna-auto-week-body {
     padding: 0 10px 13px;
@@ -559,7 +559,7 @@
     padding: 9px 5px;
   }
   .tenna-auto-pill span {
-    font-size: 10px;
+    font-size: 12px;
   }
   .tenna-auto-week-status {
     font-size: 0;
@@ -608,7 +608,7 @@
 }
 .tenna-auto-progress-value span {
   margin-top: 3px;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .tenna-auto-progress-track {
@@ -700,17 +700,17 @@
   background: var(--card);
   border: 2px solid #D5E3F0;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   box-shadow: 0 0 0 5px var(--card);
   transition: all .18s ease;
 }
 .tenna-auto-timeline-item strong {
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--ink-soft);
 }
 .tenna-auto-timeline-item small {
-  font-size: 9px;
+  font-size: 12px;
   color: var(--muted);
 }
 .tenna-auto-timeline-item.active
@@ -762,7 +762,7 @@
   font-size: 23px;
 }
 .tenna-auto-month-title > div:last-child > span {
-  font-size: 9.5px;
+  font-size: 12px;
   color: var(--accent-dark);
   font-weight: 800;
   letter-spacing: .08em;
@@ -794,7 +794,7 @@
 .tenna-auto-month-count span {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 12px;
 }
 .tenna-auto-weeks {
   padding: 15px 18px 18px;
@@ -847,7 +847,7 @@
   align-items: center;
   justify-content: center;
   color: var(--accent-dark);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
 }
 .tenna-auto-week-title {
@@ -859,11 +859,11 @@
   font-size: 14px;
 }
 .tenna-auto-week-title small {
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--muted);
   }
 .tenna-auto-week-status {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   font-weight: 700;
 }
@@ -904,7 +904,7 @@
   transform: translateX(2px);
 }
 .tenna-auto-day-name {
-  font-size: 9.5px;
+  font-size: 12px;
   font-weight: 800;
   color: var(--muted);
 }
@@ -932,7 +932,7 @@
   color: var(--ink);
 }
 .tenna-auto-day-content span {
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.35;
   color: var(--ink-soft);
 }
@@ -946,7 +946,7 @@
   border-top: 1px dashed var(--line);
 }
 .tenna-auto-week-footer span {
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--muted);
 }
 @media (max-width: 800px) {
@@ -1037,7 +1037,7 @@
     padding: 8px;
   }
   .tenna-auto-day-content span {
-    font-size: 11px;
+    font-size: 12px;
   }
   .tenna-auto-week-footer {
     align-items: flex-start;
@@ -1117,7 +1117,7 @@
   line-height: 1.2;
 }
 .tenna-auto-timeline-item small {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.2;
 }
 .tenna-auto-month {
@@ -1136,7 +1136,7 @@
   border-radius: var(--radius-md);
 }
 .tenna-auto-month-title > div:last-child > span {
-  font-size: 11px;
+  font-size: 12px;
 }
 .tenna-auto-month-title h3 {
   margin: 5px 0 4px;
@@ -1155,7 +1155,7 @@
   font-size: 22px;
 }
 .tenna-auto-month-count span {
-  font-size: 11px;
+  font-size: 12px;
 }
 .tenna-auto-weeks {
   padding: 18px 20px 22px;
@@ -1207,7 +1207,7 @@
   border-radius: var(--radius-md);
 }
 .tenna-auto-day-name {
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: .02em;
 }
 .tenna-auto-day-icon {
@@ -1326,7 +1326,7 @@
   color: var(--text, #252a32);
 }
 .tenna-auto-day-item span {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.35;
   color: var(--muted, #737a85);
 }
@@ -1378,7 +1378,7 @@
   border-radius: var(--radius-pill);
   background: var(--paper);
   color: var(--ink-soft);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -1437,7 +1437,7 @@
   cursor: pointer;
 }
 .tenna-auto-plan .tenna-auto-month-select:focus-visible { outline: 3px solid var(--accent-light); outline-offset: 2px; }
-.tenna-auto-plan .tenna-auto-month-control > span { font-size: 11.5px; color: var(--muted); }
+.tenna-auto-plan .tenna-auto-month-control > span { font-size: 12px; color: var(--muted); }
 .tenna-auto-plan .tenna-auto-pills.days {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
@@ -1450,7 +1450,7 @@
   padding: 9px 5px;
 }
 .tenna-auto-plan .tenna-auto-pills.days .tenna-auto-pill strong { font-size: 18px; }
-.tenna-auto-plan .tenna-auto-pills.days .tenna-auto-pill span { font-size: 9px; }
+.tenna-auto-plan .tenna-auto-pills.days .tenna-auto-pill span { font-size: 12px; }
 .tenna-auto-plan .tenna-auto-selection-summary {
   display: flex;
   align-items: center;
@@ -1523,7 +1523,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
   gap: 4px;
 }
 .tenna-auto-deadline small {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .11em;
   opacity: .8;
@@ -1594,7 +1594,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
   border-radius: 999px;
   background: var(--paper);
   color: var(--accent-dark);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -1631,22 +1631,22 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
 }
 .tenna-auto-plan .tenna-auto-month-choice span,
 .tenna-auto-plan .tenna-auto-day-choice span {
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
 }
 .tenna-auto-plan .tenna-auto-month-choice small {
-  font-size: 8px;
+  font-size: 12px;
   line-height: 1.1;
   text-align: center;
   color: inherit;
-  opacity: .8;
+  opacity: 1;
 }
 .tenna-auto-plan .tenna-auto-month-choice.beyond-exam {
   border-color: #d6dce6;
   background: #eef1f5;
-  color: #728096;
+  color: #616e83;
 }
-.tenna-auto-plan .tenna-auto-month-choice.beyond-exam span { color: #77869a; }
+.tenna-auto-plan .tenna-auto-month-choice.beyond-exam span { color: #616f82; }
 .tenna-auto-plan .tenna-auto-month-choice.selected,
 .tenna-auto-plan .tenna-auto-day-choice.selected {
   background: #154ba5;
@@ -1655,7 +1655,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
   box-shadow: 0 8px 18px -11px rgba(0,43,137,.45);
 }
 .tenna-auto-plan .tenna-auto-month-choice.selected span,
-.tenna-auto-plan .tenna-auto-day-choice.selected span { color: rgba(255,255,255,.85); }
+.tenna-auto-plan .tenna-auto-day-choice.selected span { color: #ffffff; }
 .tenna-auto-plan .tenna-auto-month-choice.selected.beyond-exam {
   background: #e4eaf3;
   border: 2px solid #1555ad;
@@ -1688,7 +1688,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
   align-items: flex-start;
   gap: 8px;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.4;
 }
 .tenna-auto-legend-dot {
@@ -1701,7 +1701,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
 }
 .tenna-auto-choice-help,
 .tenna-auto-date-unknown {
-  font-size: 11.5px;
+  font-size: 12px;
   color: var(--muted);
   line-height: 1.5;
   margin: 15px 0 0;
@@ -1733,7 +1733,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
 .tenna-auto-choice-summary { display: flex; flex-direction: column; gap: 4px; }
 .tenna-auto-choice-summary strong { color: var(--ink); font-size: 15px; }
 .tenna-auto-choice-summary span { color: var(--ink-soft); font-size: 12px; }
-.tenna-auto-choice-summary small { color: var(--muted); font-size: 11px; }
+.tenna-auto-choice-summary small { color: var(--muted); font-size: 12px; }
 .tenna-auto-config-buttons { display:flex; gap: 10px; flex-wrap: wrap; }
 .tenna-auto-config-buttons .mural-btn.primary {
   display: inline-flex;
@@ -1761,7 +1761,7 @@ html[data-theme='dark'] .tenna-auto-plan .tenna-auto-month-select {
   cursor: pointer;
 }
 .tenna-auto-plan .tenna-auto-secondary-button:hover { border-color: var(--accent); }
-.tenna-auto-info-note { margin: 0; font-size: 11.5px; line-height:1.5; color: var(--muted); }
+.tenna-auto-info-note { margin: 0; font-size: 12px; line-height:1.5; color: var(--muted); }
 .tenna-auto-generated-head {
   display:flex;
   align-items:center;
@@ -1882,7 +1882,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
 }
 .tenna-auto-generated-chips span.warn {
   background: #fff3e6;
-  color: #b86a11;
+  color: #8f4f0b;
 }
 .tenna-auto-generated-chips span.ok {
   background: #e9f8ef;
@@ -1918,7 +1918,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   display: block;
   margin-bottom: 4px;
   color: var(--accent-dark);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .08em;
 }
@@ -2043,7 +2043,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   border-radius: 12px;
   background: #e8f2fc;
   color: var(--accent-dark);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .06em;
 }
@@ -2077,7 +2077,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   border-radius: 999px;
   background: var(--study-bg);
   color: var(--study-color);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
 }
 .tenna-auto-study-toggle {
@@ -2087,7 +2087,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   border-radius: 999px;
   min-height: 30px;
   padding: 6px 10px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   cursor: pointer;
 }
@@ -2117,7 +2117,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   border-radius: 999px;
   background: #eef3f9;
   color: var(--muted);
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .03em;
 }
@@ -2262,9 +2262,9 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
 .tenna-auto-plan .tenna-auto-generated-hero .tenna-auto-config-kicker {
   display: inline-block;
   margin-bottom: 10px;
-  color: #c7eaff;
+  color: #ffffff;
   letter-spacing: .15em;
-  font-size: 11px;
+  font-size: 12px;
 }
 .tenna-auto-plan .tenna-auto-generated-hero h2 {
   color: #fff;
@@ -2276,7 +2276,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   max-width: 640px;
 }
 .tenna-auto-plan .tenna-auto-generated-hero-copy > p {
-  color: #d8eeff;
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   line-height: 1.5;
@@ -2296,7 +2296,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   background: rgba(255, 255, 255, .16);
   border: 1px solid rgba(255, 255, 255, .21);
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   padding: 6px 12px;
   backdrop-filter: blur(7px);
@@ -2388,7 +2388,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   display: block;
   margin-bottom: 4px;
   color: #4276b1;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: .12em;
   font-weight: 800;
 }
@@ -2472,7 +2472,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
 .tenna-auto-plan .tenna-auto-progress-ring small {
   margin-top: 3px;
   color: var(--muted);
-  font-size: 10px;
+  font-size: 12px;
 }
 .tenna-auto-plan .tenna-auto-progress-details {min-width:0}
 .tenna-auto-plan .tenna-auto-progress-details > strong {
@@ -2491,8 +2491,8 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
 .tenna-auto-plan .tenna-auto-progress-details > small {
   display: block;
   margin-top: 8px;
-  color: #5c83ae;
-  font-size: 11px;
+  color: #4c719a;
+  font-size: 12px;
   line-height: 1.35;
 }
 .tenna-auto-plan .tenna-auto-rhythm-stats {
@@ -2519,10 +2519,10 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   font-size: 22px;
 }
 .tenna-auto-plan .tenna-auto-rhythm-stats strong small {font-size:13px}
-.tenna-auto-plan .tenna-auto-rhythm-stats span {color:#5365a0;font-size:10px;font-weight:700;text-align:center}
+.tenna-auto-plan .tenna-auto-rhythm-stats span {color:#5365a0;font-size:12px;font-weight:700;text-align:center}
 .tenna-auto-plan .tenna-auto-overview-card .tenna-auto-rhythm-message {
   color: #596e97;
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -2613,7 +2613,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   gap: 4px;
 }
 .tenna-auto-plan .tenna-auto-timeline-item strong {color:#0a468f;font-size:13px}
-.tenna-auto-plan .tenna-auto-timeline-item small {color:#5b79a2;font-size:10.5px}
+.tenna-auto-plan .tenna-auto-timeline-item small {color:#546f95;font-size:12px}
 
 /* Bloco mensal e semanas com personalidade */
 .tenna-auto-plan .tenna-auto-month {
@@ -2634,12 +2634,12 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   color: #135ab0;
 }
 .tenna-auto-plan .tenna-auto-month-title h3 {font-size:clamp(21px,2.1vw,28px);color:#0c4ba0}
-.tenna-auto-plan .tenna-auto-month-title p {color:#5a7d9e;font-size:12px}
+.tenna-auto-plan .tenna-auto-month-title p {color:#52718f;font-size:12px}
 .tenna-auto-plan .tenna-auto-month-badges span {
   background: #fff;
   border: 1px solid #cee2f5;
   color: #2964a8;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
 }
 .tenna-auto-plan .tenna-auto-weeks {padding:19px;}
@@ -2671,7 +2671,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
 }
 .tenna-auto-plan .tenna-auto-week-title {gap:5px}
 .tenna-auto-plan .tenna-auto-week-title strong {font-size:15px;color:var(--ink)}
-.tenna-auto-plan .tenna-auto-week-title small {font-size:11px;color:var(--muted)}
+.tenna-auto-plan .tenna-auto-week-title small {font-size:12px;color:var(--muted)}
 .tenna-auto-plan .tenna-auto-week-meter {
   display:block;
   width: min(240px,100%);
@@ -2688,7 +2688,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   background: linear-gradient(90deg,#168fe9,#58c6b1);
   transition:width .3s ease;
 }
-.tenna-auto-plan .tenna-auto-week-status {font-size:11px;color:#4d79aa}
+.tenna-auto-plan .tenna-auto-week-status {font-size:12px;color:#47709e}
 .tenna-auto-plan .tenna-auto-week-body {background:#fbfdff;padding:18px}
 .tenna-auto-plan .tenna-auto-days-grid-plan {gap:14px}
 .tenna-auto-plan .tenna-auto-day-card {
@@ -2699,7 +2699,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
 }
 .tenna-auto-plan .tenna-auto-day-card-head {gap:11px;margin-bottom:13px}
 .tenna-auto-plan .tenna-auto-day-card-head strong {font-size:13px;color:#174b91}
-.tenna-auto-plan .tenna-auto-day-card-head div > span {font-size:11px;color:#6785a9}
+.tenna-auto-plan .tenna-auto-day-card-head div > span {font-size:12px;color:#536f92}
 .tenna-auto-plan .tenna-auto-day-card-chip {
   width: 43px;
   min-width: 43px;
@@ -2726,7 +2726,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   padding: 6px 10px;
   background: var(--study-bg);
   color: var(--study-color);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
 }
 .tenna-auto-plan .tenna-auto-study-toggle {
@@ -2734,7 +2734,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   min-height: 32px;
   border-color: #c8daf0;
   color: #2764aa;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   padding: 6px 10px;
 }
@@ -2748,7 +2748,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   font-size: 17px;
   font-weight: 800;
 }
-.tenna-auto-plan .tenna-auto-study-state {color:#5b7796;font-size:10.5px}
+.tenna-auto-plan .tenna-auto-study-state {color:#5b7796;font-size:12px}
 .tenna-auto-plan .tenna-auto-study-actions {margin-top:12px}
 .tenna-auto-plan .tenna-auto-study-open {
   display: inline-flex;
@@ -2761,7 +2761,7 @@ html[data-theme='dark'] .tenna-auto-date-warning { background: #42331c; border-c
   border: 1px solid #d0e5fa;
   border-radius: 10px;
   color: #0b54a9;
-  font-size: 11.5px;
+  font-size: 12px;
   font-weight: 800;
   text-decoration: none;
 }

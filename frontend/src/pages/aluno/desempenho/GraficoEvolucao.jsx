@@ -78,7 +78,7 @@ export function GraficoEvolucao({ resultadosCronologicos, obterNomeSimulado, for
         <>
           <div className="desempenho-grafico-legenda"><span className="desempenho-legenda-ponto"/> Resultado <span className="desempenho-legenda-meta"/> Meta {META}%</div>
           <div ref={graficoRef} className="desempenho-grafico-rolagem" role="region" tabIndex="0" aria-label="Gráfico de evolução. Role horizontalmente se necessário">
-            <svg viewBox={`0 0 ${largura} ${ALTURA}`} width={largura} height={ALTURA} role="img" aria-label={`Notas de ${lista.length} tentativas, de 0 a 100 por cento`}>
+            <svg viewBox={`0 0 ${largura} ${ALTURA}`} width={largura} height={ALTURA} role="group" aria-label={`Notas de ${lista.length} tentativas, de 0 a 100 por cento`}>
               {[0,25,50,75,100].map((valor) => {
                 const y = posY(valor);
                 return <g key={valor}>

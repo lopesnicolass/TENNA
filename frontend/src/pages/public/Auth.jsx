@@ -156,7 +156,7 @@ export default function Auth() {
   }
 
   return (
-    <div className="page">
+    <main className="page">
       <button
         type="button"
         className="back-btn"
@@ -196,7 +196,7 @@ export default function Auth() {
               <div className={`view ${view === 'login' ? 'view-current' : ''}`} ref={loginViewRef} aria-hidden={view !== 'login'} inert={view !== 'login'}>
                 <div className="form-head">
                   <p className="eyebrow">Bem-vindo de volta</p>
-                  <h2>Entrar na plataforma</h2>
+                  <h1>Entrar na plataforma</h1>
                   <p className="sub">Continue de onde você parou nos seus estudos.</p>
                 </div>
                 <form onSubmit={handleLoginSubmit} noValidate>
@@ -249,7 +249,7 @@ export default function Auth() {
               <div className={`view ${view === 'cadastro' ? 'view-current' : ''}`} ref={cadViewRef} aria-hidden={view !== 'cadastro'} inert={view !== 'cadastro'}>
                 <div className="form-head">
                   <p className="eyebrow">Comece agora</p>
-                  <h2>Criar sua conta</h2>
+                  <h1>Criar sua conta</h1>
                   <p className="sub">Leva menos de um minuto para começar a organizar seus estudos.</p>
                 </div>
                 <form onSubmit={handleCadSubmit} noValidate>
@@ -305,6 +305,6 @@ export default function Auth() {
       <div className={`toast ${showToast ? 'show' : ''}`}>
         <span className="dot"></span><span>{toast}</span>
       </div>
-    </div>
+    </main>
   );
 }

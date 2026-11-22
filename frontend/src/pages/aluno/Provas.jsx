@@ -53,7 +53,7 @@ export default function Provas() {
           {provas.map((prova) => (
             <article className="prova-card" key={prova.id}>
               <div className="prova-card-main">
-                <span className="prova-pdf-icon" aria-label="Arquivo PDF" title="Arquivo PDF">
+                <span className="prova-pdf-icon" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M7 2.5h7l5 5V21H7a2 2 0 0 1-2-2V4.5a2 2 0 0 1 2-2Z"/>
                     <path d="M14 2.5V8h5"/>
@@ -75,7 +75,7 @@ export default function Provas() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Abrir prova
+                  Abrir prova<span className="sr-only"> de {prova.ano} (PDF, abre em nova aba)</span>
                 </a>
 
                 <a
@@ -83,7 +83,7 @@ export default function Provas() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Ver gabarito
+                  Ver gabarito<span className="sr-only"> de {prova.ano} (PDF, abre em nova aba)</span>
                 </a>
               </div>
             </article>

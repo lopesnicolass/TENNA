@@ -64,7 +64,7 @@ export function Historico({ resultados, limitar, obterNomeSimulado, formatarData
             return <div className="desempenho-historico-entrada" key={chave}>
               <button type="button" className="desempenho-historico-row desempenho-historico-row--botao" data-sem-ampliacao aria-expanded={expandido} onClick={() => setDetalheAberto(expandido ? null : chave)}>
                 <div className="desempenho-historico-identificacao">
-                  <strong title={obterNomeSimulado(resultado, index)}>{obterNomeSimulado(resultado, index)}</strong>
+                  <strong>{obterNomeSimulado(resultado, index)}</strong>
                   <span>{formatarData(resultado.data_realizacao) || 'Data indisponível'} · {obterMateria(resultado)}</span>
                 </div>
                 <div className="desempenho-barra desempenho-historico-barra" aria-hidden="true"><span style={{ width: `${valor}%` }}/></div>

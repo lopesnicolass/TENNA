@@ -312,7 +312,7 @@ export default function Landing() {
 
             <h1>
               Organize seus estudos e conquiste sua vaga na{' '}
-              <span className="accent-word">TENNA.</span>
+              <span className="accent-word">ETECAMP.</span>
             </h1>
 
 
@@ -404,7 +404,7 @@ export default function Landing() {
                         : 'pending'
                     }`}
                   >
-                    {s.done ? '✓' : ''}
+                    {s.done ? (<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" focusable="false"><path d="M3 8.5l3.2 3.2L13 4.5" /></svg>) : null}
                   </div>
 
 

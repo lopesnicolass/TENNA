@@ -287,7 +287,7 @@
 
 .flashcards-game-banner{margin-bottom:22px; padding:24px 28px; border:1px solid var(--line); border-radius:var(--radius-xl); background:var(--card); box-shadow:0 8px 28px rgba(13,71,161,.06);}
 .flashcards-game-banner-content{display:flex; align-items:center; justify-content:space-between; gap:24px;}
-.flashcards-game-eyebrow{display:inline-block; margin-bottom:7px; color:var(--accent); font-size:10px; font-weight:800; letter-spacing:.12em;}
+.flashcards-game-eyebrow{display:inline-block; margin-bottom:7px; color:var(--accent-dark); font-size:12px; font-weight:800; letter-spacing:.12em;}
 .flashcards-game-banner h2{margin:0 0 6px; color:var(--ink); font:800 22px "Inter",sans-serif;}
 .flashcards-game-banner p{margin:0; max-width:680px; color:var(--muted); font-size:13px; line-height:1.55;}
 .flashcards-game-start{flex-shrink:0; border:0; border-radius:var(--radius-sm); padding:12px 22px; background:var(--ink); color:#fff; font-size:13px; font-weight:700; cursor:pointer; transition:transform .18s var(--bouncy),box-shadow .18s ease,background .18s ease;}
@@ -2000,7 +2000,7 @@ html[data-theme='dark'] .flashcards-page .flashcards-game-start {
 }
 .flashcards-deck-action {
   display: inline-flex; align-items: center; gap: 8px;
-  margin-top: 5px; color: var(--deck-color); font-size: 12px; font-weight: 800;
+  margin-top: 5px; color: color-mix(in srgb, var(--deck-color) 78%, #000); font-size: 13px; font-weight: 800;
 }
 .flashcards-deck-action span { font-size: 18px; line-height: 1; transition: transform .2s ease; }
 .flashcards-page .flashcards-deck:hover .flashcards-deck-action span { transform: translateX(4px); }

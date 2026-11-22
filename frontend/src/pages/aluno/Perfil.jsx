@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { request } from '../../services/api.js';
 import Icon from '../../components/Icon.jsx';
 import { CATEGORIAS_CONQUISTAS, montarConquistas } from '../../utils/conquistas.js';
+import { usePreferenciaContagem } from '../../utils/usePreferenciaContagem.js';
 
 export default function Perfil() {
 
@@ -24,6 +25,10 @@ export default function Perfil() {
   } catch {
     usuarioInicial = null;
   }
+
+  const { exibirCard: exibirCardContagem, erro: erroContagem, alternarCard: alternarCardContagem } = usePreferenciaContagem(
+    Number(usuarioInicial?.id || usuarioInicial?.usuarioId || 0)
+  );
 
   // =====================================================
   // ESTADOS
@@ -850,6 +855,32 @@ export default function Perfil() {
                 </div>
               </div>
             )}
+          </section>
+
+          <section className="perfil-security perfil-preferencias" aria-labelledby="perfil-preferencias-titulo">
+            <div className="perfil-security-bar">
+              <span className="perfil-security-icon"><Icon name={exibirCardContagem ? 'eye' : 'eyeOff'} size={20} /></span>
+              <div className="perfil-security-copy">
+                <h3 id="perfil-preferencias-titulo">Contagem do Vestibulinho</h3>
+                <p id="perfil-preferencias-descricao">
+                  {exibirCardContagem
+                    ? 'O card com os dias restantes aparece na tela Início. Se a contagem te deixar ansioso(a), desative para removê-lo.'
+                    : 'O card com os dias restantes está oculto na tela Início. Ative para ele voltar.'}
+                </p>
+                {erroContagem && <p className="perfil-ranking-error" role="alert">{erroContagem}</p>}
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={exibirCardContagem}
+                aria-labelledby="perfil-preferencias-titulo"
+                aria-describedby="perfil-preferencias-descricao"
+                className={`perfil-switch ${exibirCardContagem ? 'is-on' : ''}`}
+                onClick={alternarCardContagem}
+              >
+                <span className="perfil-switch-thumb" aria-hidden="true" />
+              </button>
+            </div>
           </section>
 
           <div className="perfil-form-footer">

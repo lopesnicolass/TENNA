@@ -33,7 +33,7 @@
   box-shadow: 0 15px 32px -26px rgba(14, 67, 144, .65);
 }
 .perfil-hero-intro { max-width: 680px; min-width: 0; }
-.perfil-hero-kicker { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 9px; color: #cce8ff; font-size: 11px; font-weight: 800; letter-spacing: .13em; }
+.perfil-hero-kicker { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 9px; color: #cce8ff; font-size: 12px; font-weight: 800; letter-spacing: .13em; }
 .perfil-page .perfil-hero h1 { margin: 0 0 8px; color: #fff; font: 800 clamp(28px,3vw,38px)/1.12 var(--font-display); letter-spacing: -.035em; }
 .perfil-page .perfil-hero p { margin: 0; color: #e3f1ff; font-size: 14px; line-height: 1.55; }
 
@@ -57,7 +57,7 @@
 .perfil-heading-icon { display: grid; place-items: center; width: 47px; height: 47px; flex: 0 0 47px; border-radius: 14px; background: var(--color-primary-100); color: var(--accent-dark); }
 .perfil-page .perfil-form-heading h2 { margin: 0 0 4px; font: 800 21px/1.2 var(--font-display); color: var(--ink); letter-spacing: -.025em; }
 .perfil-form-heading p, .perfil-subheading p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
-.perfil-eyebrow { color: var(--accent-dark); font-size: 10px; font-weight: 800; letter-spacing: .105em; }
+.perfil-eyebrow { color: var(--accent-dark); font-size: 12px; font-weight: 800; letter-spacing: .105em; }
 
 /* Identidade e foto num bloco horizontal, sem o espaço vazio anterior. */
 .perfil-account-avatar { display: flex; align-items: center; gap: 16px; min-width: 0; margin-bottom: 12px; padding: 0 0 14px; border: 0; border-bottom: 1px solid var(--color-border); background: transparent; }
@@ -65,7 +65,7 @@
 .avatar-circle img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .perfil-avatar-info { display: flex; flex: 1 1 auto; flex-direction: column; gap: 5px; min-width: 0; }
 .perfil-avatar-info strong { overflow: hidden; color: var(--color-text); font: 800 19px/1.25 var(--font-display); text-overflow: ellipsis; overflow-wrap: anywhere; }
-.perfil-avatar-info > span:last-child { color: var(--muted); font-size: 11.5px; line-height: 1.45; }
+.perfil-avatar-info > span:last-child { color: var(--muted); font-size: 12px; line-height: 1.45; }
 .perfil-file-input { position: absolute; width: 1px; height: 1px; opacity: 0; overflow: hidden; pointer-events: none; }
 .perfil-photo-actions { display: flex; flex: 0 0 auto; flex-direction: column; gap: 7px; }
 
@@ -105,7 +105,7 @@
 .perfil-security-icon { display: grid; place-items: center; flex: 0 0 39px; width: 39px; height: 39px; border-radius: 12px; background: var(--card); color: var(--accent-dark); }
 .perfil-security-copy { flex: 1 1 auto; min-width: 0; }
 .perfil-page .perfil-security-copy h3 { margin: 0 0 4px; color: var(--ink); font-size: 13px; font-weight: 800; }
-.perfil-security-copy p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.perfil-security-copy p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .perfil-password-fields { padding-top: 17px; margin-top: 16px; border-top: 1px solid var(--color-border); }
 
 /* Botões sem dependência das classes globais do mural. */
@@ -138,24 +138,24 @@
 .perfil-progress-ring { display: grid; place-items: center; flex: 0 0 104px; width: 104px; height: 104px; padding: 10px; border-radius: 50%; background: conic-gradient(#2387e2 var(--perfil-progress), var(--color-surface-muted) 0); }
 .perfil-progress-ring-inner { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1px; width: 100%; height: 100%; border-radius: 50%; background: var(--card); }
 .perfil-progress-ring strong { color: var(--ink); font: 800 26px/1.15 var(--font-display); }
-.perfil-progress-ring small { color: var(--muted); font-size: 10px; }
+.perfil-progress-ring small { color: var(--muted); font-size: 12px; }
 .perfil-progress-info { display: flex; flex: 1 1 auto; flex-direction: column; gap: 5px; min-width: 0; }
 .perfil-progress-info > strong { color: var(--ink); font: 800 26px/1.1 var(--font-display); }
 .perfil-progress-info > strong span { color: var(--muted); font-size: 15px; }
-.perfil-progress-info > span { color: var(--muted); font-size: 11px; line-height: 1.45; }
-.perfil-progress-info > small { color: var(--accent-dark); font-size: 11px; font-weight: 750; }
+.perfil-progress-info > span { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.perfil-progress-info > small { color: var(--accent-dark); font-size: 12px; font-weight: 750; }
 .perfil-progress-divider { height: 1px; width: 100%; margin: 6px 0; background: var(--color-border); }
 .perfil-next-goal { display: flex; align-items: center; gap: 10px; min-height: 59px; margin-bottom: 13px; padding: 11px 12px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-surface-soft); }
 .perfil-next-goal-loading { visibility: hidden; }
 .perfil-next-goal-icon { display: grid; place-items: center; width: 33px; height: 33px; flex: 0 0 33px; border-radius: 10px; color: var(--accent-dark); background: var(--card); }
 .perfil-next-goal > div { display: flex; flex-direction: column; min-width: 0; gap: 3px; }
-.perfil-next-goal > div span { color: var(--muted); font-size: 9px; font-weight: 800; letter-spacing: .08em; }
-.perfil-next-goal > div strong { color: var(--color-text); font-size: 11px; line-height: 1.3; }
-.perfil-next-goal > small { margin-left: auto; color: var(--accent-dark); white-space: nowrap; font-size: 10px; font-weight: 800; }
+.perfil-next-goal > div span { color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+.perfil-next-goal > div strong { color: var(--color-text); font-size: 12px; line-height: 1.3; }
+.perfil-next-goal > small { margin-left: auto; color: var(--accent-dark); white-space: nowrap; font-size: 12px; font-weight: 800; }
 .perfil-full-button { width: 100%; justify-content: space-between; padding: 12px 15px; }
 .perfil-ranking-title-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 7px; }
 .perfil-ranking-title-row h2 { margin-bottom: 4px !important; }
-.perfil-ranking-status { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 99px; background: var(--color-surface-muted); color: var(--muted); font-size: 10px; font-weight: 800; }
+.perfil-ranking-status { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 99px; background: var(--color-surface-muted); color: var(--muted); font-size: 12px; font-weight: 800; }
 .perfil-ranking-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #95a8bb; }
 .perfil-ranking-status.is-participating { color: var(--color-success); background: var(--color-success-soft); }
 .perfil-ranking-status.is-participating::before { background: #38a36a; }
@@ -163,13 +163,13 @@
 .perfil-ranking-position > strong { min-width: 67px; color: var(--ink); font: 800 41px/1 var(--font-display); letter-spacing: -.045em; }
 .perfil-ranking-position > div { display: flex; flex-direction: column; gap: 4px; }
 .perfil-ranking-position span { color: var(--color-text); font-size: 12px; font-weight: 700; }
-.perfil-ranking-position small { color: var(--muted); font-size: 11px; line-height: 1.4; }
-.perfil-ranking-privacy { display: flex; align-items: flex-start; gap: 9px; margin: 0 0 15px; color: var(--muted); font-size: 11px; line-height: 1.55; }
+.perfil-ranking-position small { color: var(--muted); font-size: 12px; line-height: 1.4; }
+.perfil-ranking-privacy { display: flex; align-items: flex-start; gap: 9px; margin: 0 0 15px; color: var(--muted); font-size: 12px; line-height: 1.55; }
 .perfil-ranking-privacy svg { flex: 0 0 16px; margin-top: 1px; color: var(--accent-dark); }
 .perfil-ranking-toggle { width: 100%; background: var(--color-primary-100); border-color: var(--color-border); color: var(--accent-dark); }
 .perfil-ranking-toggle:hover:not(:disabled) { background: var(--color-surface-muted); }
 .perfil-ranking-toggle.is-active { background: var(--card); }
-.perfil-ranking-error { margin: 10px 0 0; color: var(--color-danger); font-size: 11px; }
+.perfil-ranking-error { margin: 10px 0 0; color: var(--color-danger); font-size: 12px; }
 
 /* Equilíbrio vertical no desktop: a soma dos dois cartões acompanha o card principal.
    Espaçamento mais enxuto sem cortar conteúdo ou fixar alturas em pixels. */
@@ -205,7 +205,7 @@
 .perfil-achievements-counter { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; min-width: 107px; min-height: 65px; padding: 9px 12px; border-radius: 13px; background: var(--color-primary-100); }
 .perfil-achievements-counter strong { color: var(--accent-dark); font: 800 24px/1.05 var(--font-display); }
 .perfil-achievements-counter strong span { color: var(--muted); font-size: 15px; }
-.perfil-achievements-counter small { color: var(--accent-dark); font-size: 10px; }
+.perfil-achievements-counter small { color: var(--accent-dark); font-size: 12px; }
 .perfil-modal-close { display: grid; place-items: center; width: 40px; height: 40px; flex: 0 0 40px; padding: 0; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-surface-soft); color: var(--accent-dark); }
 .perfil-modal-close:hover { background: var(--color-primary-100); }
 .perfil-modal-x { display: block; position: relative; width: 17px; height: 17px; }
@@ -230,20 +230,20 @@
 .perfil-badge-card[data-categoria="Flashcards"] { --badge-accent: #b97126; --badge-soft: #fff2de; }
 .perfil-badge-card[data-categoria="Consistência"] { --badge-accent: #188e85; --badge-soft: #e1f6f2; }
 
-.perfil-badge-status { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 6px 9px; border-radius: 99px; color: var(--muted); background: var(--color-surface-muted); font-size: 10px; font-weight: 800; white-space: nowrap; }
+.perfil-badge-status { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 6px 9px; border-radius: 99px; color: var(--muted); background: var(--color-surface-muted); font-size: 12px; font-weight: 800; white-space: nowrap; }
 .perfil-badge-status.is-unlocked { color: var(--color-success); background: var(--color-success-soft); }
-.perfil-badge-category { margin-bottom: 6px; color: var(--badge-accent); font-size: 10px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
+.perfil-badge-category { margin-bottom: 6px; color: var(--badge-accent); font-size: 12px; font-weight: 800; letter-spacing: .09em; text-transform: uppercase; }
 .perfil-page .perfil-badge-card h3 { margin: 0 0 6px; font: 800 17px/1.28 var(--font-display); color: var(--ink); }
 .perfil-badge-card > p { min-height: 30px; margin: 0 0 17px; color: var(--muted); font-size: 12px; line-height: 1.5; }
 .perfil-badge-bottom { margin-top: auto; }
-.perfil-badge-count { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; color: var(--muted); font-size: 11px; }
-.perfil-badge-count strong { color: var(--color-text); font-size: 11px; }
+.perfil-badge-count { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 8px; color: var(--muted); font-size: 12px; }
+.perfil-badge-count strong { color: var(--color-text); font-size: 12px; }
 .perfil-badge-progress { width: 100%; height: 6px; overflow: hidden; border-radius: 99px; background: var(--color-surface-muted); }
 .perfil-badge-progress > span { display: block; height: 100%; border-radius: inherit; background: var(--badge-accent); }
 .perfil-badge-unlocked .perfil-badge-progress > span { background: #2b9c6c; }
 .perfil-badge-link { display: inline-flex; align-items: center; gap: 7px; align-self: flex-start; margin-top: 11px; padding: 0; border: 0; background: transparent; color: var(--accent-dark); font: 800 11px var(--font-body); }
 .perfil-badge-link:hover { text-decoration: underline; }
-.perfil-modal-footer { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; padding: 12px 28px; border-top: 1px solid var(--color-border); background: var(--color-surface-soft); color: var(--muted); font-size: 11px; }
+.perfil-modal-footer { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; padding: 12px 28px; border-top: 1px solid var(--color-border); background: var(--color-surface-soft); color: var(--muted); font-size: 12px; }
 .perfil-modal-footer p { display: flex; align-items: center; gap: 8px; margin: 0; line-height: 1.4; }
 .perfil-modal-footer svg { color: var(--accent-dark); flex-shrink: 0; }
 .perfil-modal-footer > span { white-space: nowrap; font-weight: 750; color: var(--accent-dark); }
@@ -284,6 +284,18 @@ html[data-theme='dark'] .perfil-badge-card[data-categoria="Consistência"] { --b
 html[data-theme='dark'] .perfil-modal-footer { background: var(--dark-surface-2); border-color: var(--dark-border); }
 html[data-theme='dark'] .perfil-page .perfil-next-goal-icon,
 html[data-theme='dark'] .perfil-page .perfil-security-icon { background: var(--dark-surface-3); }
+/* O estilo global do modo escuro clareia spans dentro do dashboard.
+   A inicial do avatar precisa manter contraste sobre o fundo azul-claro. */
+html[data-theme='dark'] .perfil-page .avatar-circle {
+  background: #d8ebff;
+  border-color: var(--dark-surface);
+  box-shadow: 0 0 0 2px #58728e;
+  color: #1458a9;
+}
+html[data-theme='dark'] .perfil-page .avatar-circle > span {
+  color: #1458a9;
+  -webkit-text-fill-color: #1458a9;
+}
 
 /* Breakpoints do dashboard e smartphones. */
 @media (max-width: 1200px) {
@@ -325,6 +337,7 @@ html[data-theme='dark'] .perfil-page .perfil-security-icon { background: var(--d
   .perfil-photo-actions .perfil-btn { flex: 1 1 auto; }
   .perfil-security-bar { flex-wrap: wrap; }
   .perfil-security-toggle { margin-left: 51px; }
+  .perfil-preferencias .perfil-switch { margin-left: 51px; }
   .perfil-save { width: 100%; }
   .perfil-logout { width: 100%; }
   .perfil-progress-main { justify-content: flex-start; }
@@ -336,7 +349,7 @@ html[data-theme='dark'] .perfil-page .perfil-security-icon { background: var(--d
   .perfil-modal-footer > span { white-space: normal; }
   .perfil-achievements-counter { min-width: 74px; min-height: 55px; padding: 8px; }
   .perfil-achievements-counter strong { font-size: 17px; }
-  .perfil-achievements-counter strong span { font-size: 11px; }
+  .perfil-achievements-counter strong span { font-size: 12px; }
   .perfil-modal-close { width: 34px; height: 34px; flex-basis: 34px; }
   .perfil-achievements-filters { flex-wrap: nowrap; max-width: 100%; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
   .perfil-achievements-filter { flex-shrink: 0; }
@@ -376,3 +389,13 @@ html[data-theme='dark'] .perfil-page .perfil-achievements-refresh { background: 
 html[data-theme='dark'] .perfil-page .perfil-achievements-counter { background: #233f5e; }
 html[data-theme='dark'] .perfil-page .perfil-achievements-counter strong,
 html[data-theme='dark'] .perfil-page .perfil-achievements-counter small { color: #c1e2ff; }
+
+/* Interruptor da preferência "Contagem do Vestibulinho". */
+.perfil-switch { position: relative; flex: 0 0 auto; width: 46px; height: 26px; padding: 0; border: 1px solid var(--color-border); border-radius: 99px; background: #b7c5d6; cursor: pointer; transition: background-color .15s ease, border-color .15s ease; }
+.perfil-switch.is-on { background: var(--color-primary-600, #176dcc); border-color: var(--color-primary-600, #176dcc); }
+.perfil-switch-thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(5, 25, 55, .3); transition: transform .15s ease; }
+.perfil-switch.is-on .perfil-switch-thumb { transform: translateX(20px); }
+.perfil-switch:focus-visible { outline: 3px solid var(--color-primary-300, #90caf9); outline-offset: 2px; }
+html[data-theme='dark'] .perfil-switch { background: #4a6179; border-color: #5b738d; }
+html[data-theme='dark'] .perfil-switch.is-on { background: #2f86e0; border-color: #2f86e0; }
+@media (prefers-reduced-motion: reduce) { .perfil-switch, .perfil-switch-thumb { transition: none; } }

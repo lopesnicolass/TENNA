@@ -64,7 +64,7 @@
   padding: 0 13px;
   margin: 0 0 7px;
   color: #9fc5f3;
-  font: 750 10px/1.5 Inter, system-ui, sans-serif;
+  font: 750 12px/1.5 Inter, system-ui, sans-serif;
   letter-spacing: .15em;
 }
 
@@ -232,13 +232,13 @@ html[data-theme='dark'] .student-area .student-sidebar .student-theme-toggle-wra
   letter-spacing: -.035em;
 }
 .student-area .student-sidebar .sidebar-streak-heading span {
-  font: 650 11px/1 Inter, system-ui, sans-serif;
+  font: 650 12px/1 Inter, system-ui, sans-serif;
 }
 .student-area .student-sidebar .sidebar-streak-label {
-  font-size: 10px;
+  font-size: 12px;
 }
 .student-area .student-sidebar .sidebar-streak-progress { margin-top: 7px; height: 6px; }
-.student-area .student-sidebar .sidebar-streak-message { font-size: 9px; }
+.student-area .student-sidebar .sidebar-streak-message { font-size: 12px; }
 .student-area .student-sidebar .sidebar-streak-arrow { font-size: 25px; }
 
 /* Recolhida: ícones centrados, sem rótulos nem divisórias extras. */
@@ -557,13 +557,13 @@ html[data-theme='dark'] .student-area .student-sidebar .student-theme-toggle-wra
   color: #fff;
 }
 .student-area .student-sidebar .sidebar-streak-heading span {
-  font: 650 11px/1 Inter, system-ui, sans-serif;
+  font: 650 12px/1 Inter, system-ui, sans-serif;
   color: #d8eaff;
 }
 .student-area .student-sidebar .sidebar-streak-label {
   margin-top: 3px;
   color: #c4daf5;
-  font: 500 10px/1.2 Inter, system-ui, sans-serif;
+  font: 500 12px/1.2 Inter, system-ui, sans-serif;
 }
 /* Sete pequenas barras, uma para cada dia. */
 .student-area .student-sidebar .sidebar-streak-progress {
@@ -600,7 +600,7 @@ html[data-theme='dark'] .student-area .student-sidebar .student-theme-toggle-wra
 .student-area .student-sidebar .sidebar-streak-message {
   margin-top: 6px;
   color: #bbd2f0;
-  font: 500 9.5px/1.3 Inter, system-ui, sans-serif;
+  font: 500 12px/1.3 Inter, system-ui, sans-serif;
 }
 .student-area .student-sidebar .sidebar-streak-arrow {
   margin-left: 0;

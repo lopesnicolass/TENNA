@@ -74,6 +74,7 @@ require("./config/ensureCronogramasModelos");
 require("./config/ensureResultados");
 require("./config/ensureXP");
 require("./config/ensureRanking");
+require("./config/ensureContagemVestibulinho");
 require("./config/ensureTerrario");
 
 // =====================================================

@@ -467,10 +467,10 @@ export default function Conteudos() {
             BASE DE CONTEÚDOS
           </span>
 
-          <h2>
+          <h1>
             Tudo que cai no{' '}
             <span>Vestibulinho</span>
-          </h2>
+          </h1>
 
           <p>
             Consulte o que estudar em cada
@@ -762,10 +762,7 @@ export default function Conteudos() {
                       <div className="content-subject-progress">
 
                         <span
-                          style={{
-                            color:
-                              style.color
-                          }}
+                          style={{ '--subject-color': style.color }}
                         >
                           {materiaProgresso}%
                         </span>

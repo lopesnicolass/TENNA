@@ -134,7 +134,7 @@ export default function RankingXP({ xp, usuarioId }) {
                 </span>
                 <span className="home-ranking-placement">{POSICAO_LABEL[aluno.posicao - 1]}</span>
                 {aluno.posicao === 1 && (
-                  <span className="home-ranking-winner-mark" aria-label="Líder do ranking">
+                  <span className="home-ranking-winner-mark" role="img" aria-label="Líder do ranking">
                     <Icon name="trophy" size={17} />
                   </span>
                 )}

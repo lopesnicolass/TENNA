@@ -4,7 +4,7 @@
   --des-azul-claro: #2389ee;
   --des-escuro: #143a68;
   --des-texto: #273f5d;
-  --des-muted: #607995;
+  --des-muted: #4a6280;
   --des-borda: #d6e3f2;
   width: 100%;
   max-width: 1440px;
@@ -26,7 +26,7 @@
   display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
   min-width: 0;
 }
-.desempenho-hero-kicker { font-weight: 800; font-size: 11px; letter-spacing: .1em; color: #c9e0ff; }
+.desempenho-hero-kicker { font-weight: 800; font-size: 12px; letter-spacing: .1em; color: #c9e0ff; }
 .desempenho-hero-principal h1 { color: #fff; margin: 5px 0 8px; font-size: clamp(26px, 2.4vw, 34px); line-height: 1.15; }
 .desempenho-hero-intro { color: #e4f0ff; font-size: 14px; line-height: 1.5; margin: 0; }
 .desempenho-hero-resumo { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; }
@@ -38,7 +38,7 @@
 .desempenho-hero-destaques { background: white; border: 1px solid var(--des-borda); border-radius: 21px; display: flex; flex-direction: column; justify-content: center; padding: 12px 24px; min-width: 0; }
 .desempenho-hero-destaque { padding: 12px 0; display: flex; flex-direction: column; gap: 5px; }
 .desempenho-hero-destaque + .desempenho-hero-destaque { border-top: 1px solid #e5edf6; }
-.desempenho-kpi-rotulo { color: #597593; font-size: 12px; font-weight: 700; }
+.desempenho-kpi-rotulo { color: #4a6280; font-size: 12px; font-weight: 700; }
 .desempenho-hero-destaque strong { color: var(--des-azul); font-size: 29px; line-height: 1.2; }
 .desempenho-hero-destaque strong.desempenho-tendencia-titulo { font-size: 18px; color: var(--des-escuro); display: flex; align-items: center; gap: 8px; }
 .desempenho-tendencia-titulo span { font-size: 23px; color: #148c65; }
@@ -71,7 +71,7 @@
 .desempenho-legendas-cor.verde { background: #2584ec; }
 .desempenho-legendas-cor.cinza { background: #becbd9; }
 .desempenho-legendas strong { color: #174676; font-size: 18px; line-height: 1.2; }
-.desempenho-legendas span { color: var(--des-muted); font-size: 11px; }
+.desempenho-legendas span { color: var(--des-muted); font-size: 12px; }
 .desempenho-painel-numero { font-size: 25px; font-weight: 800; line-height: 1; color: var(--des-azul); white-space: nowrap; }
 .desempenho-meta-grafico { margin: 40px 0 24px; }
 .desempenho-meta-barra { height: 14px; overflow: visible; }
@@ -90,12 +90,12 @@
 .desempenho-opcoes { border-radius: 10px; padding: 3px; display: flex; align-items: center; gap: 3px; background: #edf4fc; flex-shrink: 0; }
 .desempenho-opcoes button { border: 0; border-radius: 8px; padding: 8px 11px; background: transparent; color: #41688e; font-weight: 700; font-size: 12px; white-space: nowrap; }
 .desempenho-opcoes button.ativo { color: #1254a6; background: white; box-shadow: 0 1px 4px #cddfee; }
-.desempenho-grafico-legenda { display: flex; justify-content: flex-end; align-items: center; gap: 8px; font-size: 12px; color: #597491; }
+.desempenho-grafico-legenda { display: flex; justify-content: flex-end; align-items: center; gap: 8px; font-size: 12px; color: #4a6280; }
 .desempenho-legenda-ponto { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #2385ed; }
 .desempenho-legenda-meta { width: 19px; border-top: 2px dashed #c99416; display: inline-block; margin-left: 14px; }
 .desempenho-grafico-rolagem { overflow-x: auto; overflow-y: hidden; width: 100%; margin: 12px 0 0; scrollbar-color: #b3cbe7 transparent; }
 .desempenho-grafico-rolagem svg { display: block; max-width: none; }
-.desempenho-svg-eixo { fill: #68809b; font-size: 11px; }
+.desempenho-svg-eixo { fill: #4a6280; font-size: 12px; }
 .desempenho-svg-valor { fill: #195cae; font-size: 12px; font-weight: 800; }
 .desempenho-grafico-rolagem circle[role="button"] { cursor: pointer; }
 .desempenho-grafico-rodape { border-top: 1px solid #edf2f7; display: flex; justify-content: space-between; gap: 12px; padding-top: 12px; color: var(--des-muted); font-size: 12px; line-height: 1.5; }
@@ -107,7 +107,7 @@
 .desempenho-historico-row:last-child { border-bottom: none; }
 .desempenho-historico-identificacao { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
 .desempenho-historico-identificacao strong { color: #244769; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.desempenho-historico-identificacao span { color: #6c84a1; font-size: 12px; }
+.desempenho-historico-identificacao span { color: #4a6280; font-size: 12px; }
 .desempenho-historico-porcentagem { color: #1255ab; font-size: 15px; text-align: right; }
 .desempenho-historico-barra span.abaixo { background: #92a9c2; }
 .desempenho-historico-rodape { border-top: 1px solid #eaf0f7; text-align: center; padding-top: 18px; margin-top: 4px; }
@@ -157,7 +157,7 @@
   display: block;
   margin-bottom: 6px;
   color: #2264af;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 850;
   letter-spacing: .12em;
 }
@@ -189,7 +189,7 @@
 .desempenho-evolucao-painel span,
 .desempenho-evolucao-painel small {
   color: var(--muted, #627b96);
-  font-size: 11px;
+  font-size: 12px;
 }
 .desempenho-evolucao-painel strong {
   font-family: 'Inter', sans-serif;
@@ -239,7 +239,7 @@
   background: rgba(33, 150, 243, .1);
   color: var(--accent-dark, #1759b1);
   font-weight: 800;
-  font-size: 10px;
+  font-size: 12px;
 }
 .desempenho-diagnostico-materias { display: grid; gap: 18px; }
 .desempenho-diagnostico-materia { min-width: 0; }
@@ -257,8 +257,8 @@
   overflow-wrap: anywhere;
 }
 .desempenho-diagnostico-ordem {
-  color: #7d99b8;
-  font-size: 10px;
+  color: #4a6280;
+  font-size: 12px;
   font-weight: 800;
 }
 .desempenho-diagnostico-porcentagem {
@@ -283,13 +283,13 @@
   display: block;
   margin-top: 7px;
   color: var(--muted, #7089a4);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.5;
 }
 .desempenho-diagnostico-nota {
   margin: 20px 0 0;
   color: var(--muted, #7c91a8);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.55;
 }
 .desempenho-diagnostico-sem-dados {
@@ -338,7 +338,7 @@
 .desempenho-revisao-texto { display: grid; min-width: 0; gap: 4px; }
 .desempenho-revisao-texto span {
   color: var(--accent-dark, #2162a9);
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 800;
   letter-spacing: .07em;
 }
@@ -348,7 +348,7 @@
   line-height: 1.2;
   overflow-wrap: anywhere;
 }
-.desempenho-revisao-texto small { color: var(--muted, #6c849e); font-size: 10px; }
+.desempenho-revisao-texto small { color: var(--muted, #6c849e); font-size: 12px; }
 .desempenho-revisao-link {
   flex-shrink: 0;
   margin-left: auto;
@@ -436,16 +436,16 @@
 .desempenho-page .desempenho-diagnostico { margin-bottom: 18px; }
 .desempenho-diagnostico-topo { margin-bottom: 15px; }
 .desempenho-diagnostico-topo h2 { font-size: 20px; color: #123e76; }
-.desempenho-diagnostico-topo p { color: #607995; font-size: 13px; }
+.desempenho-diagnostico-topo p { color: #4a6280; font-size: 13px; }
 .desempenho-diagnostico-grid { gap: 18px; }
 .desempenho-diagnostico-card { border-color: #d6e3f2; border-radius: 21px; box-shadow: none; padding: 24px 26px; }
 .desempenho-diagnostico-cabecalho { margin-bottom: 19px; }
 .desempenho-diagnostico-cabecalho h3 { color: #123e76; font-size: 19px; }
-.desempenho-diagnostico-cabecalho p, .desempenho-diagnostico-amostra, .desempenho-diagnostico-nota { font-size: 12px; color: #607995; }
+.desempenho-diagnostico-cabecalho p, .desempenho-diagnostico-amostra, .desempenho-diagnostico-nota { font-size: 12px; color: #4a6280; }
 .desempenho-diagnostico-nome strong, .desempenho-revisao-texto strong { font-size: 14px; }
 .desempenho-diagnostico-barra span { background: #2389ee; }
 .desempenho-revisao-item { background: #f3f8fe; border: 1px solid #d6e6f7; }
-.desempenho-revisao-texto span { font-size: 11px; }
+.desempenho-revisao-texto span { font-size: 12px; }
 .desempenho-revisao-texto small { font-size: 12px; }
 .desempenho-diagnostico-acao a { font-size: 13px; }
 .desempenho-evolucao-painel { box-shadow: none; border-color: #d6e3f2; }
@@ -814,7 +814,7 @@ html[data-theme='dark'] .desempenho-page .desempenho-diagnostico-acao a { backgr
 .desempenho-page .desempenho-historico-seta {
   justify-self: end;
   text-align: center;
-  color: #5d81a5;
+  color: #4a6280;
   font-weight: 800;
   font-size: 16px;
   line-height: 1;
@@ -880,3 +880,5 @@ html[data-theme='dark'] .desempenho-page .desempenho-historico-detalhe strong { 
   .desempenho-page .desempenho-historico-row--botao { padding-left: 3px; padding-right: 3px; }
 }
 
+
+html[data-theme='dark'] .desempenho-page .desempenho-diagnostico-ordem { color: #9fb8d4; }

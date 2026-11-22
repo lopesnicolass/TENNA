@@ -300,7 +300,7 @@ export default function Sidebar({
 
                 <div className="streak-modal-goal">
                   <div>
-                    <span className="streak-modal-goal-icon">🔥</span>
+                    <span className="streak-modal-goal-icon" aria-hidden="true">🔥</span>
                     <div>
                       <strong>{proximaMeta} dias</strong>
                       <span>meta de sequência</span>

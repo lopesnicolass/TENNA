@@ -55,7 +55,7 @@ html[data-theme='dark'] .home-page .home-stats-row .stat-icon {
 html[data-theme='dark'] .home-page .home-stats-row .stat-value { color: #f1f6fe; }
 html[data-theme='dark'] .home-page .home-stats-row .stat-label { color: #a8bcd3; }
 
-html[data-theme='dark'] .home-page .home-panel-heading h3,
+html[data-theme='dark'] .home-page .home-panel-heading h2,
 html[data-theme='dark'] .home-page .performance-subject { color: #e5eefb; }
 html[data-theme='dark'] .home-page .home-panel-heading p,
 html[data-theme='dark'] .home-page .performance-count { color: #98adc6; }
@@ -176,7 +176,7 @@ html[data-theme='dark'] .home-page .home-bottom-grid .home-next-meta,
 html[data-theme='dark'] .home-page .home-bottom-grid .home-extra-copy p,
 html[data-theme='dark'] .home-page .home-bottom-grid .home-result-questions,
 html[data-theme='dark'] .home-page .home-bottom-grid .home-result-date { color: #acbfd6; }
-html[data-theme='dark'] .home-page .home-bottom-grid .home-extra-copy h3 { color: #eff6ff; }
+html[data-theme='dark'] .home-page .home-bottom-grid .home-extra-copy h2 { color: #eff6ff; }
 html[data-theme='dark'] .home-page .home-bottom-grid .home-result-percentage { color: #99cbff; }
 html[data-theme='dark'] .home-page .home-bottom-grid .home-result-progress { background: #304760; }
 html[data-theme='dark'] .home-page .home-bottom-grid .home-next-pending {
@@ -351,3 +351,6 @@ html[data-theme='dark'] .home-page .home-bottom-grid .home-ranking-score-number 
 html[data-theme='dark'] .home-page .home-bottom-grid .home-ranking-place-1 .home-ranking-score-number strong { color: #f5d083; }
 html[data-theme='dark'] .home-page .home-bottom-grid .home-ranking-score-number small { color: #b2c7dc; }
 html[data-theme='dark'] .home-page .home-bottom-grid .home-ranking-place-1 .home-ranking-score-number small { color: #edc983; }
+
+html[data-theme='dark'] .home-page .home-stats-row .stat-visibility-btn { color: #a8bcd3; }
+html[data-theme='dark'] .home-page .home-stats-row .stat-visibility-btn:hover { color: #e8f3ff; }

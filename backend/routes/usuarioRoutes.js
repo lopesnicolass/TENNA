@@ -11,6 +11,11 @@ const {
     excluir
 } = require("../controllers/usuarioController");
 
+const {
+    buscar: buscarPreferenciaContagem,
+    atualizar: atualizarPreferenciaContagem
+} = require("../controllers/preferenciaContagemController");
+
 const autenticarToken =
     require("../middleware/authMiddleware");
 
@@ -111,6 +116,23 @@ router.post(
     autenticarToken,
     upload.single("foto"),
     editarFoto
+);
+
+
+// =====================================================
+// PREFERÊNCIA DA CONTAGEM DO VESTIBULINHO
+// =====================================================
+
+router.get(
+    "/preferencias/contagem",
+    autenticarToken,
+    buscarPreferenciaContagem
+);
+
+router.put(
+    "/preferencias/contagem",
+    autenticarToken,
+    atualizarPreferenciaContagem
 );
 
 

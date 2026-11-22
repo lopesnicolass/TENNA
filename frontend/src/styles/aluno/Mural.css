@@ -99,7 +99,7 @@
 .admin-page-header .mural-btn{width:100%;}.admin-next-card .mural-btn{margin-left:55px;}
 }
 
-.mural-btn.small{padding:8px 11px;font-size:11px;}
+.mural-btn.small{padding:8px 11px;font-size:12px;}
 
 @media(max-width:600px){
 .admin-modal-actions .mural-btn{flex:1;}
@@ -152,7 +152,7 @@
 .mural-hero-eyebrow{
   display:block;
   margin-bottom:7px;
-  color:rgba(255,255,255,.72);
+  color:#ffffff;
   font-family:"Inter", sans-serif;
   font-size:12px;
   font-weight:700;
@@ -169,7 +169,7 @@
 .mural-hero p{
   max-width:700px;
   margin:9px 0 0;
-  color:rgba(255,255,255,.82);
+  color:#ffffff;
   font-size:15px;
   line-height:1.5;
 }
@@ -469,7 +469,7 @@
 .mural-page .postit-tag {
   margin: 0;
   color: rgba(0,0,0,.48);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: .08em;
 }
 
@@ -480,7 +480,7 @@
   background: rgba(255,255,255,.42);
   color: rgba(0,0,0,.48);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   transition: opacity var(--duration-fast) var(--ease-standard);
 }
@@ -507,7 +507,7 @@
   padding-top: 16px;
   color: rgba(0,0,0,.38);
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   opacity: .78;
 }
@@ -721,7 +721,7 @@
   padding: 0;
   border-radius: 50%;
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 800;
   line-height: 1;
   border: 1px solid transparent;
@@ -819,7 +819,7 @@
   border: 1px solid #a8c8eb;
   box-shadow: 0 3px 12px rgba(14,68,133,.08);
 }
-.mural-page .mural-search input::placeholder { color: #6689b5; opacity: 1; }
+.mural-page .mural-search input::placeholder { color: #4c6f9c; opacity: 1; }
 .mural-page .mural-search:focus-within { border-color: #258be9; box-shadow: 0 0 0 3px rgba(37,139,233,.13); }
 .mural-page .materia-tab-count { flex-shrink: 0; opacity: 1; }
 .mural-page .materia-tab.active .materia-tab-count-todas { background: #2468c1; color: #fff; border-color: #83b8ff; }
@@ -1115,9 +1115,9 @@
 /* Seletor visual de post-its: etapa anterior à escrita */
 .mural-page .mural-create-flow { width:min(100%, 710px); max-height:calc(100dvh - 28px); overflow-y:auto; margin:auto; padding:12px; }
 .mural-page .mural-picker { position:relative; background:#fff; border-radius:25px; padding:32px; box-shadow:0 20px 70px rgba(5,36,83,.17); }
-.mural-page .mural-picker-eyebrow { display:block; color:#5680b9; font-size:10px; font-weight:800; letter-spacing:.13em; margin-bottom:7px; }
+.mural-page .mural-picker-eyebrow { display:block; color:#466fa8; font-size:12px; font-weight:800; letter-spacing:.13em; margin-bottom:7px; }
 .mural-page .mural-picker h2 { margin:0 0 5px; font-size:25px; color:#10499c; }
-.mural-page .mural-picker p { margin:0 0 30px; font-size:13px; color:#6a89b3; }
+.mural-page .mural-picker p { margin:0 0 30px; font-size:13px; color:#4f6f9b; }
 .mural-page .mural-picker-close { position:absolute; right:22px; top:20px; width:32px; height:32px; border:1px solid #d7e5f8; border-radius:10px; background:#f4f8ff; color:#124b9c; font-size:23px; cursor:pointer; }
 .mural-page .mural-picker-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px 18px; padding:8px 0 4px; }
 .mural-page .mural-picker-option { position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; aspect-ratio:1.12; border:0; border-radius:2px; cursor:pointer; color:#24425a; box-shadow:3px 8px 13px rgba(35,55,77,.15); transform:rotate(-1.5deg); transition:transform .18s,box-shadow .18s; }
@@ -1182,8 +1182,8 @@
 .mural-page .postit.mural-create-paper::before { width: 95px; height: 24px; top: -12px; }
 .mural-page .mural-create-text { font-size: 22px!important; line-height: 1.25!important; }
 .mural-page .mural-create-bottom { padding-top: 5px; gap: 5px; }
-.mural-page .mural-create-save { font-size: 11px; padding: 8px 9px; border-radius: 8px; }
-.mural-page .mural-create-count { font-size: 10px; }
+.mural-page .mural-create-save { font-size: 12px; padding: 8px 9px; border-radius: 8px; }
+.mural-page .mural-create-count { font-size: 12px; }
 @media(max-width:550px), (max-height:590px) {
  .mural-page .postit.mural-create-paper { height:218px; min-height:218px; max-height:218px; padding:30px 20px 16px; }
  .mural-page .mural-create-text { font-size:22px!important; }
@@ -1263,12 +1263,12 @@
 }
 .mural-page .mural-search-icon { display: grid; place-items: center; width: 18px; height: 18px; color: #1766bd; }
 .mural-page .mural-search input { font-size: 13px; font-weight: 500; line-height: normal; }
-.mural-page .mural-search input::placeholder { color: #7696bd; opacity: 1; }
+.mural-page .mural-search input::placeholder { color: #4b6f9c; opacity: 1; }
 .mural-page .mural-add-inline {
   box-sizing: border-box; height: 46px; min-height: 46px;
   display: inline-flex; align-items: center; justify-content: center;
-  gap: 9px; padding: 0 19px; border: 1px solid #2783df;
-  border-radius: 12px; background: #2687e2; color: #fff;
+  gap: 9px; padding: 0 19px; border: 1px solid #1763b8;
+  border-radius: 12px; background: #1763b8; color: #fff;
   font-size: 13px; font-weight: 700; line-height: 1;
   box-shadow: 0 4px 10px rgba(30, 108, 194, .13);
   transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease, transform .2s ease;
@@ -1292,6 +1292,7 @@
 /* Filtros compactos em telas muito pequenas: exibe apenas as bolinhas com contagem */
 .mural-page .materia-tab-label {
   display: inline;
+  font-family: var(--font-body);
 }
 
 @media (max-width: 520px) {
@@ -1460,7 +1461,7 @@
     height: 24px;
     min-width: 24px;
     flex: 0 0 24px;
-    font-size: 11px;
+    font-size: 12px;
     border-width: 1px;
     transform: none;
     outline: none;
@@ -1477,7 +1478,7 @@
 @container mural (max-width: 540px) {
   .mural-page .mural-hero { padding: 23px 20px; margin-bottom: 17px; border-radius: 18px; }
   .mural-page .mural-hero h1 { font-size: clamp(26px, 7vw, 31px); }
-  .mural-page .mural-hero-eyebrow { font-size: 10px; }
+  .mural-page .mural-hero-eyebrow { font-size: 12px; }
   .mural-page .mural-toolbar-top { grid-template-columns: minmax(0, 1fr); gap: 9px; }
   .mural-page .mural-add-inline { width: 100%; min-height: 44px; }
   .mural-page .mural-search { min-height: 44px; height: 44px; }
@@ -1611,14 +1612,14 @@ html[data-theme='dark'] .student-area .mural-page .mural-search:focus-within {
   }
   .mural-page .materia-tab {
     padding: 7px 8px;
-    font-size: 11px;
+    font-size: 12px;
   }
   .mural-page .materia-tab-count {
     flex: 0 0 21px;
     width: 21px;
     min-width: 21px;
     height: 21px;
-    font-size: 10px;
+    font-size: 12px;
   }
   .mural-page .mural-toolbar-top {
     order: 0;

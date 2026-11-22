@@ -400,7 +400,7 @@
 
 .materia-tab{
   background:var(--card); border:1.5px solid var(--line); border-radius:var(--radius-pill);
-  padding:9px 16px; font-family:"Inter"; font-size:13.5px; font-weight:600;
+  padding:9px 16px; font-family:"Inter", system-ui, sans-serif; font-size:13.5px; font-weight:600;
   color:var(--ink-soft); cursor:pointer; display:inline-flex; align-items:center; gap:7px;
   transition:transform .18s var(--bouncy), border-color .15s ease, background .15s ease, color .15s ease;
 }
@@ -1026,9 +1026,9 @@
 
 .tenna-auto-kicker{display:block;margin-bottom:8px;color:#BBDEFB;font-size:11px;font-weight:800;letter-spacing:.12em;}
 
-.tenna-auto-intro h2{margin:0 0 9px;font-family:"Inter",sans-serif;font-size:clamp(25px,3vw,34px);line-height:1.08;letter-spacing:-.025em;}
+.tenna-auto-intro :is(h1,h2){margin:0 0 9px;font-family:"Inter",sans-serif;font-size:clamp(25px,3vw,34px);line-height:1.08;letter-spacing:-.025em;}
 
-.tenna-auto-intro h2 span{color:var(--accent-light);}
+.tenna-auto-intro :is(h1,h2) span{color:var(--accent-light);}
 
 .tenna-auto-intro p{margin:0;max-width:730px;color:rgba(255,255,255,.86);font-size:14px;line-height:1.6;}
 
@@ -1045,7 +1045,7 @@
 }
 
 @media(max-width:520px){
-.tenna-auto-intro h2{font-size:24px;}
+.tenna-auto-intro :is(h1,h2){font-size:24px;}
 }
 
 /* ===== TENNA — CALENDÁRIO DO ALUNO ===== */
@@ -1437,7 +1437,7 @@
 .sidebar-streak-label{
   margin-top:2px;
   color:rgba(255,255,255,.72);
-  font-size:10.5px;
+  font-size:12px;
   font-weight:500;
   line-height:1.2;
 }
@@ -1494,7 +1494,7 @@
   text-overflow:ellipsis;
   white-space:nowrap;
   color:rgba(255,255,255,.62);
-  font-size:9.5px;
+  font-size:12px;
   font-weight:500;
 }
 
@@ -1794,7 +1794,11 @@ body.streak-modal-open{
   flex:0 0 42px;
   border-radius:var(--radius-md);
   background:#fff4cf;
-  font-size:22px;
+}
+
+.streak-modal-goal-icon{
+  font-size:24px;
+  line-height:1;
 }
 
 .streak-modal-goal strong,
@@ -2378,3 +2382,18 @@ html[data-theme='dark'] .student-area .student-sidebar .student-sidebar-brand {
 /* Esconde o aviso de XP após a janela visível, sem atualizar estado em useEffect. */
 .xp-toast.show { animation: tenna-xp-toast-out .4s ease 1.8s forwards; }
 @keyframes tenna-xp-toast-out { to { opacity: 0; transform: translateY(-12px) scale(.9); } }
+
+
+/* Ajuste fino: centraliza visualmente o emoji no quadrado da próxima conquista. */
+.streak-modal-goal-icon {
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 0;
+  transform: none;
+}
+.streak-modal-goal-icon {
+  position: relative;
+  top: 1px;
+  left: 1px;
+}

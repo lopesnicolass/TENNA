@@ -115,7 +115,7 @@ export function CategoriasSimulados({ indicadores, melhorDesempenho, piorDesempe
                   </div>
 
                   <div className="materia-simulado-card-content">
-                    <h3>{materia}</h3>
+                    <h2>{materia}</h2>
                   </div>
 
                 </button>

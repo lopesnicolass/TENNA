@@ -40,8 +40,8 @@
   --color-surface-muted: #edf5fc;
 
   --color-text: #183a5d;
-  --color-text-soft: rgba(13, 71, 161, 0.72);
-  --color-text-muted: rgba(13, 71, 161, 0.55);
+  --color-text-soft: #3d5f8f;
+  --color-text-muted: #4a6585;
   --color-text-on-primary: #ffffff;
 
   --color-border: rgba(13, 71, 161, 0.16);
