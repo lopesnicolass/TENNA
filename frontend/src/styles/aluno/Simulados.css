@@ -2621,3 +2621,28 @@ html[data-theme='dark'] .simulado-prova .simulado-prova-cabecalho .simulado-prov
   border-radius: 2px;
 }
 
+
+/* Identificação da disciplina permanece visível mesmo com as questões embaralhadas. */
+.simulado-prova-classificacao { display:flex; flex-wrap:wrap; align-items:center; gap:7px; margin:12px 0 13px; }
+.simulado-prova-classificacao span { display:inline-flex; align-items:center; min-height:23px; padding:4px 9px; border:1px solid #d4e5f6; border-radius:999px; background:#f1f7fd; color:#315d85; font-size:11px; line-height:1.2; font-weight:750; }
+.simulado-resultado-por-disciplina { max-width:1060px; margin:22px auto 26px; padding:20px; border:1px solid #d5e5f4; border-radius:16px; background:var(--card,#fff); }
+.simulado-resultado-por-disciplina .simulado-resultado-correcao-heading { margin-bottom:14px; }
+.simulado-resultado-disciplinas-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:10px; }
+.simulado-resultado-disciplina-card { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:8px 12px; padding:13px; border:1px solid #dce8f4; border-radius:11px; background:var(--paper,#f8fbff); }
+.simulado-resultado-disciplina-card > div:first-child { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.simulado-resultado-disciplina-card > div:first-child strong { color:var(--ink,#183a59); font-size:13px; }
+.simulado-resultado-disciplina-card > div:first-child span { color:var(--muted,#6d8298); font-size:11px; }
+.simulado-resultado-disciplina-percentual { color:#176bb7; font-size:16px; font-variant-numeric:tabular-nums; }
+.simulado-resultado-disciplina-barra { grid-column:1/-1; height:6px; overflow:hidden; border-radius:99px; background:#e2edf8; }
+.simulado-resultado-disciplina-barra span { display:block; height:100%; border-radius:inherit; background:#2786d6; }
+html[data-theme='dark'] .simulado-prova-classificacao span { background:#213f5e; border-color:#426584; color:#d1e6fb; }
+html[data-theme='dark'] .simulado-resultado-por-disciplina { background:#192f45; border-color:#3e5f7e; }
+html[data-theme='dark'] .simulado-resultado-disciplina-card { background:#203a54; border-color:#3e5f7e; }
+html[data-theme='dark'] .simulado-resultado-disciplina-card > div:first-child strong { color:#eaf3fd; }
+html[data-theme='dark'] .simulado-resultado-disciplina-card > div:first-child span { color:#aec3dc; }
+html[data-theme='dark'] .simulado-resultado-disciplina-percentual { color:#98caff; }
+html[data-theme='dark'] .simulado-resultado-disciplina-barra { background:#324e6b; }
+@media(max-width:620px) {
+  .simulado-resultado-por-disciplina { padding:15px; }
+  .simulado-resultado-disciplinas-grid { grid-template-columns:1fr; }
+}

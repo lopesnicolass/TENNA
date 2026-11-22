@@ -10,6 +10,7 @@ const {
     listarQuestoes,
     removerQuestao,
     editarOrdemQuestao,
+    iniciarTentativa,
     corrigirSimulado
 } = require("../controllers/simuladoController");
 
@@ -40,9 +41,15 @@ router.get(
     listarTodosSimulados
 );
 
-// Buscar (abrir simulado para responder) — qualquer usuário logado.
-// A rota NUNCA devolve o gabarito (campo "correta") aqui —
-// ver simuladoModel.listarQuestoesDoSimuladoParaResponder.
+// Inicia ou recupera uma tentativa. A seleção e a ordem são registradas no servidor.
+router.post(
+    "/:id/iniciar",
+    autenticarToken,
+    iniciarTentativa
+);
+
+// Buscar simulado — rota mantida para compatibilidade; a interface atual usa /iniciar.
+// Nunca devolve o gabarito.
 router.get(
     "/:id",
     autenticarToken,

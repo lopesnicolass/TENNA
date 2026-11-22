@@ -75,6 +75,7 @@ require("./config/ensureResultados");
 require("./config/ensureXP");
 require("./config/ensureRanking");
 require("./config/ensureContagemVestibulinho");
+const bancoQuestoesPronto = require("./config/ensureBancoQuestoes");
 require("./config/ensureTerrario");
 
 // =====================================================
@@ -93,8 +94,10 @@ app.use(cors({
     }
 }));
 
+// Não aceitamos corpos JSON comprimidos: a API recebe JSON simples do front-end.
+// Além de evitar descompressão desnecessária, limitamos o tamanho dos corpos.
 app.use(
-    express.json()
+    express.json({ limit: "1mb", inflate: false })
 );
 
 // =====================================================
@@ -228,13 +231,14 @@ app.get(
 const PORT =
     process.env.PORT || 3000;
 
-app.listen(
-    PORT,
-    () => {
-
-        console.log(
-            `Servidor rodando na porta ${PORT}`
-        );
-
-    }
-);
+// Só aceita requisições depois que os campos novos do banco estiverem prontos.
+bancoQuestoesPronto
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`Servidor rodando na porta ${PORT}`);
+        });
+    })
+    .catch(() => {
+        console.error('Servidor não iniciado porque a migração do banco de questões falhou.');
+        process.exitCode = 1;
+    });

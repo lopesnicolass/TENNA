@@ -90,6 +90,11 @@ export function TelaSimulado({
                     {respostas[questao.id] ? '✓ Respondida' : 'Não respondida'}
                   </span>
                 </div>
+                <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
+                  {questao.materia && <span>{questao.materia}</span>}
+                  {questao.topico && <span>{questao.topico}</span>}
+                  {questao.dificuldade && questao.dificuldade !== 'Não classificada' && <span>{questao.dificuldade}</span>}
+                </div>
                 <h2 id={`titulo-questao-${questao.id}`}>{questao.pergunta}</h2>
                 {questao.imagem && (
                   <figure className="simulado-prova-figura">

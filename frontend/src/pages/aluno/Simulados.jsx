@@ -8,7 +8,6 @@ import { ListaSimulados } from './simulados/ListaSimulados.jsx';
 import { filtrarPorMateria, integrarStatusComHistorico } from './simulados/dadosSimulados.js';
 import { request } from '../../services/api.js';
 import { lerPrazoSalvo, lerSegundosSalvos, pausarPrazo, retomarPrazo, calcularSegundosRestantes } from '../../utils/simuladoCronometro.js';
-import { prepararTentativaPersistida } from '../../utils/simuladoTentativa.js';
 
 // A navegação dos simulados é independente do estado de outras contas.
 // sessionStorage mantém a tela no mesmo navegador/aba ao navegar pela sidebar.
@@ -232,10 +231,17 @@ export default function Simulados() {
     return usuarioId ? `tentativaSimulado_${usuarioId}_${simuladoId}` : null;
   }
 
-  function prepararTentativa(simuladoId, nova = false) {
+  function salvarTentativaServidor(simuladoId, tentativaId) {
     const chave = obterChaveTentativa(simuladoId);
     if (!chave) throw new Error('Usuário não encontrado para registrar a tentativa.');
-    return prepararTentativaPersistida(localStorage, chave, nova);
+    if (!tentativaId || typeof tentativaId !== 'string') throw new Error('O servidor não retornou o identificador da tentativa.');
+    localStorage.setItem(chave, tentativaId);
+    return tentativaId;
+  }
+
+  function obterTentativaServidor(simuladoId) {
+    const chave = obterChaveTentativa(simuladoId);
+    return chave ? localStorage.getItem(chave) : null;
   }
 
   function obterChaveRespostas(
@@ -825,22 +831,20 @@ export default function Simulados() {
         false
       );
 
-      const dados =
-        await request(
-          `/simulados/${simulado.id}`,
-          {},
-          'Erro ao buscar o simulado.'
-        );
+      const tentativaAnterior = simulado.status === 'em-progresso'
+        ? obterTentativaServidor(simulado.id)
+        : null;
+      const dados = await request(
+        `/simulados/${simulado.id}/iniciar`,
+        {
+          method: 'POST',
+          body: JSON.stringify({ tentativaId: tentativaAnterior })
+        },
+        'Erro ao iniciar o simulado.'
+      );
 
-      const listaQuestoes =
-        Array.isArray(
-          dados.questoes
-        )
-          ? dados.questoes
-          : [];
-
-      // Reutiliza o ID se a prova estava em andamento; gera outro ao refazer.
-      prepararTentativa(simulado.id, simulado.status !== 'em-progresso');
+      const listaQuestoes = Array.isArray(dados.questoes) ? dados.questoes : [];
+      salvarTentativaServidor(simulado.id, dados.tentativaId);
 
       setSimuladoSelecionado(
         simulado
@@ -1166,6 +1170,8 @@ export default function Simulados() {
   // ==========================================
 
   async function corrigirNoServidor() {
+    const tentativaId = obterTentativaServidor(simuladoSelecionado.id);
+    if (!tentativaId) throw new Error('Sua tentativa não foi registrada. Abra o simulado novamente.');
     const dados =
       await request(
         `/simulados/${simuladoSelecionado.id}/corrigir`,
@@ -1174,7 +1180,7 @@ export default function Simulados() {
 
           body: JSON.stringify({
             respostas: respostasAtuais.current,
-            tentativaId: prepararTentativa(simuladoSelecionado.id)
+            tentativaId
           })
         },
         'Erro ao corrigir o simulado.'
@@ -1438,83 +1444,31 @@ export default function Simulados() {
   // REFAZER SIMULADO
   // ==========================================
 
-  function refazerSimulado() {
-    if (
-      !simuladoSelecionado
-    ) {
-      return;
-    }
-    prepararTentativa(simuladoSelecionado.id, true);
+  async function refazerSimulado() {
+    if (!simuladoSelecionado) return;
 
-    const chaveRespostas =
-      obterChaveRespostas(
-        simuladoSelecionado.id
-      );
+    const simuladoId = simuladoSelecionado.id;
+    const chaveTentativa = obterChaveTentativa(simuladoId);
+    const chaveRespostas = obterChaveRespostas(simuladoId);
+    if (chaveTentativa) localStorage.removeItem(chaveTentativa);
+    if (chaveRespostas) localStorage.removeItem(chaveRespostas);
 
-    if (
-      chaveRespostas
-    ) {
-      localStorage.removeItem(
-        chaveRespostas
-      );
-    }
+    setRespostas({});
+    respostasAtuais.current = {};
+    setResultadoFinal(null);
+    setMostrarErros(false);
+    setTempoGasto(null);
+    setTempoRestante(null);
+    finalizandoPorTempo.current = false;
 
-    setRespostas(
-      {}
-    );
-
-    setResultadoFinal(
-      null
-    );
-
-    setMostrarErros(
-      false
-    );
-
-    setTempoGasto(
-      null
-    );
-
-    const simuladoAtualizado =
-      {
-        ...simuladoSelecionado,
-
-        status:
-          'em-progresso'
-      };
-
-    setSimuladoSelecionado(
-      simuladoAtualizado
-    );
-
-    setSimulados(
-      (prev) =>
-        prev.map(
-          (simulado) =>
-            simulado.id ===
-            simuladoSelecionado.id
-              ? simuladoAtualizado
-              : simulado
-        )
-    );
-
-    salvarStatus(
-      simuladoSelecionado.id,
-      'em-progresso'
-    );
-
-    finalizandoPorTempo.current =
-      false;
-
-    iniciarCronometro(
-      simuladoSelecionado
-    );
-
-    window.scrollTo({
-      top: 0,
-      behavior:
-        'smooth'
-    });
+    const novoEstado = { ...simuladoSelecionado, status: 'nao-iniciado' };
+    setSimulados((atuais) => atuais.map((item) =>
+      Number(item.id) === Number(simuladoId) ? novoEstado : item
+    ));
+    salvarStatus(simuladoId, 'nao-iniciado');
+    limparCronometro(simuladoId);
+    limparInicioSimulado(simuladoId);
+    await abrirSimulado(novoEstado);
   }
 
   // ==========================================

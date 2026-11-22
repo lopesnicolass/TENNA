@@ -73,8 +73,22 @@ function criarSimulado(
     tempoLimite,
     quantidadeQuestoes,
     topicoId,
+    tipo,
     callback
 ) {
+
+    const tipoSimulado = tipo === 'geral' ? 'geral' : 'disciplina';
+    if (tipoSimulado === 'geral') {
+        return db.run(`
+            INSERT INTO simulados
+              (titulo, descricao, materia, dificuldade, topico_id,
+               tempo_limite, quantidade_questoes, ativo, tipo)
+            VALUES (?, ?, 'Simulados Gerais', ?, NULL, ?, ?, 1, 'geral')
+        `, [titulo, descricao, dificuldade, tempoLimite, quantidadeQuestoes], function (erro) {
+            if (erro) return callback(erro);
+            callback(null, this);
+        });
+    }
 
     validarTopicoDaMateria(
         topicoId,
@@ -112,10 +126,11 @@ function criarSimulado(
                         topico_id,
                         tempo_limite,
                         quantidade_questoes,
-                        ativo
+                        ativo,
+                        tipo
                     )
 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, 1)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, 1, 'disciplina')
                 `,
                 [
                     titulo,
@@ -171,6 +186,7 @@ function listarSimulados(
                 s.tempo_limite,
                 s.quantidade_questoes,
                 s.ativo,
+                s.tipo,
                 s.data_criacao
 
             FROM simulados s
@@ -219,6 +235,7 @@ function buscarSimuladoPorId(
                 s.tempo_limite,
                 s.quantidade_questoes,
                 s.ativo,
+                s.tipo,
                 s.data_criacao
 
             FROM simulados s
@@ -322,8 +339,27 @@ function atualizarSimulado(
     tempoLimite,
     quantidadeQuestoes,
     topicoId,
+    tipo,
     callback
 ) {
+
+    const tipoSimulado = tipo === 'geral' ? 'geral' : 'disciplina';
+    if (tipoSimulado === 'geral') {
+        return db.run(`
+            UPDATE simulados SET
+              titulo = ?, descricao = ?, materia = 'Simulados Gerais',
+              dificuldade = ?, topico_id = NULL, tempo_limite = ?,
+              quantidade_questoes = ?, tipo = 'geral'
+            WHERE id = ? AND ativo = 1
+        `, [titulo, descricao, dificuldade, tempoLimite, quantidadeQuestoes, id], function (erro) {
+            if (erro) return callback(erro);
+            if (this.changes === 0) return callback(null, this, 'NOT_FOUND');
+            removerQuestoesForaDaQuantidade(id, quantidadeQuestoes, (erroLimpeza) => {
+                if (erroLimpeza) return callback(erroLimpeza);
+                callback(null, this);
+            });
+        });
+    }
 
     validarTopicoDaMateria(
         topicoId,
@@ -361,7 +397,8 @@ function atualizarSimulado(
                         dificuldade = ?,
                         topico_id = ?,
                         tempo_limite = ?,
-                        quantidade_questoes = ?
+                        quantidade_questoes = ?,
+                        tipo = 'disciplina' 
 
                     WHERE id = ?
                       AND ativo = 1
@@ -494,19 +531,25 @@ function buscarQuestao(
     db.get(
         `
             SELECT
-                id,
-                pergunta,
-                alternativa_a,
-                alternativa_b,
-                alternativa_c,
-                alternativa_d,
-                alternativa_e,
-                correta,
-                materia
+                q.id,
+                q.pergunta,
+                q.alternativa_a,
+                q.alternativa_b,
+                q.alternativa_c,
+                q.alternativa_d,
+                q.alternativa_e,
+                q.correta,
+                q.materia,
+                q.materia_id,
+                q.topico_id,
+                q.dificuldade,
+                q.habilidade,
+                t.materia_id AS topico_materia_id
 
-            FROM questoes
+            FROM questoes q
+            LEFT JOIN topicos t ON t.id = q.topico_id
 
-            WHERE id = ?
+            WHERE q.id = ?
         `,
         [
             questaoId
@@ -580,14 +623,17 @@ function adicionarQuestao(
     db.get(
         `
             SELECT
-                id,
-                materia,
-                quantidade_questoes
+                s.id,
+                s.materia,
+                s.quantidade_questoes,
+                s.tipo,
+                t.materia_id AS materia_id
 
-            FROM simulados
+            FROM simulados s
+            LEFT JOIN topicos t ON t.id = s.topico_id
 
-            WHERE id = ?
-              AND ativo = 1
+            WHERE s.id = ?
+              AND s.ativo = 1
         `,
         [
             simuladoId
@@ -637,14 +683,16 @@ function adicionarQuestao(
                         );
                     }
 
+                    if (!questao.materia_id || !questao.topico_id || Number(questao.materia_id) !== Number(questao.topico_materia_id)) {
+                        return callback(criarErro(
+                            "Classifique a questão por disciplina e conteúdo antes de adicioná-la ao simulado.",
+                            "QUESTAO_CLASSIFICACAO_INVALIDA"
+                        ));
+                    }
 
                     if (
-                        String(
-                            questao.materia
-                        ).trim() !==
-                        String(
-                            simulado.materia
-                        ).trim()
+                        simulado.tipo !== 'geral' &&
+                        Number(questao.materia_id) !== Number(simulado.materia_id)
                     ) {
 
                         return callback(
@@ -878,6 +926,11 @@ function listarQuestoesDoSimulado(
                 q.alternativa_e,
                 q.correta,
                 q.materia,
+                q.materia_id,
+                q.topico_id,
+                t.nome AS topico,
+                q.dificuldade,
+                q.habilidade,
                 q.imagem,
                 sq.ordem
 
@@ -888,6 +941,8 @@ function listarQuestoesDoSimulado(
 
             INNER JOIN simulados s
                 ON s.id = sq.simulado_id
+            LEFT JOIN topicos t
+                ON t.id = q.topico_id
 
             WHERE sq.simulado_id = ?
               AND s.ativo = 1
@@ -927,6 +982,11 @@ function listarQuestoesDoSimuladoParaResponder(
                 q.alternativa_d,
                 q.alternativa_e,
                 q.materia,
+                q.materia_id,
+                q.topico_id,
+                t.nome AS topico,
+                q.dificuldade,
+                q.habilidade,
                 q.imagem,
                 sq.ordem
 
@@ -937,6 +997,8 @@ function listarQuestoesDoSimuladoParaResponder(
 
             INNER JOIN simulados s
                 ON s.id = sq.simulado_id
+            LEFT JOIN topicos t
+                ON t.id = q.topico_id
 
             WHERE sq.simulado_id = ?
               AND s.ativo = 1
@@ -994,6 +1056,85 @@ function buscarGabaritoDoSimulado(
     );
 }
 
+
+// =====================================================
+// TENTATIVAS DE SIMULADO — SELEÇÃO E ORDEM CONTROLADAS NO SERVIDOR
+// =====================================================
+
+function buscarTentativa(tentativaId, usuarioId, simuladoId, callback) {
+    db.get(`
+        SELECT id, usuario_id, simulado_id, questoes_json, status
+        FROM simulado_tentativas
+        WHERE id = ? AND usuario_id = ? AND simulado_id = ?
+    `, [tentativaId, usuarioId, simuladoId], callback);
+}
+
+function buscarTentativaEmAndamento(usuarioId, simuladoId, callback) {
+    db.get(`
+        SELECT id, usuario_id, simulado_id, questoes_json, status
+        FROM simulado_tentativas
+        WHERE usuario_id = ? AND simulado_id = ? AND status = 'em_andamento'
+        ORDER BY criada_em DESC, id DESC
+        LIMIT 1
+    `, [usuarioId, simuladoId], callback);
+}
+
+function criarTentativa(tentativaId, usuarioId, simuladoId, idsOrdenados, callback) {
+    db.run(`
+        INSERT INTO simulado_tentativas (id, usuario_id, simulado_id, questoes_json)
+        VALUES (?, ?, ?, ?)
+    `, [tentativaId, usuarioId, simuladoId, JSON.stringify(idsOrdenados)], function (erro) {
+        if (erro) return callback(erro);
+        callback(null, this);
+    });
+}
+
+function listarQuestoesPorIdsParaTentativa(ids, callback) {
+    const idsValidos = Array.isArray(ids) ? ids.map(Number).filter((id) => Number.isInteger(id) && id > 0) : [];
+    if (!idsValidos.length) return callback(null, []);
+    const placeholders = idsValidos.map(() => '?').join(',');
+    db.all(`
+        SELECT q.id, q.pergunta, q.alternativa_a, q.alternativa_b,
+               q.alternativa_c, q.alternativa_d, q.alternativa_e,
+               q.materia, q.materia_id, q.topico_id, t.nome AS topico,
+               q.dificuldade, q.habilidade, q.imagem
+        FROM questoes q
+        LEFT JOIN topicos t ON t.id = q.topico_id
+        WHERE q.id IN (${placeholders})
+    `, idsValidos, (erro, questoes) => {
+        if (erro) return callback(erro);
+        const mapa = new Map((questoes || []).map((questao) => [Number(questao.id), questao]));
+        callback(null, idsValidos.map((id) => mapa.get(id)).filter(Boolean));
+    });
+}
+
+function buscarGabaritoPorIds(ids, callback) {
+    const idsValidos = Array.isArray(ids) ? ids.map(Number).filter((id) => Number.isInteger(id) && id > 0) : [];
+    if (!idsValidos.length) return callback(null, []);
+    const placeholders = idsValidos.map(() => '?').join(',');
+    db.all(`
+        SELECT q.id, q.correta, q.materia, q.materia_id, q.topico_id,
+               t.nome AS topico, q.dificuldade, q.habilidade
+        FROM questoes q
+        LEFT JOIN topicos t ON t.id = q.topico_id
+        WHERE q.id IN (${placeholders})
+    `, idsValidos, (erro, questoes) => {
+        if (erro) return callback(erro);
+        const mapa = new Map((questoes || []).map((questao) => [Number(questao.id), questao]));
+        callback(null, idsValidos.map((id) => mapa.get(id)).filter(Boolean));
+    });
+}
+
+function concluirTentativa(tentativaId, usuarioId, callback) {
+    db.run(`
+        UPDATE simulado_tentativas
+        SET status = 'concluida', concluida_em = CURRENT_TIMESTAMP
+        WHERE id = ? AND usuario_id = ? AND status = 'em_andamento'
+    `, [tentativaId, usuarioId], function (erro) {
+        if (erro) return callback(erro);
+        callback(null, this);
+    });
+}
 
 // =====================================================
 // REMOVER QUESTÃO
@@ -1245,6 +1386,12 @@ module.exports = {
     listarQuestoesDoSimuladoParaResponder,
 
     buscarGabaritoDoSimulado,
+    buscarTentativa,
+    buscarTentativaEmAndamento,
+    criarTentativa,
+    listarQuestoesPorIdsParaTentativa,
+    buscarGabaritoPorIds,
+    concluirTentativa,
 
     removerQuestao,
 

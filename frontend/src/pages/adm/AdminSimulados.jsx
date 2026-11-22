@@ -21,6 +21,7 @@ const MIN_QUESTOES = 10;
 const emptySimulado = {
   nome: '',
   limiteTempo: '',
+  tipo: 'disciplina',
   materiaId: '',
   topicoId: ''
 };
@@ -33,12 +34,23 @@ const emptyQuestao = {
   d: '',
   e: '',
   correta: 'A',
-  imagem: null
+  imagem: null,
+  materiaId: '',
+  topicoId: '',
+  dificuldade: 'Média',
+  habilidade: ''
 };
 
 export default function AdminSimulados() {
   const [simulados, setSimulados] = useState([]);
   const [materiasConteudos, setMateriasConteudos] = useState([]);
+  const [bancoQuestoes, setBancoQuestoes] = useState([]);
+  const [mostrarBancoQuestoes, setMostrarBancoQuestoes] = useState(false);
+  const [filtroBancoMateria, setFiltroBancoMateria] = useState('');
+  const [filtroBancoDificuldade, setFiltroBancoDificuldade] = useState('');
+  const [filtroBancoTopico, setFiltroBancoTopico] = useState('');
+  const [buscaBanco, setBuscaBanco] = useState('');
+  const [mostrarGerenciadorBanco, setMostrarGerenciadorBanco] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [form, setForm] = useState(emptySimulado);
@@ -59,6 +71,8 @@ export default function AdminSimulados() {
   const [questaoForm, setQuestaoForm] = useState(emptyQuestao);
 
   const [questaoEditando, setQuestaoEditando] = useState(null);
+  const [questaoBancoMode, setQuestaoBancoMode] = useState(false);
+  const [questaoBancoId, setQuestaoBancoId] = useState(null);
   const [enviandoImagem, setEnviandoImagem] = useState(false);
   const [erroImagem, setErroImagem] = useState('');
 
@@ -74,6 +88,7 @@ export default function AdminSimulados() {
   useEffect(() => {
     carregarSimulados();
     carregarMateriasConteudos();
+    carregarBancoQuestoes();
   }, []);
 
   // =====================================================
@@ -142,6 +157,18 @@ export default function AdminSimulados() {
     }
   }
 
+  async function carregarBancoQuestoes() {
+    try {
+      const resposta = await fetch(`${API_URL}/questoes`, { headers: headerAuth() });
+      if (!resposta.ok) throw new Error('Não foi possível carregar o banco de questões.');
+      const dados = await resposta.json();
+      setBancoQuestoes(Array.isArray(dados.questoes) ? dados.questoes : []);
+    } catch (error) {
+      console.error(error);
+      setBancoQuestoes([]);
+    }
+  }
+
   // =====================================================
   // ABRIR MODAL PARA CRIAR
   // =====================================================
@@ -152,6 +179,10 @@ export default function AdminSimulados() {
     setForm({
       ...emptySimulado
     });
+    setMostrarBancoQuestoes(false);
+    setFiltroBancoMateria('');
+    setFiltroBancoDificuldade('');
+    setFiltroBancoTopico('');
 
     setQuestoes([]);
     setQuestoesOriginais([]);
@@ -219,6 +250,7 @@ export default function AdminSimulados() {
         nome: dadosSimulado.titulo || '',
         limiteTempo:
           dadosSimulado.tempo_limite || '',
+        tipo: dadosSimulado.tipo === 'geral' ? 'geral' : 'disciplina',
         materiaId:
           materiaEncontrada
             ? String(materiaEncontrada.id)
@@ -246,11 +278,17 @@ export default function AdminSimulados() {
             questao.alternativa_e || '',
           correta:
             questao.correta || 'A',
-          imagem: questao.imagem || null
+          imagem: questao.imagem || null,
+          materiaId: questao.materia_id != null ? String(questao.materia_id) : '',
+          topicoId: questao.topico_id != null ? String(questao.topico_id) : '',
+          dificuldade: questao.dificuldade || 'Não classificada',
+          habilidade: questao.habilidade || '',
+          materia: questao.materia || ''
         }));
 
       setQuestoes(questoesFormatadas);
       setQuestoesOriginais(questoesFormatadas);
+      setMostrarBancoQuestoes(false);
 
       setQuestaoForm({
         ...emptyQuestao
@@ -297,10 +335,14 @@ export default function AdminSimulados() {
 
   function abrirCriarQuestao() {
     setErroImagem('');
+    setQuestaoBancoMode(false);
+    setQuestaoBancoId(null);
     setQuestaoEditando(null);
 
     setQuestaoForm({
-      ...emptyQuestao
+      ...emptyQuestao,
+      materiaId: form.tipo === 'disciplina' ? form.materiaId : '',
+      topicoId: form.tipo === 'disciplina' ? form.topicoId : ''
     });
 
     setShowQuestaoModal(true);
@@ -312,6 +354,8 @@ export default function AdminSimulados() {
 
   function abrirEditarQuestao(index) {
     setErroImagem('');
+    setQuestaoBancoMode(false);
+    setQuestaoBancoId(null);
     const questao = questoes[index];
 
     setQuestaoEditando(index);
@@ -320,6 +364,37 @@ export default function AdminSimulados() {
       ...questao
     });
 
+    setShowQuestaoModal(true);
+  }
+
+  function abrirNovaQuestaoBanco() {
+    setErroImagem('');
+    setQuestaoBancoMode(true);
+    setQuestaoBancoId(null);
+    setQuestaoEditando(null);
+    setQuestaoForm({ ...emptyQuestao });
+    setShowQuestaoModal(true);
+  }
+
+  function abrirEditarQuestaoBanco(questao) {
+    setErroImagem('');
+    setQuestaoBancoMode(true);
+    setQuestaoBancoId(Number(questao.id));
+    setQuestaoEditando(null);
+    setQuestaoForm({
+      enunciado: questao.pergunta || '',
+      a: questao.alternativa_a || '',
+      b: questao.alternativa_b || '',
+      c: questao.alternativa_c || '',
+      d: questao.alternativa_d || '',
+      e: questao.alternativa_e || '',
+      correta: questao.correta || 'A',
+      imagem: questao.imagem || null,
+      materiaId: questao.materia_id != null ? String(questao.materia_id) : '',
+      topicoId: questao.topico_id != null ? String(questao.topico_id) : '',
+      dificuldade: questao.dificuldade || 'Não classificada',
+      habilidade: questao.habilidade || ''
+    });
     setShowQuestaoModal(true);
   }
 
@@ -369,13 +444,44 @@ export default function AdminSimulados() {
     }
   }
 
+  function adicionarQuestaoDoBanco(questao) {
+    if (questoes.some((item) => Number(item.id) === Number(questao.id))) {
+      alert('Esta questão já está neste simulado.');
+      return;
+    }
+    if (form.tipo === 'disciplina' && Number(questao.materia_id) !== Number(form.materiaId)) {
+      alert('Este simulado aceita somente questões da matéria selecionada.');
+      return;
+    }
+    if (!questao.materia_id || !questao.topico_id) {
+      alert('Esta questão ainda não está classificada por disciplina e conteúdo. Edite-a no banco antes de adicioná-la.');
+      return;
+    }
+    setQuestoes((atuais) => [...atuais, {
+      id: questao.id,
+      enunciado: questao.pergunta || '',
+      a: questao.alternativa_a || '',
+      b: questao.alternativa_b || '',
+      c: questao.alternativa_c || '',
+      d: questao.alternativa_d || '',
+      e: questao.alternativa_e || '',
+      correta: questao.correta || 'A',
+      imagem: questao.imagem || null,
+      materiaId: String(questao.materia_id),
+      topicoId: questao.topico_id != null ? String(questao.topico_id) : '',
+      dificuldade: questao.dificuldade || 'Não classificada',
+      habilidade: questao.habilidade || '',
+      materia: questao.materia_nome || questao.materia || ''
+    }]);
+  }
+
   // =====================================================
   // SALVAR QUESTÃO NO FORMULÁRIO
   // =====================================================
 
-  function handleAddQuestao(e) {
+  async function handleAddQuestao(e) {
     e.preventDefault();
-    if (enviandoImagem) return;
+    if (enviandoImagem || salvando) return;
 
     if (
       !questaoForm.enunciado.trim() ||
@@ -384,9 +490,59 @@ export default function AdminSimulados() {
       !questaoForm.c.trim() ||
       !questaoForm.d.trim() ||
       !questaoForm.e.trim() ||
-      !questaoForm.correta
+      !questaoForm.correta ||
+      !questaoForm.materiaId ||
+      !questaoForm.topicoId
     ) {
-      alert('Preencha todos os campos da questão.');
+      alert('Preencha o enunciado, as alternativas, o gabarito e a classificação da questão.');
+      return;
+    }
+
+    if (!questaoBancoMode && form.tipo === 'disciplina' && Number(questaoForm.materiaId) !== Number(form.materiaId)) {
+      alert('A questão precisa pertencer à matéria selecionada para este simulado.');
+      return;
+    }
+
+    if (questaoBancoMode) {
+      try {
+        setSalvando(true);
+        const resposta = await fetch(
+          questaoBancoId ? `${API_URL}/questoes/${questaoBancoId}` : `${API_URL}/questoes`,
+          {
+            method: questaoBancoId ? 'PUT' : 'POST',
+            headers: headerAuth(true),
+            body: JSON.stringify({
+              pergunta: questaoForm.enunciado.trim(),
+              alternativaA: questaoForm.a.trim(),
+              alternativaB: questaoForm.b.trim(),
+              alternativaC: questaoForm.c.trim(),
+              alternativaD: questaoForm.d.trim(),
+              alternativaE: questaoForm.e.trim(),
+              correta: questaoForm.correta,
+              materiaId: Number(questaoForm.materiaId),
+              topicoId: Number(questaoForm.topicoId),
+              dificuldade: questaoForm.dificuldade,
+              habilidade: questaoForm.habilidade || '',
+              imagem: questaoForm.imagem || null
+            })
+          }
+        );
+        const dados = await resposta.json();
+        if (!resposta.ok) throw new Error(dados.mensagem || 'Não foi possível salvar a questão no banco.');
+        await carregarBancoQuestoes();
+        setMostrarGerenciadorBanco(true);
+        setShowQuestaoModal(false);
+        setQuestaoBancoMode(false);
+        setQuestaoBancoId(null);
+        setQuestaoEditando(null);
+        setQuestaoForm({ ...emptyQuestao });
+        alert(questaoBancoId ? 'Questão atualizada no banco.' : 'Questão cadastrada no banco.');
+      } catch (error) {
+        console.error(error);
+        alert(error.message || 'Não foi possível salvar a questão.');
+      } finally {
+        setSalvando(false);
+      }
       return;
     }
 
@@ -394,26 +550,15 @@ export default function AdminSimulados() {
       setQuestoes((prev) =>
         prev.map((questao, index) =>
           index === questaoEditando
-            ? {
-                ...questaoForm,
-                id: questao.id
-              }
+            ? { ...questaoForm, id: questao.id }
             : questao
         )
       );
     } else {
-      setQuestoes((prev) => [
-        ...prev,
-        {
-          ...questaoForm
-        }
-      ]);
+      setQuestoes((prev) => [...prev, { ...questaoForm }]);
     }
 
-    setQuestaoForm({
-      ...emptyQuestao
-    });
-
+    setQuestaoForm({ ...emptyQuestao });
     setQuestaoEditando(null);
     setShowQuestaoModal(false);
   }
@@ -535,34 +680,29 @@ export default function AdminSimulados() {
       return false;
     }
 
-    if (!form.materiaId) {
-      alert('Selecione uma matéria.');
-      return false;
+    if (form.tipo === 'disciplina') {
+      if (!form.materiaId) {
+        alert('Selecione uma matéria.');
+        return false;
+      }
+      if (!form.topicoId) {
+        alert('Selecione um conteúdo.');
+        return false;
+      }
+      const materiaSelecionada = materiasConteudos.find((materia) => String(materia.id) === String(form.materiaId));
+      const topicoSelecionado = materiaSelecionada?.topicos?.find((topico) => String(topico.id) === String(form.topicoId));
+      if (!materiaSelecionada || !topicoSelecionado) {
+        alert('Selecione um conteúdo existente na matéria escolhida.');
+        return false;
+      }
     }
 
-    if (!form.topicoId) {
-      alert('Selecione um conteúdo.');
+    if (questoes.some((questao) => !questao.materiaId || !questao.topicoId)) {
+      alert('Classifique cada questão do banco com matéria e conteúdo antes de salvar o simulado.');
       return false;
     }
-
-    const materiaSelecionada =
-      materiasConteudos.find(
-        (materia) =>
-          String(materia.id) ===
-          String(form.materiaId)
-      );
-
-    const topicoSelecionado =
-      materiaSelecionada?.topicos?.find(
-        (topico) =>
-          String(topico.id) ===
-          String(form.topicoId)
-      );
-
-    if (!materiaSelecionada || !topicoSelecionado) {
-      alert(
-        'Selecione um conteúdo existente na matéria escolhida.'
-      );
+    if (form.tipo === 'disciplina' && questoes.some((questao) => Number(questao.materiaId) !== Number(form.materiaId))) {
+      alert('Os simulados por disciplina só podem conter questões da matéria selecionada.');
       return false;
     }
 
@@ -581,12 +721,9 @@ export default function AdminSimulados() {
   // =====================================================
 
   async function criarSimulado() {
-    const materiaSelecionada =
-      materiasConteudos.find(
-        (materia) =>
-          String(materia.id) ===
-          String(form.materiaId)
-      );
+    const materiaSelecionada = form.tipo === 'disciplina'
+      ? materiasConteudos.find((materia) => String(materia.id) === String(form.materiaId))
+      : null;
 
     const respostaSimulado = await fetch(
       `${API_URL}/simulados`,
@@ -598,10 +735,9 @@ export default function AdminSimulados() {
           descricao: '',
           tempoLimite: Number(form.limiteTempo),
           quantidadeQuestoes: questoes.length,
-          materia:
-            materiaSelecionada.nome,
-          topicoId:
-            Number(form.topicoId),
+          tipo: form.tipo,
+          materia: materiaSelecionada?.nome || 'Simulados Gerais',
+          topicoId: form.tipo === 'disciplina' ? Number(form.topicoId) : null,
           dificuldade: simuladoEditando ? (simulados.find(item => item.id === simuladoEditando)?.dificuldade || 'Média') : 'Média',
           ativo: 1
         })
@@ -633,92 +769,40 @@ export default function AdminSimulados() {
       );
     }
 
-    // Criar questões
+    // Questões novas são cadastradas; questões já existentes no banco apenas recebem o vínculo.
     for (let i = 0; i < questoes.length; i++) {
       const questao = questoes[i];
-
-      const respostaQuestao = await fetch(
-        `${API_URL}/questoes`,
-        {
-          method: 'POST',
-          headers: headerAuth(true),
-          body: JSON.stringify({
-            pergunta:
-              questao.enunciado.trim(),
-
-            alternativaA:
-              questao.a.trim(),
-
-            alternativaB:
-              questao.b.trim(),
-
-            alternativaC:
-              questao.c.trim(),
-
-            alternativaD:
-              questao.d.trim(),
-
-            alternativaE:
-              questao.e.trim(),
-
-            correta:
-              questao.correta,
-
-            materia:
-              materiaSelecionada.nome,
-            imagem: questao.imagem || null
-          })
-        }
-      );
-
-      const dadosQuestao =
-        await respostaQuestao.json();
-
-      if (!respostaQuestao.ok) {
-        throw new Error(
-          dadosQuestao.mensagem ||
-          dadosQuestao.erro ||
-          `Erro ao cadastrar a questão ${i + 1}.`
-        );
-      }
-
-      const questaoCriada =
-        dadosQuestao.questao ||
-        dadosQuestao;
-
-      const questaoId =
-        questaoCriada.id ||
-        dadosQuestao.id;
+      let questaoId = questao.id;
 
       if (!questaoId) {
-        throw new Error(
-          `O backend não retornou o ID da questão ${i + 1}.`
-        );
-      }
-
-      // Vincular questão
-      const respostaVinculo = await fetch(
-        `${API_URL}/simulados/${simuladoId}/questoes`,
-        {
+        const respostaQuestao = await fetch(`${API_URL}/questoes`, {
           method: 'POST',
           headers: headerAuth(true),
           body: JSON.stringify({
-            questaoId: questaoId,
-            ordem: i + 1
+            pergunta: questao.enunciado.trim(),
+            alternativaA: questao.a.trim(), alternativaB: questao.b.trim(),
+            alternativaC: questao.c.trim(), alternativaD: questao.d.trim(),
+            alternativaE: questao.e.trim(), correta: questao.correta,
+            materiaId: Number(questao.materiaId),
+            topicoId: Number(questao.topicoId),
+            dificuldade: questao.dificuldade,
+            habilidade: questao.habilidade || '',
+            imagem: questao.imagem || null
           })
-        }
-      );
-
-      const dadosVinculo =
-        await respostaVinculo.json();
-
-      if (!respostaVinculo.ok) {
-        throw new Error(
-          dadosVinculo.mensagem ||
-          dadosVinculo.erro ||
-          `Erro ao vincular a questão ${i + 1}.`
-        );
+        });
+        const dadosQuestao = await respostaQuestao.json();
+        if (!respostaQuestao.ok) throw new Error(dadosQuestao.mensagem || `Erro ao cadastrar a questão ${i + 1}.`);
+        questaoId = dadosQuestao.questao?.id || dadosQuestao.id;
+        if (!questaoId) throw new Error(`O backend não retornou o ID da questão ${i + 1}.`);
       }
+
+      const respostaVinculo = await fetch(`${API_URL}/simulados/${simuladoId}/questoes`, {
+        method: 'POST',
+        headers: headerAuth(true),
+        body: JSON.stringify({ questaoId, ordem: i + 1 })
+      });
+      const dadosVinculo = await respostaVinculo.json();
+      if (!respostaVinculo.ok) throw new Error(dadosVinculo.mensagem || `Erro ao vincular a questão ${i + 1}.`);
     }
   }
 
@@ -772,12 +856,9 @@ export default function AdminSimulados() {
     }
 
     // Atualizar informações do simulado
-    const materiaSelecionada =
-      materiasConteudos.find(
-        (materia) =>
-          String(materia.id) ===
-          String(form.materiaId)
-      );
+    const materiaSelecionada = form.tipo === 'disciplina'
+      ? materiasConteudos.find((materia) => String(materia.id) === String(form.materiaId))
+      : null;
 
     const respostaSimulado = await fetch(
       `${API_URL}/simulados/${simuladoId}`,
@@ -789,10 +870,9 @@ export default function AdminSimulados() {
           descricao: '',
           tempoLimite: Number(form.limiteTempo),
           quantidadeQuestoes: questoes.length,
-          materia:
-            materiaSelecionada.nome,
-          topicoId:
-            Number(form.topicoId),
+          tipo: form.tipo,
+          materia: materiaSelecionada?.nome || 'Simulados Gerais',
+          topicoId: form.tipo === 'disciplina' ? Number(form.topicoId) : null,
           dificuldade: simulados.find(item => String(item.id) === String(simuladoId))?.dificuldade || 'Média',
           ativo: 1
         })
@@ -844,8 +924,10 @@ export default function AdminSimulados() {
                 correta:
                   questao.correta,
 
-                materia:
-                  materiaSelecionada.nome,
+                materiaId: Number(questao.materiaId),
+                topicoId: Number(questao.topicoId),
+                dificuldade: questao.dificuldade,
+                habilidade: questao.habilidade || '',
                 imagem: questao.imagem || null
               })
             }
@@ -916,8 +998,10 @@ export default function AdminSimulados() {
                 correta:
                   questao.correta,
 
-                materia:
-                  materiaSelecionada.nome,
+                materiaId: Number(questao.materiaId),
+                topicoId: Number(questao.topicoId),
+                dificuldade: questao.dificuldade,
+                habilidade: questao.habilidade || '',
                 imagem: questao.imagem || null
               })
             }
@@ -1036,14 +1120,29 @@ export default function AdminSimulados() {
 
   const gruposSimulados = Object.entries(
     simulados.reduce((materias, simulado) => {
-      const materia = simulado.materia || 'Sem matéria';
-      const conteudo = simulado.topico || 'Sem conteúdo';
+      const materia = simulado.tipo === 'geral' ? 'Simulados Gerais' : (simulado.materia || 'Sem matéria');
+      const conteudo = simulado.tipo === 'geral' ? 'Provas com disciplinas misturadas' : (simulado.topico || 'Sem conteúdo');
       if (!materias[materia]) materias[materia] = {};
       if (!materias[materia][conteudo]) materias[materia][conteudo] = [];
       materias[materia][conteudo].push(simulado);
       return materias;
     }, {})
   ).sort(([a], [b]) => a.localeCompare(b, 'pt-BR'));
+
+  const topicosBanco = materiasConteudos.flatMap((materia) =>
+    (materia.topicos || []).map((topico) => ({ ...topico, materiaNome: materia.nome }))
+  );
+  const textoBuscaBanco = buscaBanco.trim().toLocaleLowerCase('pt-BR');
+  const questoesBancoFiltradas = bancoQuestoes.filter((questao) => {
+    if (filtroBancoMateria === 'sem-classificacao' && questao.materia_id != null) return false;
+    if (filtroBancoMateria && filtroBancoMateria !== 'sem-classificacao' && String(questao.materia_id) !== filtroBancoMateria) return false;
+    if (filtroBancoTopico === 'sem-classificacao' && questao.topico_id != null) return false;
+    if (filtroBancoTopico && filtroBancoTopico !== 'sem-classificacao' && String(questao.topico_id) !== filtroBancoTopico) return false;
+    if (filtroBancoDificuldade && (questao.dificuldade || 'Não classificada') !== filtroBancoDificuldade) return false;
+    if (!textoBuscaBanco) return true;
+    return [questao.pergunta, questao.materia_nome, questao.materia, questao.topico, questao.habilidade]
+      .some((valor) => String(valor || '').toLocaleLowerCase('pt-BR').includes(textoBuscaBanco));
+  });
 
   // =====================================================
   // RENDER
@@ -1052,9 +1151,70 @@ export default function AdminSimulados() {
   return (
     <div className="admin-simulados-page">
       <div className="page-header admin-simulados-heading">
-        <div><h1>Simulados</h1><p>Gerencie seus simulados organizados por matéria e conteúdo.</p></div>
-        <button className="admin-simulados-new" type="button" onClick={openCreate}>+ Novo simulado</button>
+        <div><h1>Simulados</h1><p>Gerencie simulados e mantenha um banco centralizado de questões por disciplina, conteúdo e dificuldade.</p></div>
+        <div className="admin-simulados-heading-actions">
+          <button className="admin-banco-toggle" type="button" onClick={() => setMostrarGerenciadorBanco((aberto) => !aberto)} aria-expanded={mostrarGerenciadorBanco}>
+            {mostrarGerenciadorBanco ? 'Fechar banco' : `Banco de questões (${bancoQuestoes.length})`}
+          </button>
+          <button className="admin-simulados-new" type="button" onClick={openCreate}>+ Novo simulado</button>
+        </div>
       </div>
+
+      {mostrarGerenciadorBanco && (
+        <section className="admin-banco-questoes" aria-labelledby="admin-banco-titulo">
+          <div className="admin-banco-questoes-heading">
+            <div>
+              <h2 id="admin-banco-titulo">Banco de questões</h2>
+              <p>Cadastre, classifique e reutilize questões sem precisar criar um simulado primeiro.</p>
+            </div>
+            <button type="button" className="admin-simulados-new" onClick={abrirNovaQuestaoBanco}>+ Nova questão</button>
+          </div>
+          <div className="admin-banco-filtros">
+            <label>Pesquisar questão
+              <input type="search" value={buscaBanco} onChange={(e) => setBuscaBanco(e.target.value)} placeholder="Enunciado, habilidade ou conteúdo" />
+            </label>
+            <label>Disciplina
+              <select value={filtroBancoMateria} onChange={(e) => { setFiltroBancoMateria(e.target.value); setFiltroBancoTopico(''); }}>
+                <option value="">Todas as disciplinas</option>
+                <option value="sem-classificacao">Sem disciplina</option>
+                {materiasConteudos.map((materia) => <option key={materia.id} value={String(materia.id)}>{materia.nome}</option>)}
+              </select>
+            </label>
+            <label>Conteúdo
+              <select value={filtroBancoTopico} onChange={(e) => setFiltroBancoTopico(e.target.value)}>
+                <option value="">Todos os conteúdos</option>
+                <option value="sem-classificacao">Sem conteúdo</option>
+                {topicosBanco.filter((topico) => !filtroBancoMateria || filtroBancoMateria === 'sem-classificacao' || String(topico.materia_id) === filtroBancoMateria).map((topico) => <option key={topico.id} value={String(topico.id)}>{topico.materiaNome} · {topico.nome}</option>)}
+              </select>
+            </label>
+            <label>Dificuldade
+              <select value={filtroBancoDificuldade} onChange={(e) => setFiltroBancoDificuldade(e.target.value)}>
+                <option value="">Todas</option>
+                {['Fácil', 'Média', 'Difícil', 'Não classificada'].map((valor) => <option key={valor} value={valor}>{valor}</option>)}
+              </select>
+            </label>
+          </div>
+          <div className="admin-banco-questoes-resumo">{questoesBancoFiltradas.length} questão(ões) encontradas</div>
+          <div className="admin-banco-questoes-lista">
+            {questoesBancoFiltradas.map((questao) => (
+              <article className="admin-banco-questao-card" key={questao.id}>
+                <div className="admin-banco-questao-conteudo">
+                  <div className="admin-banco-questao-meta">
+                    <strong>Questão #{questao.id}</strong>
+                    <span>{questao.materia_nome || questao.materia || 'Sem disciplina'}</span>
+                    <span>{questao.topico || 'Sem conteúdo'}</span>
+                    <span>{questao.dificuldade || 'Não classificada'}</span>
+                  </div>
+                  <p>{questao.pergunta}</p>
+                  {questao.habilidade && <small>Habilidade: {questao.habilidade}</small>}
+                </div>
+                <button type="button" className="admin-edit-btn" onClick={() => abrirEditarQuestaoBanco(questao)}>Editar classificação/questão</button>
+              </article>
+            ))}
+            {questoesBancoFiltradas.length === 0 && <p className="admin-banco-vazio">Nenhuma questão corresponde aos filtros selecionados.</p>}
+          </div>
+        </section>
+      )}
 
       {erro && (
         <div className="stat-card simulado-error">
@@ -1162,7 +1322,18 @@ export default function AdminSimulados() {
                     disabled={salvando || excluindo}
                   />
                 </div>
-                <div className="simulado-form-subject">
+                <div className="modal-input-group simulado-type-field">
+                  <label htmlFor="simulado-tipo">Tipo de simulado</label>
+                  <select id="simulado-tipo" value={form.tipo} onChange={(e) => {
+                    alterarForm('tipo', e.target.value);
+                    setForm((atual) => ({ ...atual, tipo: e.target.value, materiaId: '', topicoId: '' }));
+                  }} disabled={salvando || excluindo}>
+                    <option value="disciplina">Por disciplina</option>
+                    <option value="geral">Geral — misturar disciplinas</option>
+                  </select>
+                  <small>O simulado geral aceita questões de matérias diferentes.</small>
+                </div>
+                {form.tipo === 'disciplina' && <div className="simulado-form-subject">
                   <span className="modal-materia-label" id="simulado-materia-label">Matéria</span>
                   {materiasConteudos.length === 0 ? (
                     <p className="modal-note">Cadastre uma matéria e pelo menos um conteúdo antes de criar um simulado.</p>
@@ -1181,7 +1352,8 @@ export default function AdminSimulados() {
                     </div>
                   )}
                 </div>
-                <div className="simulado-form-content">
+                }
+                {form.tipo === 'disciplina' && <div className="simulado-form-content">
                   <div className="modal-input-group simulado-content-group">
                     <label htmlFor="simulado-conteudo">Conteúdo</label>
                     {(() => {
@@ -1233,7 +1405,7 @@ export default function AdminSimulados() {
                       <small>Esta matéria ainda não possui conteúdos cadastrados.</small>
                     )}
                   </div>
-                </div>
+                </div>}
               </div>
 
               <section className="simulado-questions-section" aria-labelledby="simulado-questoes-title">
@@ -1244,17 +1416,57 @@ export default function AdminSimulados() {
                       {questoes.length} de {MIN_QUESTOES} questões mínimas
                     </span>
                   </div>
-                  <button type="button" className="simulado-add-question" onClick={abrirCriarQuestao} disabled={salvando || excluindo}>
-                    + Criar questão
-                  </button>
+                  <div className="simulado-questions-toolbar-actions">
+                    <button type="button" className="simulado-add-question secondary" onClick={() => setMostrarBancoQuestoes((aberto) => !aberto)} disabled={salvando || excluindo}>
+                      {mostrarBancoQuestoes ? 'Fechar banco' : 'Adicionar do banco'}
+                    </button>
+                    <button type="button" className="simulado-add-question" onClick={abrirCriarQuestao} disabled={salvando || excluindo}>
+                      + Criar questão
+                    </button>
+                  </div>
                 </div>
+                {mostrarBancoQuestoes && (
+                  <div className="simulado-banco-panel">
+                    <div className="simulado-banco-filtros">
+                      <label>Filtrar matéria
+                        <select value={filtroBancoMateria} onChange={(e) => setFiltroBancoMateria(e.target.value)}>
+                          <option value="">Todas as matérias</option>
+                          <option value="sem-classificacao">Sem matéria</option>
+                          {materiasConteudos.map((materia) => <option key={materia.id} value={String(materia.id)}>{materia.nome}</option>)}
+                        </select>
+                      </label>
+                      <label>Conteúdo
+                        <select value={filtroBancoTopico} onChange={(e) => setFiltroBancoTopico(e.target.value)}>
+                          <option value="">Todos</option>
+                          <option value="sem-classificacao">Sem conteúdo</option>
+                          {topicosBanco.map((topico) => <option key={topico.id} value={String(topico.id)}>{topico.materiaNome} · {topico.nome}</option>)}
+                        </select>
+                      </label>
+                      <label>Dificuldade
+                        <select value={filtroBancoDificuldade} onChange={(e) => setFiltroBancoDificuldade(e.target.value)}>
+                          <option value="">Todas</option>
+                          {['Fácil', 'Média', 'Difícil', 'Não classificada'].map((valor) => <option key={valor} value={valor}>{valor}</option>)}
+                        </select>
+                      </label>
+                    </div>
+                    <div className="simulado-banco-lista">
+                      {questoesBancoFiltradas.map((q) => (
+                        <article key={q.id} className="simulado-banco-item">
+                          <div><strong>#{q.id} · {(q.materia_nome || q.materia || 'Sem matéria')}</strong><span>{q.topico || 'Conteúdo não classificado'} · {q.dificuldade || 'Não classificada'}</span><p>{q.pergunta}</p></div>
+                          <button type="button" onClick={() => adicionarQuestaoDoBanco(q)} disabled={questoes.some((item) => Number(item.id) === Number(q.id)) || salvando || excluindo}>{questoes.some((item) => Number(item.id) === Number(q.id)) ? 'Adicionada' : 'Adicionar'}</button>
+                        </article>
+                      ))}
+                      {bancoQuestoes.length === 0 && <p>O banco ainda não possui questões cadastradas.</p>}
+                    </div>
+                  </div>
+                )}
                 {questoes.length === 0 ? (
                   <p className="simulado-questions-empty">Nenhuma questão adicionada. Crie a primeira questão para começar.</p>
                 ) : (
                   <div className="simulado-question-list">
                     {questoes.map((questao, index) => (
                       <div key={questao.id || `nova-${index}`} className="simulado-question-item">
-                        <span>Questão {index + 1} — correta: {questao.correta}
+                        <span>Questão {index + 1} — {materiasConteudos.find((item) => String(item.id) === String(questao.materiaId))?.nome || questao.materia || 'Matéria não definida'} · {materiasConteudos.flatMap((item) => item.topicos || []).find((item) => String(item.id) === String(questao.topicoId))?.nome || 'Conteúdo não definido'} · {questao.dificuldade || 'Não classificada'} · correta: {questao.correta}
                           {questao.imagem && <span className="simulado-question-image-label"> · Com imagem</span>}
                         </span>
                         <div className="simulado-question-actions">
@@ -1276,7 +1488,7 @@ export default function AdminSimulados() {
                   )}
                 </div>
                 <div className="simulado-footer-actions">
-                  <button type="button" className="mural-btn ghost" disabled={salvando || excluindo} onClick={() => setShowModal(false)}>Cancelar</button>
+                  <button type="button" className="mural-btn ghost" disabled={salvando || excluindo} onClick={() => { setShowModal(false); setMostrarBancoQuestoes(false); }}>Cancelar</button>
                   <button type="submit" className="mural-btn primary" disabled={salvando || excluindo || questoes.length < MIN_QUESTOES}>
                     {salvando ? 'Salvando...' : simuladoEditando ? 'Salvar alterações' : 'Postar'}
                   </button>
@@ -1292,10 +1504,35 @@ export default function AdminSimulados() {
         <div className="modal-overlay simulado-questao-overlay" onClick={() => { if (!enviandoImagem) setShowQuestaoModal(false); }}>
           <div className="modal-card simulado-questao-modal" role="dialog" aria-modal="true" aria-labelledby="simulado-questao-title" onClick={e => e.stopPropagation()}>
             <div className="modal-header">
-              <h2 id="simulado-questao-title">{questaoEditando !== null ? 'Editar Questão' : 'Criar Questão'}</h2>
+              <h2 id="simulado-questao-title">{questaoBancoMode ? (questaoBancoId ? 'Editar questão do banco' : 'Nova questão no banco') : questaoEditando !== null ? 'Editar Questão' : 'Criar Questão'}</h2>
             </div>
             <form onSubmit={handleAddQuestao}>
               <div className="simulado-questao-fields">
+                <div className="modal-input-group">
+                  <label htmlFor="questao-materia">Disciplina</label>
+                  <select id="questao-materia" value={questaoForm.materiaId} onChange={(e) => setQuestaoForm((atual) => ({ ...atual, materiaId: e.target.value, topicoId: '' }))} required>
+                    <option value="">Selecione a disciplina</option>
+                    {materiasConteudos.map((materia) => <option key={materia.id} value={String(materia.id)}>{materia.nome}</option>)}
+                  </select>
+                </div>
+                <div className="modal-input-group">
+                  <label htmlFor="questao-topico">Conteúdo / assunto</label>
+                  <select id="questao-topico" value={questaoForm.topicoId} onChange={(e) => alterarQuestao('topicoId', e.target.value)} required disabled={!questaoForm.materiaId}>
+                    <option value="">Selecione o conteúdo</option>
+                    {(materiasConteudos.find((materia) => String(materia.id) === String(questaoForm.materiaId))?.topicos || []).filter((topico) => Number(topico.ativo) !== 0).map((topico) => <option key={topico.id} value={String(topico.id)}>{topico.nome}</option>)}
+                  </select>
+                </div>
+                <div className="modal-input-group">
+                  <label htmlFor="questao-dificuldade">Dificuldade</label>
+                  <select id="questao-dificuldade" value={questaoForm.dificuldade} onChange={(e) => alterarQuestao('dificuldade', e.target.value)}>
+                    {['Fácil', 'Média', 'Difícil'].map((valor) => <option key={valor} value={valor}>{valor}</option>)}
+                    <option value="Não classificada">Não classificada</option>
+                  </select>
+                </div>
+                <div className="modal-input-group">
+                  <label htmlFor="questao-habilidade">Habilidade / classificação complementar <span>(opcional)</span></label>
+                  <input id="questao-habilidade" type="text" maxLength={160} value={questaoForm.habilidade || ''} onChange={(e) => alterarQuestao('habilidade', e.target.value)} placeholder="Ex.: interpretação, raciocínio lógico..." />
+                </div>
                 <div className="modal-input-group simulado-enunciado-grupo">
                   <label htmlFor="simulado-enunciado">Enunciado</label>
                   <textarea
@@ -1341,9 +1578,9 @@ export default function AdminSimulados() {
                 </div>
               </div>
               <div className="modal-actions simulado-questao-actions">
-                <button type="button" className="mural-btn ghost" onClick={() => { setShowQuestaoModal(false); setQuestaoEditando(null); }} disabled={enviandoImagem}>Cancelar</button>
-                <button type="submit" className="mural-btn primary" disabled={enviandoImagem}>
-                  {enviandoImagem ? 'Enviando imagem...' : questaoEditando !== null ? 'Salvar questão' : 'Criar questão'}
+                <button type="button" className="mural-btn ghost" onClick={() => { setShowQuestaoModal(false); setQuestaoEditando(null); setQuestaoBancoMode(false); setQuestaoBancoId(null); }} disabled={enviandoImagem || salvando}>Cancelar</button>
+                <button type="submit" className="mural-btn primary" disabled={enviandoImagem || salvando}>
+                  {enviandoImagem ? 'Enviando imagem...' : salvando ? 'Salvando...' : questaoBancoMode ? (questaoBancoId ? 'Salvar questão' : 'Cadastrar no banco') : questaoEditando !== null ? 'Salvar questão' : 'Adicionar ao simulado'}
                 </button>
               </div>
             </form>

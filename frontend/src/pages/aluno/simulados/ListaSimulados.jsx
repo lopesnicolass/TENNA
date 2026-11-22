@@ -131,9 +131,10 @@ export function ListaSimulados({
 
                     if (!mapa.has(chave)) {
                       mapa.set(chave, {
-                        nome:
-                          simulado.topico ||
-                          'Conteúdo não definido',
+                        nome: simulado.tipo === 'geral'
+                          ? 'Provas com disciplinas misturadas'
+                          : simulado.topico || 'Conteúdo não definido',
+                        tipoGeral: simulado.tipo === 'geral',
                         simulados: []
                       });
                     }
@@ -158,7 +159,7 @@ export function ListaSimulados({
                   >
                     <div className="simulados-conteudo-heading">
                       <div className="simulados-conteudo-heading-main">
-                        <span className="simulados-conteudo-label">Conteúdo</span>
+                        <span className="simulados-conteudo-label">{grupo.tipoGeral ? 'Modalidade' : 'Conteúdo'}</span>
                         <h2>{grupo.nome}</h2>
                       </div>
                     </div>

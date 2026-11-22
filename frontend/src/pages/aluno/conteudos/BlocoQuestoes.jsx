@@ -182,7 +182,7 @@ export default function BlocoQuestoes({
 
         const dadosResposta =
           await request(
-            `/questoes/aluno?ids=${encodeURIComponent(
+            `/questoes/aluno?blocoId=${encodeURIComponent(Number(bloco?.id) || '')}&ids=${encodeURIComponent(
               questaoIdsChave
             )}`,
             {},
@@ -285,6 +285,7 @@ export default function BlocoQuestoes({
             method: 'POST',
 
             body: JSON.stringify({
+              blocoId: Number(bloco?.id),
               questaoIds:
                 questoes.map(
                   (questao) =>

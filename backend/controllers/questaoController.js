@@ -5,7 +5,8 @@ const {
     atualizarQuestao,
     excluirQuestao,
     listarQuestoesPorIds,
-    corrigirQuestoesPorIds
+    corrigirQuestoesPorIds,
+    buscarBlocoQuestoesPorId
 } = require("../models/questaoModel");
 
 // =====================================================
@@ -86,8 +87,12 @@ function cadastrarQuestao(
 
         correta,
         materia,
+        materiaId,
+        topicoId,
+        dificuldade,
+        habilidade,
         imagem
-    } = req.body;
+    } = req.body || {};
 
 
     const a =
@@ -119,7 +124,8 @@ function cadastrarQuestao(
         !d ||
         !e ||
         !correta ||
-        !materia
+        !Number.isInteger(Number(materiaId)) || Number(materiaId) <= 0 ||
+        !Number.isInteger(Number(topicoId)) || Number(topicoId) <= 0
     ) {
         return res.status(400).json({
             mensagem:
@@ -146,6 +152,18 @@ function cadastrarQuestao(
     }
 
 
+    const dificuldadeNormalizada = String(dificuldade || 'Não classificada').trim();
+    if (!['Fácil', 'Média', 'Difícil', 'Não classificada'].includes(dificuldadeNormalizada)) {
+        return res.status(400).json({ mensagem: 'Selecione uma dificuldade válida.' });
+    }
+
+    const classificacao = {
+        materiaId: Number(materiaId),
+        topicoId: Number(topicoId),
+        dificuldade: dificuldadeNormalizada,
+        habilidade: String(habilidade || '').trim().slice(0, 160)
+    };
+
     let caminhoImagem;
     try { caminhoImagem = imagemDaQuestao(imagem); }
     catch (erro) { return res.status(400).json({ mensagem: erro.message }); }
@@ -158,13 +176,17 @@ function cadastrarQuestao(
         d.trim(),
         e.trim(),
         respostaCorreta,
-        materia,
+        materia || '',
         caminhoImagem,
+        classificacao,
         (
             erro,
             resultado
         ) => {
             if (erro) {
+                if (erro.code === 'CLASSIFICACAO_INVALIDA') {
+                    return res.status(400).json({ mensagem: erro.message });
+                }
                 console.error(
                     "Erro ao cadastrar questão:",
                     erro
@@ -204,7 +226,11 @@ function cadastrarQuestao(
                     correta:
                         respostaCorreta,
 
-                    materia,
+                    materia: materia || '',
+                    materia_id: classificacao.materiaId,
+                    topico_id: classificacao.topicoId,
+                    dificuldade: classificacao.dificuldade,
+                    habilidade: classificacao.habilidade,
                     imagem: caminhoImagem
                 }
             });
@@ -306,156 +332,111 @@ function buscarQuestao(
 
 // =====================================================
 // QUESTÕES DO CONTEÚDO — ALUNO
-//
-// IMPORTANTE:
-// a resposta correta NÃO é enviada.
+// IDs precisam pertencer ao bloco de questões publicado solicitado.
 // =====================================================
 
-function listarQuestoesDoConteudo(
-    req,
-    res
-) {
-    const ids =
-        normalizarIds(
-            req.query.ids
-        );
-
-    if (
-        ids.length === 0
-    ) {
-        return res.json({
-            questoes: []
-        });
+function validarQuestoesDoBloco(req, blocoIdBruto, ids, callback) {
+    const blocoId = Number(blocoIdBruto);
+    if (!Number.isInteger(blocoId) || blocoId <= 0) {
+        return callback({ status: 400, mensagem: 'Bloco de questões inválido.' });
     }
 
-
-    listarQuestoesPorIds(
-        ids,
-        (
-            erro,
-            questoes
-        ) => {
-            if (erro) {
-                console.error(
-                    "Erro ao carregar questões do conteúdo:",
-                    erro
-                );
-
-                return res.status(500).json({
-                    mensagem:
-                        "Erro ao carregar questões."
-                });
-            }
-
-            return res.json({
-                questoes:
-                    questoes || []
-            });
+    buscarBlocoQuestoesPorId(blocoId, (erro, bloco) => {
+        if (erro) return callback({ status: 500, mensagem: 'Não foi possível validar o bloco de questões.', erro });
+        const ehAdmin = req.usuario?.tipo === 'admin';
+        if (!bloco || (!ehAdmin && Number(bloco.publicado) !== 1)) {
+            return callback({ status: 404, mensagem: 'Bloco de questões não encontrado ou não publicado.' });
         }
-    );
+
+        let dados;
+        try { dados = typeof bloco.dados === 'string' ? JSON.parse(bloco.dados) : (bloco.dados || {}); }
+        catch { dados = {}; }
+        const idsDoBloco = normalizarIds(dados.questaoIds ?? dados.ids);
+        const enviados = new Set(ids.map(Number));
+        const correspondem = idsDoBloco.length > 0 &&
+            idsDoBloco.length === enviados.size &&
+            idsDoBloco.every((id) => enviados.has(id));
+
+        if (!correspondem) {
+            return callback({ status: 403, mensagem: 'As questões solicitadas não pertencem a este bloco.' });
+        }
+        return callback(null, idsDoBloco);
+    });
 }
 
+function listarQuestoesDoConteudo(req, res) {
+    const ids = normalizarIds(req.query.ids);
+    if (ids.length === 0) return res.json({ questoes: [] });
+
+    validarQuestoesDoBloco(req, req.query.blocoId, ids, (falha, idsPermitidos) => {
+        if (falha) {
+            if (falha.erro) console.error('Erro ao validar bloco de questões:', falha.erro);
+            return res.status(falha.status).json({ mensagem: falha.mensagem });
+        }
+
+        listarQuestoesPorIds(idsPermitidos, (erro, questoes) => {
+            if (erro) {
+                console.error('Erro ao carregar questões do conteúdo:', erro);
+                return res.status(500).json({ mensagem: 'Erro ao carregar questões.' });
+            }
+            if (!questoes || questoes.length !== idsPermitidos.length) {
+                return res.status(409).json({ mensagem: 'Uma ou mais questões deste bloco não estão mais disponíveis.' });
+            }
+            return res.json({ questoes: questoes || [] });
+        });
+    });
+}
 
 // =====================================================
 // CORRIGIR QUESTÕES DO CONTEÚDO — ALUNO
 // =====================================================
 
-function corrigirQuestoesDoConteudo(
-    req,
-    res
-) {
-    const ids =
-        normalizarIds(
-            req.body?.questaoIds
-        );
+function corrigirQuestoesDoConteudo(req, res) {
+    const ids = normalizarIds(req.body?.questaoIds);
+    const respostas = req.body?.respostas;
 
-    const respostas =
-        req.body?.respostas;
-
-
-    if (
-        ids.length === 0
-    ) {
-        return res.status(400).json({
-            mensagem:
-                "Nenhuma questão foi informada."
-        });
+    if (ids.length === 0) {
+        return res.status(400).json({ mensagem: 'Nenhuma questão foi informada.' });
+    }
+    if (!respostas || typeof respostas !== 'object' || Array.isArray(respostas)) {
+        return res.status(400).json({ mensagem: 'As respostas precisam ser informadas.' });
+    }
+    if (Object.keys(respostas).some((id) => !ids.includes(Number(id)))) {
+        return res.status(400).json({ mensagem: 'Foram enviadas respostas para questões que não pertencem a este bloco.' });
+    }
+    for (const resposta of Object.values(respostas)) {
+        if (resposta != null && !['A', 'B', 'C', 'D', 'E'].includes(String(resposta).trim().toUpperCase())) {
+            return res.status(400).json({ mensagem: 'Uma ou mais alternativas enviadas são inválidas.' });
+        }
     }
 
+    validarQuestoesDoBloco(req, req.body?.blocoId, ids, (falha) => {
+        if (falha) {
+            if (falha.erro) console.error('Erro ao validar bloco para correção:', falha.erro);
+            return res.status(falha.status).json({ mensagem: falha.mensagem });
+        }
 
-    if (
-        !respostas ||
-        typeof respostas !== "object" ||
-        Array.isArray(respostas)
-    ) {
-        return res.status(400).json({
-            mensagem:
-                "As respostas precisam ser informadas."
-        });
-    }
-
-
-    corrigirQuestoesPorIds(
-        ids,
-        respostas,
-        (
-            erro,
-            detalhes
-        ) => {
+        corrigirQuestoesPorIds(ids, respostas, (erro, detalhes) => {
             if (erro) {
-                console.error(
-                    "Erro ao corrigir questões:",
-                    erro
-                );
-
-                return res.status(500).json({
-                    mensagem:
-                        "Erro ao corrigir questões."
-                });
+                console.error('Erro ao corrigir questões:', erro);
+                return res.status(500).json({ mensagem: 'Erro ao corrigir questões.' });
             }
 
-
-            const lista =
-                detalhes || [];
-
-            const acertos =
-                lista.filter(
-                    (item) =>
-                        item.acertou
-                ).length;
-
-            const totalQuestoes =
-                ids.length;
-
-            const erros =
-                totalQuestoes -
-                acertos;
-
-            const porcentagem =
-                totalQuestoes > 0
-                    ? Number(
-                        (
-                            (
-                                acertos /
-                                totalQuestoes
-                            ) * 100
-                        ).toFixed(2)
-                    )
-                    : 0;
-
+            const lista = detalhes || [];
+            if (lista.length !== ids.length) {
+                return res.status(409).json({ mensagem: 'Uma ou mais questões deste bloco não estão mais disponíveis.' });
+            }
+            const acertos = lista.filter((item) => item.acertou).length;
+            const totalQuestoes = lista.length;
+            const erros = totalQuestoes - acertos;
+            const porcentagem = totalQuestoes > 0 ? Number(((acertos / totalQuestoes) * 100).toFixed(2)) : 0;
 
             return res.json({
-                resultado: {
-                    acertos,
-                    erros,
-                    totalQuestoes,
-                    porcentagem
-                },
-
+                resultado: { acertos, erros, totalQuestoes, porcentagem },
                 detalhes: lista
             });
-        }
-    );
+        });
+    });
 }
 
 
@@ -500,8 +481,12 @@ function editarQuestao(
 
         correta,
         materia,
+        materiaId,
+        topicoId,
+        dificuldade,
+        habilidade,
         imagem
-    } = req.body;
+    } = req.body || {};
 
 
     const a =
@@ -533,7 +518,8 @@ function editarQuestao(
         !d ||
         !e ||
         !correta ||
-        !materia
+        !Number.isInteger(Number(materiaId)) || Number(materiaId) <= 0 ||
+        !Number.isInteger(Number(topicoId)) || Number(topicoId) <= 0
     ) {
         return res.status(400).json({
             mensagem:
@@ -560,6 +546,18 @@ function editarQuestao(
     }
 
 
+    const dificuldadeNormalizada = String(dificuldade || 'Não classificada').trim();
+    if (!['Fácil', 'Média', 'Difícil', 'Não classificada'].includes(dificuldadeNormalizada)) {
+        return res.status(400).json({ mensagem: 'Selecione uma dificuldade válida.' });
+    }
+
+    const classificacao = {
+        materiaId: Number(materiaId),
+        topicoId: Number(topicoId),
+        dificuldade: dificuldadeNormalizada,
+        habilidade: String(habilidade || '').trim().slice(0, 160)
+    };
+
     let caminhoImagem;
     try { caminhoImagem = imagemDaQuestao(imagem); }
     catch (erro) { return res.status(400).json({ mensagem: erro.message }); }
@@ -573,13 +571,17 @@ function editarQuestao(
         d.trim(),
         e.trim(),
         respostaCorreta,
-        materia,
+        materia || '',
         caminhoImagem,
+        classificacao,
         (
             erro,
             resultado
         ) => {
             if (erro) {
+                if (erro.code === 'CLASSIFICACAO_INVALIDA') {
+                    return res.status(400).json({ mensagem: erro.message });
+                }
                 console.error(
                     "Erro ao atualizar questão:",
                     erro

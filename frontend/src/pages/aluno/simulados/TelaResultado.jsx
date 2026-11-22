@@ -14,6 +14,14 @@ export function TelaResultado({
 }) {
   const aproveitamento = Number(resultadoFinal.porcentagem || 0);
   const detalhes = Array.isArray(resultadoFinal.detalhes) ? resultadoFinal.detalhes : [];
+  const desempenhoPorDisciplina = Array.from(detalhes.reduce((mapa, item) => {
+    const materia = String(item.questao?.materia || item.materia || 'Sem disciplina').trim();
+    if (!mapa.has(materia)) mapa.set(materia, { materia, acertos: 0, total: 0 });
+    const grupo = mapa.get(materia);
+    grupo.total += 1;
+    if (item.acertou) grupo.acertos += 1;
+    return mapa;
+  }, new Map()).values()).sort((a, b) => a.materia.localeCompare(b.materia, 'pt-BR'));
 
   return createPortal(
     <main className="simulado-fullscreen simulado-resultado-screen">
@@ -46,6 +54,27 @@ export function TelaResultado({
           </div>
         </section>
 
+        {simuladoSelecionado.tipo === 'geral' && desempenhoPorDisciplina.length > 0 && (
+          <section className="simulado-resultado-por-disciplina" aria-labelledby="simulado-resultado-disciplinas-titulo">
+            <div className="simulado-resultado-correcao-heading">
+              <h2 id="simulado-resultado-disciplinas-titulo">Desempenho por disciplina</h2>
+              <p>Veja como foi seu resultado em cada matéria do simulado.</p>
+            </div>
+            <div className="simulado-resultado-disciplinas-grid">
+              {desempenhoPorDisciplina.map((item) => {
+                const percentual = item.total ? Math.round((item.acertos / item.total) * 100) : 0;
+                return (
+                  <article className="simulado-resultado-disciplina-card" key={item.materia}>
+                    <div><strong>{item.materia}</strong><span>{item.acertos} de {item.total} acertos</span></div>
+                    <strong className="simulado-resultado-disciplina-percentual">{percentual}%</strong>
+                    <div className="simulado-resultado-disciplina-barra" role="progressbar" aria-label={`Aproveitamento em ${item.materia}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percentual}><span style={{ width: `${percentual}%` }} /></div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        )}
+
         {mostrarErros && (
           <section className="simulado-resultado-correcao" aria-labelledby="simulado-correcao-titulo">
             <div className="simulado-resultado-correcao-heading">
@@ -58,6 +87,11 @@ export function TelaResultado({
                   <div className="simulado-resultado-questao-topo">
                     <span>Questão {index + 1}</span>
                     <span className={`simulado-resultado-estado ${acertou ? 'certo' : 'incorreto'}`}>{acertou ? 'Correta' : respostaUsuario ? 'Incorreta' : 'Não respondida'}</span>
+                  </div>
+                  <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
+                    {questao.materia && <span>{questao.materia}</span>}
+                    {questao.topico && <span>{questao.topico}</span>}
+                    {questao.dificuldade && questao.dificuldade !== 'Não classificada' && <span>{questao.dificuldade}</span>}
                   </div>
                   <h3>{questao.pergunta}</h3>
                   {questao.imagem && (

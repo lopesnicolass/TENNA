@@ -5,99 +5,72 @@ const db = require("../config/db");
 // =====================================================
 
 function criarQuestao(
-    pergunta,
-    alternativaA,
-    alternativaB,
-    alternativaC,
-    alternativaD,
-    alternativaE,
-    correta,
-    materia,
-    imagem,
-    callback
+    pergunta, alternativaA, alternativaB, alternativaC, alternativaD,
+    alternativaE, correta, materia, imagem, classificacao, callback
 ) {
-
-    const sql = `
-        INSERT INTO questoes
-        (
-            pergunta,
-            alternativa_a,
-            alternativa_b,
-            alternativa_c,
-            alternativa_d,
-            alternativa_e,
-            correta,
-            materia,
-            imagem
-        )
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-    `;
-
-    db.run(
-        sql,
-        [
-            pergunta,
-            alternativaA,
-            alternativaB,
-            alternativaC,
-            alternativaD,
-            alternativaE,
-            correta,
-            materia,
-            imagem
-        ],
+    const meta = classificacao || {};
+    const inserir = (materiaNome, materiaId, topicoId) => {
+        db.run(`
+            INSERT INTO questoes
+              (pergunta, alternativa_a, alternativa_b, alternativa_c, alternativa_d,
+               alternativa_e, correta, materia, imagem, materia_id, topico_id, dificuldade, habilidade)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `, [pergunta, alternativaA, alternativaB, alternativaC, alternativaD,
+            alternativaE, correta, materiaNome, imagem, materiaId || null,
+            topicoId || null, meta.dificuldade || 'Não classificada', meta.habilidade || ''],
         function (erro) {
-
-            if (erro) {
-                return callback(erro);
-            }
-
+            if (erro) return callback(erro);
             callback(null, this);
+        });
+    };
+
+    if (!meta.materiaId) return inserir(materia, null, null);
+    db.get(`
+        SELECT m.id, m.nome, t.id AS topico_id
+        FROM materias m
+        LEFT JOIN topicos t ON t.id = ? AND t.materia_id = m.id AND t.ativo = 1
+        WHERE m.id = ? AND m.ativa = 1
+    `, [meta.topicoId || null, meta.materiaId], (erro, registro) => {
+        if (erro) return callback(erro);
+        if (!registro || (meta.topicoId && !registro.topico_id)) {
+            const falha = new Error('A matéria ou o conteúdo selecionado não é válido.');
+            falha.code = 'CLASSIFICACAO_INVALIDA';
+            return callback(falha);
         }
-    );
+        inserir(registro.nome, registro.id, registro.topico_id || null);
+    });
 }
 
+// =====================================================
+// BANCO DE QUESTÕES — ADMIN
+// =====================================================
 
-// =====================================================
-// LISTAR QUESTÕES — ADMIN
-// =====================================================
+const SELECT_QUESTOES_CLASSIFICADAS = `
+    SELECT q.*, m.nome AS materia_nome, t.nome AS topico
+    FROM questoes q
+    LEFT JOIN materias m ON m.id = q.materia_id
+    LEFT JOIN topicos t ON t.id = q.topico_id
+`;
+
+
+
+// Confere a origem das questões exibidas em um bloco publicado.
+// O aluno não pode escolher IDs arbitrários para consultar ou corrigir gabaritos.
+function buscarBlocoQuestoesPorId(blocoId, callback) {
+    db.get(`
+        SELECT b.id, b.tipo, b.dados, b.ativo, p.publicado
+        FROM blocos_conteudo b
+        INNER JOIN paginas_conteudo p ON p.id = b.pagina_id
+        WHERE b.id = ? AND b.tipo = 'questoes' AND b.ativo = 1
+    `, [blocoId], callback);
+}
 
 function listarQuestoes(callback) {
-
-    const sql = `
-        SELECT *
-        FROM questoes
-        ORDER BY id DESC
-    `;
-
-    db.all(
-        sql,
-        [],
-        callback
-    );
+    db.all(`${SELECT_QUESTOES_CLASSIFICADAS} ORDER BY q.id DESC`, [], callback);
 }
 
-
-// =====================================================
-// BUSCAR QUESTÃO POR ID
-// =====================================================
-
-function buscarQuestaoPorId(
-    id,
-    callback
-) {
-
-    const sql = `
-        SELECT *
-        FROM questoes
-        WHERE id = ?
-    `;
-
-    db.get(
-        sql,
-        [id],
-        callback
-    );
+function buscarQuestaoPorId(id, callback) {
+    db.get(`${SELECT_QUESTOES_CLASSIFICADAS} WHERE q.id = ?`, [id], callback);
 }
 
 
@@ -161,6 +134,11 @@ function listarQuestoesPorIds(
             alternativa_d,
             alternativa_e,
             materia,
+            materia_id,
+            topico_id,
+            dificuldade,
+            habilidade,
+            (SELECT nome FROM topicos WHERE id = questoes.topico_id) AS topico,
             imagem
         FROM questoes
         WHERE id IN (${placeholders})
@@ -347,64 +325,41 @@ function corrigirQuestoesPorIds(
 // =====================================================
 
 function atualizarQuestao(
-    id,
-    pergunta,
-    alternativaA,
-    alternativaB,
-    alternativaC,
-    alternativaD,
-    alternativaE,
-    correta,
-    materia,
-    imagem,
-    callback
+    id, pergunta, alternativaA, alternativaB, alternativaC, alternativaD,
+    alternativaE, correta, materia, imagem, classificacao, callback
 ) {
-
-    const sql = `
-        UPDATE questoes
-
-        SET
-            pergunta = ?,
-            alternativa_a = ?,
-            alternativa_b = ?,
-            alternativa_c = ?,
-            alternativa_d = ?,
-            alternativa_e = ?,
-            correta = ?,
-            materia = ?,
-            imagem = ?
-
-        WHERE id = ?
-    `;
-
-    db.run(
-        sql,
-        [
-            pergunta,
-            alternativaA,
-            alternativaB,
-            alternativaC,
-            alternativaD,
-            alternativaE,
-            correta,
-            materia,
-            imagem,
-            id
-        ],
+    const meta = classificacao || {};
+    const atualizar = (materiaNome, materiaId, topicoId) => {
+        db.run(`
+            UPDATE questoes SET
+              pergunta = ?, alternativa_a = ?, alternativa_b = ?, alternativa_c = ?,
+              alternativa_d = ?, alternativa_e = ?, correta = ?, materia = ?, imagem = ?,
+              materia_id = ?, topico_id = ?, dificuldade = ?, habilidade = ?
+            WHERE id = ?
+        `, [pergunta, alternativaA, alternativaB, alternativaC, alternativaD,
+            alternativaE, correta, materiaNome, imagem, materiaId || null,
+            topicoId || null, meta.dificuldade || 'Não classificada', meta.habilidade || '', id],
         function (erro) {
+            if (erro) return callback(erro);
+            callback(null, this);
+        });
+    };
 
-            if (erro) {
-                return callback(
-                    erro
-                );
-            }
-
-            callback(
-                null,
-                this
-            );
+    if (!meta.materiaId) return atualizar(materia, null, null);
+    db.get(`
+        SELECT m.id, m.nome, t.id AS topico_id
+        FROM materias m
+        LEFT JOIN topicos t ON t.id = ? AND t.materia_id = m.id AND t.ativo = 1
+        WHERE m.id = ? AND m.ativa = 1
+    `, [meta.topicoId || null, meta.materiaId], (erro, registro) => {
+        if (erro) return callback(erro);
+        if (!registro || (meta.topicoId && !registro.topico_id)) {
+            const falha = new Error('A matéria ou o conteúdo selecionado não é válido.');
+            falha.code = 'CLASSIFICACAO_INVALIDA';
+            return callback(falha);
         }
-    );
+        atualizar(registro.nome, registro.id, registro.topico_id || null);
+    });
 }
 
 
@@ -451,6 +406,8 @@ module.exports = {
     listarQuestoes,
 
     buscarQuestaoPorId,
+
+    buscarBlocoQuestoesPorId,
 
     listarQuestoesPorIds,
 
