@@ -39,9 +39,15 @@ export default function DashboardLayout() {
     };
   }, [cleanFocus]);
 
-  const [isAdminPreview, setIsAdminPreview] = useState(() =>
-    sessionStorage.getItem('etecamp_admin_preview') === 'true'
-  );
+  const [isAdminPreview, setIsAdminPreview] = useState(() => {
+    if (sessionStorage.getItem('etecamp_admin_preview') !== 'true') return false;
+    try {
+      const usuario = JSON.parse(localStorage.getItem('etecamp_usuario') || 'null');
+      if (usuario?.tipo === 'admin') return true;
+    } catch { /* usuário ilegível: trata como não-admin */ }
+    sessionStorage.removeItem('etecamp_admin_preview');
+    return false;
+  });
 
   useEffect(() => {
     const fechar = setTimeout(() => setMobileMenuOpen(false), 0);

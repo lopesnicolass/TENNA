@@ -1,7 +1,7 @@
 import '../../styles/aluno/Perfil.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { request } from '../../services/api.js';
+import { limparSessao, request } from '../../services/api.js';
 import Icon from '../../components/Icon.jsx';
 import { CATEGORIAS_CONQUISTAS, montarConquistas } from '../../utils/conquistas.js';
 import { usePreferenciaContagem } from '../../utils/usePreferenciaContagem.js';
@@ -665,7 +665,14 @@ export default function Perfil() {
   // LOGOUT
   // =====================================================
 
+  // O admin só está "olhando" o site como aluno: sair daqui não deve encerrar a sessão dele.
+  const [emVisualizacaoAdmin] = useState(
+    () => sessionStorage.getItem('etecamp_admin_preview') === 'true'
+  );
+
   async function handleLogout() {
+
+    if (emVisualizacaoAdmin) return;
 
     try {
 
@@ -707,17 +714,8 @@ export default function Perfil() {
 
     } finally {
 
-      localStorage.removeItem(
-        'etecamp_usuario'
-      );
-
-      localStorage.removeItem(
-        'etecamp_token'
-      );
-
-      localStorage.removeItem(
-        'token'
-      );
+      // Limpa token, usuário e também a flag de "visualização como estudante".
+      limparSessao();
 
       navigate('/login');
 
@@ -887,7 +885,13 @@ export default function Perfil() {
             <button type="submit" className="perfil-btn perfil-btn-primary perfil-save" disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar alterações'}
             </button>
-            <button type="button" className="perfil-btn perfil-logout" onClick={handleLogout}>
+            <button
+              type="button"
+              className="perfil-btn perfil-logout"
+              onClick={handleLogout}
+              disabled={emVisualizacaoAdmin}
+              title={emVisualizacaoAdmin ? 'Indisponível na visualização de estudante. Use "Sair" no menu do administrador.' : undefined}
+            >
               Sair da conta
             </button>
           </div>

@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { lazy, Suspense, useEffect } from 'react';
 
 import Landing from './pages/public/Landing.jsx';
@@ -35,18 +35,28 @@ const AdminConteudos = lazy(() => import('./pages/adm/AdminConteudos.jsx'));
 const AdminCronogramas = lazy(() => import('./pages/adm/AdminCronogramas.jsx'));
 const AdminCalendario = lazy(() => import('./pages/adm/AdminCalendario.jsx'));
 
+// Landing e telas de acesso ficam sempre no tema claro.
+// A preferência salva em 'tenna_theme' não é apagada: continua valendo no painel.
+const ROTAS_SEMPRE_CLARAS = ['/', '/login', '/esqueci-senha', '/redefinir-senha'];
+
 export default function App() {
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('tenna_theme');
-      const theme = saved === 'dark' ? 'dark' : 'light';
-      document.documentElement.dataset.theme = theme;
-      document.documentElement.style.colorScheme = theme;
-    } catch {
-      document.documentElement.dataset.theme = 'light';
-      document.documentElement.style.colorScheme = 'light';
+    const rotaPublica = ROTAS_SEMPRE_CLARAS.includes(pathname.replace(/\/+$/, '') || '/');
+    let theme = 'light';
+
+    if (!rotaPublica) {
+      try {
+        theme = localStorage.getItem('tenna_theme') === 'dark' ? 'dark' : 'light';
+      } catch {
+        theme = 'light';
+      }
     }
-  }, []);
+
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+  }, [pathname]);
 
   return (
     <>

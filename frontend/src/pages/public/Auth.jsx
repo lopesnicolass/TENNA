@@ -81,6 +81,8 @@ export default function Auth() {
         'Não foi possível entrar.'
       );
 
+      sessionStorage.removeItem('etecamp_admin_preview');
+
       localStorage.setItem(
         'etecamp_usuario',
         JSON.stringify(dados.usuario)

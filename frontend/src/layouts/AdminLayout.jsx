@@ -7,6 +7,7 @@ import '../styles/adm/AdminArea.css';
 import '../styles/mobile-responsive.css';
 import '../styles/adm/AdminPolish.css';
 import '../styles/adm/AdminConsistency.css';
+import '../styles/adm/AdminSidebarStudent.css';
 
 export default function AdminLayout() {
   const location = useLocation();
