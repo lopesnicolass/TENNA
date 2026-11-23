@@ -124,10 +124,10 @@ export default function AdminProvas() {
         }
     }
 
-    async function excluirProva(id) {
+    async function excluirProva(id, titulo = 'esta prova') {
         if (excluindoId !== null) return;
         const confirmar = window.confirm(
-            "Tem certeza que deseja excluir esta prova?\n\nA prova e o gabarito serão apagados."
+            `Tem certeza que deseja excluir "${titulo}"?\n\nA prova e o gabarito serão apagados.`
         );
 
         if (!confirmar) {
@@ -275,12 +275,11 @@ export default function AdminProvas() {
                             <input
                                 id="arquivoProva"
                                 ref={provaInputRef}
-                                required
                                 type="file"
                                 accept=".pdf,application/pdf"
                                 onChange={(e) =>
                                     setArquivoProva(
-                                        e.target.files[0]
+                                        e.target.files[0] || null
                                     )
                                 }
                             />
@@ -323,12 +322,11 @@ export default function AdminProvas() {
                             <input
                                 id="arquivoGabarito"
                                 ref={gabaritoInputRef}
-                                required
                                 type="file"
                                 accept=".pdf,application/pdf"
                                 onChange={(e) =>
                                     setArquivoGabarito(
-                                        e.target.files[0]
+                                        e.target.files[0] || null
                                     )
                                 }
                             />
@@ -394,9 +392,7 @@ export default function AdminProvas() {
                         </p>
                     </div>
 
-                </div>
-
-                <div className="admin-provas-list-toolbar">
+                    <div className="admin-provas-list-toolbar">
                     <label className="admin-provas-search">
                         <ProvasIcon name="search" size={19} />
                         <span className="sr-only">Buscar provas por título ou ano</span>
@@ -405,6 +401,8 @@ export default function AdminProvas() {
                     <button className="admin-provas-refresh" type="button" onClick={carregarProvas} disabled={carregandoLista} title="Atualizar lista" aria-label="Atualizar lista">
                         <ProvasIcon name="refresh" size={19} />
                     </button>
+                </div>
+
                 </div>
 
                 {erroLista && <div className="admin-provas-message error" role="alert">{erroLista} <button type="button" onClick={carregarProvas}>Tentar novamente</button></div>}
@@ -464,7 +462,7 @@ export default function AdminProvas() {
                                     <button
                                         type="button"
                                         className="admin-delete-prova"
-                                        onClick={() => excluirProva(prova.id)}
+                                        onClick={() => excluirProva(prova.id, prova.titulo)}
                                         disabled={excluindoId !== null}
                                     >
                                         <ProvasIcon name="trash" size={16} /> {excluindoId === prova.id ? 'Excluindo...' : 'Excluir'}

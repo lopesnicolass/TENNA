@@ -23,6 +23,14 @@ export function Icon({ name, size = 20 }) {
       <path d="M12 21a9 9 0 1 0-9-9m9 5a5 5 0 1 0-5-5m5 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm0 0 6-6" />
     ),
 
+    landmark: (
+      <path d="M3 10 12 4l9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 20h18" />
+    ),
+
+    layers: (
+      <path d="m12 3 9 5-9 5-9-5 9-5Zm-9 9 9 5 9-5M3 16l9 5 9-5" />
+    ),
+
     plus: (
       <path d="M12 5v14M5 12h14" />
     ),

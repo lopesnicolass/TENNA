@@ -84,6 +84,21 @@ export default function AdminCalendario() {
       return dia;
     });
   }, [mesCampo]);
+  useEffect(() => {
+    if (!campoAberto) return undefined;
+    const fechar = (event) => {
+      if (event.type === 'keydown' && event.key !== 'Escape') return;
+      if (event.type === 'mousedown' && event.target.closest?.('.admin-calendar-picker-anchor')) return;
+      setCampoAberto(null);
+    };
+    document.addEventListener('keydown', fechar);
+    document.addEventListener('mousedown', fechar);
+    return () => {
+      document.removeEventListener('keydown', fechar);
+      document.removeEventListener('mousedown', fechar);
+    };
+  }, [campoAberto]);
+
   function abrirCampoData() {
     if (campoAberto === 'data') { setCampoAberto(null); return; }
     const base = form.data ? new Date(`${form.data}T12:00:00`) : new Date();
@@ -253,16 +268,7 @@ export default function AdminCalendario() {
   }
 
   const hoje = dateKey(new Date());
-  const eventosSelecionados = datasOrdenadas.filter((item) => item.data === diaSelecionado);
   const eventosNesteMes = datasOrdenadas.filter((item) => item.data?.slice(0, 7) === dateKey(mesAtual).slice(0, 7));
-
-  function prepararNovaData() {
-    cancelarEdicao();
-    setCampoAberto(null);
-    setForm({ ...FORM_INICIAL, data: diaSelecionado });
-    formCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    tituloRef.current?.focus({ preventScroll: true });
-  }
 
   return (
     <div className="admin-calendar-page">
@@ -309,33 +315,27 @@ export default function AdminCalendario() {
                   type="button"
                   key={chave}
                   className={`admin-calendar-day ${foraDoMes ? 'outside' : ''} ${chave === hoje ? 'today' : ''} ${chave === diaSelecionado ? 'selected' : ''}`}
-                  onClick={() => setDiaSelecionado(chave)}
-                  aria-label={`${formatarData(chave)}: ${eventos.length} eventos`}
+                  onClick={() => { setDiaSelecionado(chave); if (!editando) setForm((atual) => ({ ...atual, data: chave })); }}
+                  aria-label={`${formatarData(chave)}: ${eventos.length === 0 ? 'nenhum evento' : eventos.length === 1 ? '1 evento' : `${eventos.length} eventos`}`}
                   aria-pressed={chave === diaSelecionado}
                 >
                   <span className="admin-calendar-day-number">{dia.getDate()}</span>
                   {chave === hoje && <span className="admin-calendar-today-tag">HOJE</span>}
-                  {eventos.length > 0 && <span className="admin-calendar-dots">{eventos.slice(0, 4).map((evento) => <span key={evento.id} className={`admin-calendar-type-dot ${getTipoClass(evento.tipo)}`} />)}</span>}
+                  {eventos.length > 0 && <>
+                    <span className="admin-calendar-chips">
+                      {eventos.slice(0, 2).map((evento) => <span key={evento.id} className={`admin-calendar-event ${getTipoClass(evento.tipo)}`} title={evento.titulo}><strong>{evento.titulo}</strong></span>)}
+                      {eventos.length > 2 && <span className="admin-calendar-more">+{eventos.length - 2} mais</span>}
+                    </span>
+                    <span className="admin-calendar-dots">{eventos.slice(0, 4).map((evento) => <span key={evento.id} className={`admin-calendar-type-dot ${getTipoClass(evento.tipo)}`} />)}</span>
+                  </>}
                 </button>
               );
             })}
           </div>
         </section>
 
-          <section className="admin-calendar-selected-card">
-            <div className="admin-calendar-selected-heading">
-              <div><span>DATA SELECIONADA</span><h2>{formatarData(diaSelecionado)}</h2></div>
-              <button type="button" onClick={prepararNovaData} aria-label="Cadastrar evento nesta data">+</button>
-            </div>
-            {eventosSelecionados.length ? eventosSelecionados.map((item) => (
-              <button key={item.id} type="button" className="admin-calendar-selected-event" onClick={() => iniciarEdicao(item)}>
-                <span className={`admin-calendar-type-dot ${getTipoClass(item.tipo)}`} />
-                <span><strong>{item.titulo}</strong><small>{item.tipo}</small></span>
-                <span className="admin-calendar-edit-label">Editar</span>
-              </button>
-            )) : <p className="admin-calendar-empty">Nenhuma data importante neste dia.</p>}
-          </section>
         </div>
+        <div className="admin-calendar-side">
           <section className="admin-calendar-form-card" ref={formCardRef}>
           <div className="admin-calendar-form-heading">
             <h2>{editando ? 'Atualizar evento' : 'Adicionar data importante'}</h2>
@@ -437,6 +437,7 @@ export default function AdminCalendario() {
             </div>
           </form>
           </section>
+        </div>
       </div>
 
           <section className="admin-calendar-list-card">
@@ -455,11 +456,11 @@ export default function AdminCalendario() {
               <p className="admin-calendar-empty">Nenhuma data importante cadastrada.</p>
             ) : (
               datasOrdenadas.map((item) => (
-                <article key={item.id} className="admin-calendar-list-item">
+                <article key={item.id} className={`admin-calendar-list-item ${item.data < hoje ? 'past' : ''}`}>
                   <span className={`admin-calendar-type-dot ${getTipoClass(item.tipo)}`} />
                   <div>
                     <strong>{item.titulo}</strong>
-                    <span>{formatarData(item.data)} · {item.tipo}</span>
+                    <span>{formatarData(item.data)}{item.horario ? ` às ${String(item.horario).slice(0, 5)}` : ''} · {item.tipo}{item.data < hoje && <em className="admin-calendar-past-tag">Encerrada</em>}</span>
                     {item.descricao && <p>{item.descricao}</p>}
                   </div>
                   <div className="admin-calendar-list-actions">

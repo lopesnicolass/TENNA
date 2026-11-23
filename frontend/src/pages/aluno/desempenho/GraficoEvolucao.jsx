@@ -1,4 +1,5 @@
 import { CartaoAmpliavel } from './CartaoAmpliavel.jsx';
+import { SeletorPersonalizado } from './SeletorPersonalizado.jsx';
 import { useEffect, useRef, useState } from 'react';
 import { META } from './constants.js';
 import { normalizarMateriaDesempenho } from '../../../utils/desempenhoInsights.js';
@@ -57,12 +58,13 @@ export function GraficoEvolucao({ resultadosCronologicos, obterNomeSimulado, for
           <p>Veja como suas notas mudaram e filtre por matéria.</p>
         </div>
         <div className="desempenho-grafico-filtros">
-          {materias.length > 1 && <label className="desempenho-campo-filtro">Matéria
-            <select aria-label="Filtrar evolução por matéria" value={materia} onChange={(event) => { setMateria(event.target.value); setSelecionado(null); }}>
-              <option value="todas">Todas as matérias</option>
-              {materias.map((nome) => <option key={nome} value={nome}>{nome}</option>)}
-            </select>
-          </label>}
+          {materias.length > 1 && <SeletorPersonalizado
+            rotulo="Matéria"
+            ariaLabel="Filtrar evolução por matéria"
+            valor={materia}
+            opcoes={[{ valor: 'todas', texto: 'Todas as matérias' }, ...materias.map((nome) => ({ valor: nome, texto: nome }))]}
+            onChange={(novo) => { setMateria(novo); setSelecionado(null); }}
+          />}
           {filtrados.length > 8 && (
           <div className="desempenho-opcoes" role="group" aria-label="Quantidade de tentativas no gráfico">
             <button type="button" className={intervalo === '8' ? 'ativo' : ''} onClick={() => { setIntervalo('8'); setSelecionado(null); }} aria-pressed={intervalo === '8'}>Últimas 8</button>

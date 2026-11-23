@@ -3451,3 +3451,317 @@ html[data-theme='dark'] .home-page .home-bottom-grid .home-ranking-join:hover {
   line-height: 1.35;
   color: var(--color-danger);
 }
+
+
+/* =====================================================================
+   HOME — acabamento final (ranking, cards de baixo e modal de XP)
+   Bloco no fim do arquivo para prevalecer sobre os ajustes anteriores.
+   ===================================================================== */
+
+/* Ranking: o rótulo "Nº lugar" aparece uma única vez, sem a medalha duplicada. */
+.home-page.home-page .home-bottom-grid .home-ranking-player-head { min-height: 30px; }
+.home-page.home-page .home-bottom-grid .home-ranking-placement {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--rank-accent, #6aa4e4) 18%, #fff);
+  font: 800 13px/1.2 var(--font-body);
+  letter-spacing: .01em;
+}
+html[data-theme='dark'] .home-page.home-page .home-bottom-grid .home-ranking-placement {
+  background: rgba(255, 255, 255, .08);
+}
+
+/* Cards "Seu próximo passo" e "Último resultado": compactos, ícone no canto,
+   conteúdo em coluna única e botão sempre alinhado no rodapé. */
+.home-page.home-page .home-bottom-grid .home-extras-grid { gap: 18px; align-items: stretch; }
+.home-page.home-page .home-bottom-grid .home-next-card,
+.home-page.home-page .home-bottom-grid .home-result-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 22px 24px 22px;
+  gap: 0;
+}
+.home-page.home-page .home-bottom-grid .home-extra-icon {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+}
+.home-page.home-page .home-bottom-grid .home-extra-copy {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  height: auto;
+  padding-right: 54px; /* espaço do ícone no título */
+}
+.home-page.home-page .home-bottom-grid .home-extra-copy > .home-extra-kicker { margin-bottom: 8px; }
+.home-page.home-page .home-bottom-grid .home-extra-copy h2 { margin: 0 0 10px; }
+.home-page.home-page .home-bottom-grid .home-next-meta { margin: 0 0 16px; }
+.home-page.home-page .home-bottom-grid .home-result-summary { padding-right: 0; margin-bottom: 4px; }
+.home-page.home-page .home-bottom-grid .home-extra-copy .home-result-summary { width: calc(100% + 54px); }
+.home-page.home-page .home-bottom-grid .home-extra-button {
+  margin-top: auto;
+  padding: 9px 15px;
+  min-height: 38px;
+  font-size: 13px;
+}
+.home-page.home-page .home-bottom-grid .home-extra-copy > .home-extra-button { margin-top: auto; }
+.home-page.home-page .home-bottom-grid .home-extra-copy > :nth-last-child(2):not(.home-extra-kicker) { margin-bottom: 18px; }
+
+/* Modal Níveis e XP — mesma linguagem visual do painel da Home. */
+.modal-card.levels-modal {
+  width: min(620px, calc(100vw - 28px));
+  max-width: 620px;
+  max-height: min(740px, 92dvh);
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 28px 70px rgba(8, 36, 78, .38);
+}
+.levels-hero {
+  position: relative;
+  flex: 0 0 auto;
+  padding: 26px 28px 24px;
+  color: #fff;
+  background: linear-gradient(120deg, #0e3f86 0%, #1a5fb8 55%, #2a88e6 100%);
+  overflow: hidden;
+}
+.levels-hero::after {
+  content: '';
+  position: absolute;
+  right: -70px;
+  top: -90px;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .08);
+  pointer-events: none;
+}
+.levels-hero > * { position: relative; z-index: 1; }
+.levels-hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+.levels-hero-top h2 { margin: 0 0 5px; color: #fff; font-size: 24px; letter-spacing: -.02em; }
+.levels-hero-top p { margin: 0; color: rgba(255, 255, 255, .82); font-size: 13.5px; line-height: 1.45; }
+.modal-card.levels-modal .levels-close {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color .16s ease;
+}
+.modal-card.levels-modal .levels-close:hover { background: rgba(255, 255, 255, .26); }
+.modal-card.levels-modal .levels-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.modal-card.levels-modal .levels-current-feature {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 0 0 14px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.modal-card.levels-modal .levels-feature-symbol {
+  width: 52px;
+  height: 52px;
+  flex: 0 0 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #ffe08a, #f6b83c);
+  color: #7a4d00;
+  font-size: 26px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .2);
+}
+.modal-card.levels-modal .levels-feature-copy { flex: 1 1 auto; min-width: 0; gap: 4px; }
+.modal-card.levels-modal .levels-feature-eyebrow { color: rgba(255, 255, 255, .72); font-size: 11px; letter-spacing: .14em; }
+.modal-card.levels-modal .levels-feature-copy strong { color: #fff; font-size: 19px; }
+.modal-card.levels-modal .levels-feature-copy small { color: rgba(255, 255, 255, .85); font-size: 12.5px; }
+.levels-feature-total {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: #fff;
+  font: 800 24px/1 var(--font-display, inherit);
+}
+.levels-feature-total small { margin-top: 4px; color: rgba(255, 255, 255, .72); font: 700 11px/1 var(--font-body, inherit); letter-spacing: .06em; text-transform: uppercase; }
+.modal-card.levels-modal .levels-progress-track {
+  height: 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .22);
+  overflow: hidden;
+}
+.modal-card.levels-modal .levels-progress-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #ffe08a, #f6b83c);
+  transition: width .4s ease;
+}
+
+.levels-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 28px 24px;
+}
+.modal-card.levels-modal .levels-list-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 10px;
+  color: #123e76;
+  font-size: 14px;
+  font-weight: 800;
+}
+.modal-card.levels-modal .levels-list-heading small { color: #6a829d; font-size: 12px; font-weight: 600; }
+.modal-card.levels-modal .levels-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  margin: 0;
+  padding: 2px 6px 2px 0;
+  gap: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.modal-card.levels-modal .levels-row {
+  min-height: 58px;
+  padding: 10px 14px;
+  border: 1px solid #dde9f6;
+  border-radius: 14px;
+  background: #f6faff;
+  transition: border-color .16s ease, background-color .16s ease;
+}
+.modal-card.levels-modal .levels-row-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  background: #e3eefb;
+  color: #3b6ca6;
+  font-size: 14px;
+}
+.modal-card.levels-modal .levels-row-info strong { color: #173e68; font-size: 14.5px; }
+.modal-card.levels-modal .levels-row-info span { color: #6a829d; font-size: 12px; }
+.modal-card.levels-modal .levels-row-xp { color: #2b64a8; font-size: 13px; }
+
+.modal-card.levels-modal .levels-row.done { background: #f1faf5; border-color: #cfe9da; }
+.modal-card.levels-modal .levels-row.done .levels-row-badge { background: #d3f0df; color: #167a4c; }
+.modal-card.levels-modal .levels-row.done .levels-row-info span { color: #2f8a62; }
+
+.modal-card.levels-modal .levels-row.current {
+  border-color: #1a5fb8;
+  background: linear-gradient(120deg, #0e3f86, #1f6cc9);
+  box-shadow: 0 8px 20px rgba(20, 90, 180, .25);
+}
+.modal-card.levels-modal .levels-row.current .levels-row-badge { background: linear-gradient(135deg, #ffe08a, #f6b83c); color: #6b4300; }
+.modal-card.levels-modal .levels-row.current .levels-row-info strong,
+.modal-card.levels-modal .levels-row.current .levels-row-xp { color: #fff; }
+.modal-card.levels-modal .levels-row.current .levels-row-info span { color: rgba(255, 255, 255, .8); }
+
+.modal-card.levels-modal .levels-row.future { opacity: .9; }
+
+@media (max-width: 600px) {
+  .modal-card.levels-modal { width: calc(100vw - 20px); border-radius: 20px; }
+  .levels-hero { padding: 20px 18px 20px; }
+  .levels-hero-top h2 { font-size: 21px; }
+  .modal-card.levels-modal .levels-feature-symbol { width: 44px; height: 44px; flex-basis: 44px; font-size: 22px; }
+  .modal-card.levels-modal .levels-feature-copy strong { font-size: 16px; }
+  .levels-feature-total { display: none; }
+  .levels-body { padding: 16px 16px 18px; }
+  .modal-card.levels-modal .levels-list-heading small { display: none; }
+}
+
+/* Modal no tema escuro */
+html[data-theme='dark'] .modal-card.levels-modal { background: #12263f; box-shadow: 0 28px 70px rgba(0, 0, 0, .6); }
+html[data-theme='dark'] .levels-hero { background: linear-gradient(120deg, #0b2d62 0%, #134a93 55%, #1d6cc2 100%); }
+html[data-theme='dark'] .modal-card.levels-modal .levels-list-heading { color: #e6f1ff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-list-heading small { color: #9bb5d1; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row { background: #19324f; border-color: #2f4d6c; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row-badge { background: #264a72; color: #bcd9f7; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row-info strong { color: #eef6ff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row-info span { color: #9bb5d1; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row-xp { color: #8fc4ff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.done { background: #173a34; border-color: #2c5e50; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.done .levels-row-badge { background: #1f5a48; color: #8be8bd; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.done .levels-row-info span { color: #8be8bd; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.current {
+  background: linear-gradient(120deg, #123f82, #1f6cc9);
+  border-color: #4a97ee;
+}
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.current .levels-row-info strong,
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.current .levels-row-xp { color: #fff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-row.current .levels-row-info span { color: rgba(255, 255, 255, .82); }
+
+
+/* Modal de XP — cabeçalho claro, para não se misturar com o painel azul atrás. */
+.modal-card.levels-modal { border: 1px solid rgba(255, 255, 255, .6); }
+.modal-card.levels-modal .levels-hero {
+  color: #123e76;
+  background: linear-gradient(180deg, #f3f8ff 0%, #e6f0fc 100%);
+  border-bottom: 1px solid #d3e3f6;
+}
+.modal-card.levels-modal .levels-hero::after { background: rgba(32, 137, 237, .08); }
+.modal-card.levels-modal .levels-hero-top h2 { color: #123e76; }
+.modal-card.levels-modal .levels-hero-top p { color: #4f6d90; }
+.modal-card.levels-modal .levels-close {
+  border: 1px solid #cfe0f3;
+  background: #fff;
+  color: #1a5fb8;
+}
+.modal-card.levels-modal .levels-close:hover { background: #eaf3ff; }
+.modal-card.levels-modal .levels-close:focus-visible { outline-color: #2a88e6; }
+.modal-card.levels-modal .levels-current-feature {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border: 1px solid #d3e3f6;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(20, 80, 150, .08);
+}
+.modal-card.levels-modal .levels-feature-eyebrow { color: #5b7aa0; }
+.modal-card.levels-modal .levels-feature-copy strong { color: #123e76; }
+.modal-card.levels-modal .levels-feature-copy small { color: #4f6d90; }
+.modal-card.levels-modal .levels-feature-total { color: #1a5fb8; }
+.modal-card.levels-modal .levels-feature-total small { color: #6a829d; }
+.modal-card.levels-modal .levels-progress-track { background: #cfe0f3; }
+.modal-card.levels-modal .levels-progress-fill { background: linear-gradient(90deg, #2a88e6, #1a5fb8); }
+
+html[data-theme='dark'] .modal-card.levels-modal { border-color: #3a5a80; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-hero {
+  color: #eaf3ff;
+  background: linear-gradient(180deg, #1c3858 0%, #17304d 100%);
+  border-bottom-color: #2f4d6c;
+}
+html[data-theme='dark'] .modal-card.levels-modal .levels-hero-top h2 { color: #fff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-hero-top p { color: #a9c2dd; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-close { background: #223f60; border-color: #3a5a80; color: #dcecff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-current-feature { background: #12263f; border-color: #35557a; box-shadow: none; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-feature-eyebrow { color: #9bb5d1; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-feature-copy strong { color: #fff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-feature-copy small { color: #b4cae2; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-feature-total { color: #8fc4ff; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-feature-total small { color: #9bb5d1; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-progress-track { background: #2a4565; }
+html[data-theme='dark'] .modal-card.levels-modal .levels-progress-fill { background: linear-gradient(90deg, #4aa0f2, #2a7fe0); }

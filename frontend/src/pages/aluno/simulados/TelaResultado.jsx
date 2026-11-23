@@ -1,5 +1,7 @@
 import { API_URL } from '../../../services/api.js';
 import { createPortal } from 'react-dom';
+import { ehSimuladoGeral, normalizarMateriaSimulado } from './dadosSimulados.js';
+import { estiloMateria } from './estiloMateria.js';
 
 // Resultado e correção mantêm os dados oficiais retornados pelo backend.
 export function TelaResultado({
@@ -12,6 +14,8 @@ export function TelaResultado({
   voltarParaSimulados,
   formatarTempo
 }) {
+  const simuladoGeral = ehSimuladoGeral(simuladoSelecionado);
+  const temaMateria = estiloMateria(normalizarMateriaSimulado(simuladoSelecionado)).classe;
   const aproveitamento = Number(resultadoFinal.porcentagem || 0);
   const detalhes = Array.isArray(resultadoFinal.detalhes) ? resultadoFinal.detalhes : [];
   const desempenhoPorDisciplina = Array.from(detalhes.reduce((mapa, item) => {
@@ -24,7 +28,7 @@ export function TelaResultado({
   }, new Map()).values()).sort((a, b) => a.materia.localeCompare(b.materia, 'pt-BR'));
 
   return createPortal(
-    <main className="simulado-fullscreen simulado-resultado-screen">
+    <main className={`simulado-fullscreen simulado-resultado-screen simulado-tema simulado-tema-${temaMateria}`}>
       <div className="simulado-resultado-container">
         <header className="simulado-resultado-cabecalho">
           <span className="simulado-resultado-kicker">Seu desempenho</span>
@@ -86,12 +90,16 @@ export function TelaResultado({
                 <article key={questao.id} className={`simulado-resultado-questao ${acertou ? 'acertou' : 'errou'}`}>
                   <div className="simulado-resultado-questao-topo">
                     <span>Questão {index + 1}</span>
+                    {(() => {
+                      const dificuldade = questao.dificuldade && questao.dificuldade !== 'Não classificada' ? questao.dificuldade : null;
+                      const etiquetas = [simuladoGeral && questao.materia, simuladoGeral && questao.topico, dificuldade].filter(Boolean);
+                      return etiquetas.length > 0 && (
+                        <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
+                          {etiquetas.map((etiqueta) => <span key={etiqueta}>{etiqueta}</span>)}
+                        </div>
+                      );
+                    })()}
                     <span className={`simulado-resultado-estado ${acertou ? 'certo' : 'incorreto'}`}>{acertou ? 'Correta' : respostaUsuario ? 'Incorreta' : 'Não respondida'}</span>
-                  </div>
-                  <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
-                    {questao.materia && <span>{questao.materia}</span>}
-                    {questao.topico && <span>{questao.topico}</span>}
-                    {questao.dificuldade && questao.dificuldade !== 'Não classificada' && <span>{questao.dificuldade}</span>}
                   </div>
                   <h3>{questao.pergunta}</h3>
                   {questao.imagem && (

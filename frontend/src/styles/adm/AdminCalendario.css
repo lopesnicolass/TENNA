@@ -795,3 +795,49 @@ html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-list-ac
   border-color: #764555;
   color: #ffbfc3;
 }
+
+
+/* ===== Ajustes de acabamento ===== */
+/* Os campos herdavam o peso 800 do <label>, deixando placeholder e texto digitado em negrito. */
+.admin-calendar-form :is(input, select, textarea) { font-weight: 500; }
+.admin-calendar-form :is(input, textarea)::placeholder { color: #7d93b0; font-weight: 400; opacity: 1; }
+.admin-calendar-form .admin-calendar-field-button { font-weight: 600; }
+
+/* Eventos legíveis direto na célula do dia (em telas menores continuam só os pontos). */
+.admin-calendar-day { overflow: hidden; }
+.admin-calendar-chips { display: flex; flex-direction: column; gap: 3px; width: 100%; min-width: 0; margin-top: 4px; }
+.admin-calendar-chips .admin-calendar-event { margin: 0; padding: 3px 6px; cursor: inherit; }
+.admin-calendar-event.vestibulinho { background: #fff3e0; color: #a85f08; }
+.admin-calendar-event strong { font-weight: 700; }
+.admin-calendar-chips .admin-calendar-more { margin: 0; padding-left: 2px; }
+.admin-calendar-day .admin-calendar-dots { display: none; }
+@media (max-width: 1200px) {
+  .admin-calendar-chips { display: none; }
+  .admin-calendar-day .admin-calendar-dots { display: flex; }
+}
+
+/* Coluna da direita: data selecionada em cima, formulário embaixo. */
+.admin-calendar-page .admin-calendar-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.admin-calendar-chips .admin-calendar-event { border-left: 0; border-radius: 6px; }
+
+/* Datas já encerradas */
+.admin-calendar-list-item.past { opacity: .7; }
+.admin-calendar-past-tag { display: inline-block; margin-left: 8px; padding: 1px 7px; border-radius: 999px; background: #eef1f5; color: #5d6f84; font-style: normal; font-size: 10px; font-weight: 800; }
+
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-event { background: #24405e; color: #cfe5ff; }
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-event.prova,
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-event.vestibulinho { background: #4a3a22; color: #ffd9a0; }
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-event.resultado { background: #1f4232; color: #b9efd0; }
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-event.outro { background: #382f5c; color: #d8ccff; }
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-past-tag { background: #294563; color: #c9e3ff; }
+html[data-theme='dark'] .admin-area .admin-calendar-page .admin-calendar-form :is(input, textarea)::placeholder { color: #96b1cc; }
+
+/* Calendário e formulário com a mesma altura; lista de datas logo abaixo, na largura total. */
+@media (min-width: 981px) {
+  .admin-calendar-page .admin-calendar-layout { align-items: stretch; }
+  .admin-calendar-page .admin-calendar-main { height: 100%; }
+  .admin-calendar-page .admin-calendar-month-card { flex: 1; display: flex; flex-direction: column; }
+  .admin-calendar-page .admin-calendar-grid { flex: 1; grid-auto-rows: minmax(0, 1fr); }
+  .admin-calendar-page .admin-calendar-day { height: auto; min-height: 72px; }
+  .admin-calendar-page .admin-calendar-side .admin-calendar-form-card { flex: 1; }
+}

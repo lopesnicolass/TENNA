@@ -1,0 +1,106 @@
+/* Caixa de seleção personalizada (painel administrativo). */
+.admin-select { position: relative; min-width: 0; width: 100%; }
+.admin-select-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px;
+  border: 1px solid #cbdff3;
+  border-radius: 12px;
+  background: #fff;
+  color: #123e76;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 650;
+  line-height: 1.2;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(19, 73, 132, .03);
+  transition: border-color .16s, box-shadow .16s, background-color .16s;
+}
+.admin-select-trigger > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.admin-select-trigger svg { flex: none; color: #537ba6; transition: transform .16s; }
+.admin-select.is-open .admin-select-trigger svg { transform: rotate(180deg); }
+.admin-select-trigger.is-placeholder { color: #6d87a6; font-weight: 550; }
+.admin-select-trigger:hover:not(:disabled) { border-color: #9cbee6; }
+.admin-select-trigger:focus-visible,
+.admin-select.is-open .admin-select-trigger {
+  outline: none;
+  border-color: #3387e6;
+  box-shadow: 0 0 0 3px rgba(43, 130, 232, .13);
+}
+.admin-select-trigger:disabled { background: #f1f6fc; color: #9db0c7; cursor: not-allowed; box-shadow: none; }
+.admin-select-trigger:disabled svg { color: #b4c4d8; }
+
+.admin-select-menu {
+  position: absolute;
+  z-index: 60;
+  top: calc(100% + 7px);
+  left: 0;
+  right: 0;
+  min-width: 100%;
+  max-height: 264px;
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid #d2e1f2;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 32px rgba(18, 58, 109, .16);
+}
+.admin-select-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #173e68;
+  font: inherit;
+  font-size: 13.5px;
+  text-align: left;
+  cursor: pointer;
+}
+.admin-select-option:hover,
+.admin-select-option:focus-visible { outline: none; background: #edf5ff; }
+.admin-select-option.is-selected { background: #e8f2ff; color: #1555ad; font-weight: 700; }
+.admin-select-option svg { flex: none; }
+.admin-select-empty { padding: 12px; color: #7e96b5; font-size: 12.5px; }
+
+/* Campo invisível só para a validação "obrigatório" do formulário. */
+.admin-select-required {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+html[data-theme='dark'] .admin-select-trigger { background: #203a54; border-color: #496783; color: #edf5ff; box-shadow: none; }
+html[data-theme='dark'] .admin-select-trigger svg { color: #a1c9ee; }
+html[data-theme='dark'] .admin-select-trigger.is-placeholder { color: #9bb5d1; }
+html[data-theme='dark'] .admin-select-trigger:hover:not(:disabled) { border-color: #6f93b8; }
+html[data-theme='dark'] .admin-select-trigger:focus-visible,
+html[data-theme='dark'] .admin-select.is-open .admin-select-trigger { border-color: #5aa6f2; box-shadow: 0 0 0 3px rgba(90, 166, 242, .2); }
+html[data-theme='dark'] .admin-select-trigger:disabled { background: #172b3f; color: #6f87a1; }
+html[data-theme='dark'] .admin-select-menu { background: #1b3148; border-color: #3f607f; box-shadow: 0 16px 34px rgba(0, 0, 0, .5); }
+html[data-theme='dark'] .admin-select-option { color: #dceaff; }
+html[data-theme='dark'] .admin-select-option:hover,
+html[data-theme='dark'] .admin-select-option:focus-visible { background: #27496a; }
+html[data-theme='dark'] .admin-select-option.is-selected { background: #2d5a86; color: #fff; }
+
+/* Dentro dos modais de simulado/questão: mesma altura dos demais campos. */
+.sim-dialog .admin-select-trigger { min-height: 44px; font-size: 13px; border-radius: 10px; }
+.sim-dialog .admin-select-option { font-size: 13px; min-height: 38px; }
+.sim-dialog .admin-select-menu { z-index: 70; }

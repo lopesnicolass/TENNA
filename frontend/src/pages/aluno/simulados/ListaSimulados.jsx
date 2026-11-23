@@ -219,7 +219,7 @@ export function ListaSimulados({
   }
 
   return (
-    <div className="simulados-page page-shell">
+    <div className={`simulados-page page-shell${materiaSelecionada ? ` simulados-tema simulados-tema-${estiloMateriaSelecionada?.classe || 'outra'}` : ''}`}>
       <div
         className={`simulados-hero ${
           materiaSelecionada

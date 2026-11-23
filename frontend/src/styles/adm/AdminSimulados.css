@@ -868,3 +868,220 @@ html[data-theme='dark'] :is(.simulado-editor-modal, .simulado-questao-modal) .mo
     transition: none;
   }
 }
+
+/* =====================================================================
+   ADMIN · SIMULADOS — acabamento visual (banco de questões e listagem)
+   ===================================================================== */
+.admin-simulados-page .admin-simulados-heading { margin-bottom: 24px; }
+.admin-simulados-page .admin-simulados-heading h1 { font-size: 36px; }
+.admin-simulados-page .admin-simulados-heading p { max-width: 640px; line-height: 1.55; }
+.admin-simulados-page .admin-simulados-new,
+.admin-simulados-page .admin-banco-toggle { min-height: 46px; border-radius: 12px; }
+.admin-simulados-page .admin-simulados-new { box-shadow: 0 6px 14px rgba(25, 118, 210, .22); }
+.admin-simulados-page .admin-banco-toggle { border-color: #c4dbf2; box-shadow: 0 2px 6px rgba(19, 73, 132, .05); }
+
+/* Banco de questões */
+.admin-simulados-page .admin-banco-questoes {
+  padding: 26px 28px 24px;
+  border-radius: 20px;
+  border-color: #d5e4f4;
+  box-shadow: 0 10px 28px rgba(25, 68, 110, .07);
+}
+.admin-simulados-page .admin-banco-questoes-heading {
+  padding-bottom: 18px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e3edf8;
+}
+.admin-simulados-page .admin-banco-questoes-heading h2 { font-size: 22px; letter-spacing: -.02em; color: #123e76; }
+.admin-simulados-page .admin-banco-filtros {
+  grid-template-columns: minmax(220px, 1.5fr) repeat(3, minmax(160px, 1fr));
+  gap: 14px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+.admin-banco-campo { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.admin-banco-rotulo { color: #2c4d73; font-size: 12.5px; font-weight: 750; }
+.admin-banco-busca { position: relative; display: flex; align-items: center; }
+.admin-banco-busca svg { position: absolute; left: 14px; color: #6386ad; pointer-events: none; }
+.admin-simulados-page .admin-banco-busca input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 14px 0 42px;
+  border: 1px solid #cbdff3;
+  border-radius: 12px;
+  background: #fff;
+  background-image: none;
+  color: #123e76;
+  font: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(19, 73, 132, .03);
+  transition: border-color .16s, box-shadow .16s;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.admin-simulados-page .admin-banco-busca input::placeholder { color: #6d87a6; font-weight: 550; opacity: 1; }
+.admin-simulados-page .admin-banco-busca input::-webkit-search-cancel-button { display: none; }
+.admin-simulados-page .admin-banco-busca input:hover { border-color: #9cbee6; }
+.admin-simulados-page .admin-banco-busca input:focus { outline: none; border-color: #3387e6; box-shadow: 0 0 0 3px rgba(43, 130, 232, .13); }
+
+.admin-simulados-page .admin-banco-questoes-resumo {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0 12px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #eaf4ff;
+  color: #1a5ea8;
+  font-size: 12px;
+  font-weight: 700;
+}
+.admin-simulados-page .admin-banco-questoes-lista { gap: 10px; padding-right: 6px; }
+.admin-simulados-page .admin-banco-questao-card {
+  position: relative;
+  gap: 18px;
+  padding: 15px 18px 15px 22px;
+  border: 1px solid #dbe8f6;
+  border-radius: 14px;
+  background: #f8fbff;
+  overflow: hidden;
+  transition: border-color .16s, box-shadow .16s, background-color .16s;
+}
+.admin-simulados-page .admin-banco-questao-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #5aa3ea;
+}
+.admin-simulados-page .admin-banco-questao-card:hover { border-color: #a9cbee; background: #fff; box-shadow: 0 6px 16px rgba(25, 80, 140, .08); }
+.admin-simulados-page .admin-banco-questao-meta { gap: 7px; margin-bottom: 8px; }
+.admin-simulados-page .admin-banco-questao-meta strong { color: #123e76; font-size: 13px; margin-right: 2px; }
+.admin-simulados-page .admin-banco-questao-meta span {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: #e5f0fc;
+  color: #1f5a96;
+  font-size: 11px;
+}
+.admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Fácil'] { background: #def5e8; color: #1a7a48; }
+.admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Média'] { background: #fff1d3; color: #94620a; }
+.admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Difícil'] { background: #fde2df; color: #b33a2e; }
+.admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Não classificada'] { background: #eceff3; color: #5d6b7c; }
+.admin-simulados-page .admin-banco-questao-card p { font-size: 13.5px; color: #1b3f69; }
+
+.admin-simulados-page .admin-edit-btn {
+  flex: none;
+  white-space: nowrap;
+  border: 1px solid #b9d5f1;
+  border-radius: 10px;
+  background: #eef6ff;
+  color: #145aa5;
+  font-weight: 700;
+  transition: background-color .15s, border-color .15s;
+}
+.admin-simulados-page .admin-edit-btn:hover:not(:disabled) { background: #dcecff; border-color: #84b6ec; }
+
+/* Lista de simulados por disciplina */
+.admin-simulados-page .admin-simulados-materia {
+  padding: 22px 26px 24px;
+  border-radius: 20px;
+  border-color: #d5e4f4;
+  box-shadow: 0 8px 24px rgba(25, 68, 110, .06);
+}
+.admin-simulados-page .admin-simulados-materia-header {
+  margin: -22px -26px 0;
+  padding: 18px 26px;
+  border-bottom: 1px solid color-mix(in srgb, var(--materia-cor, #2783d3) 22%, #e3edf8);
+  border-radius: 20px 20px 0 0;
+  background: linear-gradient(100deg, color-mix(in srgb, var(--materia-cor, #2783d3) 10%, #fff) 0%, #fff 70%);
+}
+.admin-simulados-page .admin-simulados-materia-icon { width: 44px; height: 44px; border-radius: 13px; box-shadow: 0 5px 12px color-mix(in srgb, var(--materia-cor, #2783d3) 30%, transparent); }
+.admin-simulados-page .admin-simulados-conteudo { padding-top: 18px; }
+.admin-simulados-page .admin-simulados-conteudo-heading h3 { font-size: 15.5px; color: #123e76; }
+.admin-simulados-page .admin-simulados-conteudo-heading span {
+  background: color-mix(in srgb, var(--materia-cor, #2783d3) 14%, #fff);
+  color: color-mix(in srgb, var(--materia-cor, #2783d3) 70%, #0d2238);
+}
+.admin-simulados-page .admin-simulados-items { gap: 10px; }
+.admin-simulados-page .admin-simulado-card {
+  position: relative;
+  padding: 15px 18px 15px 22px;
+  border: 1px solid #dbe8f6;
+  border-radius: 14px;
+  background: #f8fbff;
+  overflow: hidden;
+  transition: border-color .16s, box-shadow .16s, background-color .16s;
+}
+.admin-simulados-page .admin-simulado-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--materia-cor, #2783d3);
+}
+.admin-simulados-page .admin-simulado-card:hover {
+  border-color: color-mix(in srgb, var(--materia-cor, #2783d3) 45%, #fff);
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(25, 80, 140, .08);
+}
+.admin-simulados-page .admin-simulado-card-main > strong { color: #123e76; }
+.admin-simulados-page .admin-simulado-details span {
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: color-mix(in srgb, var(--materia-cor, #2783d3) 12%, #fff);
+  color: color-mix(in srgb, var(--materia-cor, #2783d3) 70%, #0d2238);
+  font-weight: 700;
+}
+
+/* Tema escuro */
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questoes,
+html[data-theme='dark'] .admin-simulados-page .admin-simulados-materia { border-color: #38536d; box-shadow: none; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questoes-heading { border-bottom-color: #34506b; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questoes-heading h2,
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-meta strong,
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-card p,
+html[data-theme='dark'] .admin-simulados-page .admin-simulado-card-main > strong,
+html[data-theme='dark'] .admin-simulados-page .admin-simulados-conteudo-heading h3 { color: #eaf3ff; }
+html[data-theme='dark'] .admin-banco-rotulo { color: #cfe1f5; }
+html[data-theme='dark'] .admin-banco-busca svg { color: #a1c9ee; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-busca input { background: #203a54; border-color: #496783; color: #edf5ff; box-shadow: none; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-busca input::placeholder { color: #9bb5d1; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-busca input:focus { border-color: #5aa6f2; box-shadow: 0 0 0 3px rgba(90, 166, 242, .2); }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questoes-resumo { background: #234463; color: #bcdcff; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-card,
+html[data-theme='dark'] .admin-simulados-page .admin-simulado-card { background: #1d3550; border-color: #35536f; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-card:hover,
+html[data-theme='dark'] .admin-simulados-page .admin-simulado-card:hover { background: #234160; border-color: #5b86b0; box-shadow: none; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-meta span { background: #2b4d70; color: #cfe6ff; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Fácil'] { background: #1f5a48; color: #98f0c6; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Média'] { background: #5b4519; color: #ffd98a; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Difícil'] { background: #5c2a29; color: #ffb4ac; }
+html[data-theme='dark'] .admin-simulados-page .admin-banco-questao-meta .admin-chip-dificuldade[data-dificuldade='Não classificada'] { background: #34475b; color: #c3d2e2; }
+html[data-theme='dark'] .admin-simulados-page .admin-edit-btn { background: #234463; border-color: #43698f; color: #cfe6ff; }
+html[data-theme='dark'] .admin-simulados-page .admin-edit-btn:hover:not(:disabled) { background: #2b5176; border-color: #6a9bcb; }
+html[data-theme='dark'] .admin-simulados-page .admin-simulados-materia-header {
+  border-bottom-color: #34506b;
+  background: linear-gradient(100deg, color-mix(in srgb, var(--materia-cor, #2783d3) 22%, #182c40) 0%, #182c40 75%);
+}
+html[data-theme='dark'] .admin-simulados-page .admin-simulados-conteudo-heading span,
+html[data-theme='dark'] .admin-simulados-page .admin-simulado-details span {
+  background: color-mix(in srgb, var(--materia-cor, #2783d3) 30%, #1b3148);
+  color: #e6f1ff;
+}
+
+@media (max-width: 980px) {
+  .admin-simulados-page .admin-banco-filtros { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .admin-simulados-page .admin-banco-campo-busca { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .admin-simulados-page .admin-banco-filtros { grid-template-columns: 1fr; }
+  .admin-simulados-page .admin-banco-questoes { padding: 18px 16px; }
+  .admin-simulados-page .admin-simulados-materia { padding: 16px; }
+  .admin-simulados-page .admin-simulados-materia-header { margin: -16px -16px 0; padding: 15px 16px; }
+}

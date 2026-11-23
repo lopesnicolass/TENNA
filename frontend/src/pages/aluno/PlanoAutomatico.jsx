@@ -14,7 +14,7 @@ import SubjectIcon
 import Icon
   from '../../components/Icon.jsx';
 import { API_URL, request, obterToken } from '../../services/api.js';
-import { gerarPlanoProgramado, reagendarDatasPlano, avaliarPrazoPlanoReal,
+import { gerarPlanoProgramado, reagendarDatasPlano, inicioFixoDoPlano,
   diasPadrao, validarDiasSemana, NOMES_DIAS, formatarPeriodo, dataCivil, inicioDoMes } from '../../utils/planoProgramado.js';
 import { getSubjectStyle } from '../../utils/subjects.js';
 import { chaveSessaoPlano, sugerirDataSessao, sessaoJaAgendada, dataPermitidaSessaoPlano, agendamentoNoFuturo, prepararAgendamentoCompleto, recuperarConfiguracaoAgenda, resumoSemanaPlano, moverSessaoNaSemana } from '../../utils/planoCalendario.js';
@@ -485,8 +485,24 @@ export default function PlanoAutomatico() {
     return () => { ativo = false; };
   }, []);
 
-  const prazoSelecionado = avaliarPrazoPlanoReal(months, dataVestibulinho, inicioPlano || dataCivil(new Date()));
-  const prazoNovaConfiguracao = avaliarPrazoPlanoReal(months, dataVestibulinho);
+  // O período do cronograma é fixo (termina no mês anterior ao Vestibulinho).
+  // Planos salvos antes dessa regra são realinhados ao período correto, sem perder
+  // conteúdos estudados nem atividades já colocadas no Calendário.
+  useEffect(() => {
+    if (!Array.isArray(plan) || !plan.length || !dataVestibulinho) return;
+    const esperado = inicioFixoDoPlano(plan.length, dataVestibulinho);
+    if (!esperado || plan[0]?.inicio === esperado) return;
+    const quantidadeDias = plan[0]?.semanas?.[0]?.days?.length || Number(days);
+    const diasPlano = validarDiasSemana(diasSemana, quantidadeDias) ? diasSemana : diasPadrao(quantidadeDias);
+    const realinhado = reagendarDatasPlano(plan, { diasSemana: diasPlano, inicio: esperado });
+    if (!realinhado.length) return;
+    setPlan(realinhado);
+    setInicioPlano(esperado);
+    setConfigSalva((anterior) => ({ ...anterior, inicio: esperado }));
+    savePlan(realinhado, configSalva?.months || plan.length, configSalva?.days || quantidadeDias, configSalva?.modeloId,
+      configSalva?.modeloAtualizadoEm, diasPlano, esperado, Boolean(configSalva?.diasPersonalizados), configSalva?.modeloVersao);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [plan, dataVestibulinho]);
 
   useEffect(() => {
     let ativo = true;
@@ -740,7 +756,11 @@ export default function PlanoAutomatico() {
       return;
     }
     const mesesDoPlano = Number(months);
-    const inicio = inicioDoMes(new Date());
+    let dataProva = dataVestibulinho;
+    if (!dataProva) {
+      try { dataProva = (await request('/calendario/vestibulinho'))?.data || null; } catch { dataProva = null; }
+    }
+    const inicio = inicioFixoDoPlano(mesesDoPlano, dataProva);
     let programacao;
     try {
       setSyncingPlan(true);
@@ -770,7 +790,9 @@ export default function PlanoAutomatico() {
       modeloId: programacao.id, modeloAtualizadoEm: programacao.atualizado_em, modeloVersao: programacao.versao });
     selecionarSemana(1, 1);
     savePlan(planoGerado, mesesDoPlano, days, programacao.id, programacao.atualizado_em, diasDaGeracao, inicio, false, programacao.versao);
-    setAvisoPlano('O cronograma começa no dia 1º do mês atual. Ao adicioná-lo ao Calendário, as sessões mantêm as datas previstas, mesmo as que já passaram.');
+    setAvisoPlano(dataProva
+      ? 'Seu cronograma segue o período fixo até o Vestibulinho. Ao adicioná-lo ao Calendário, as sessões mantêm as datas previstas, mesmo as que já passaram.'
+      : 'O cronograma começa no dia 1º do mês atual. Ao adicioná-lo ao Calendário, as sessões mantêm as datas previstas, mesmo as que já passaram.');
     setEditandoPlano(false);
     // Gerar o plano NÃO adiciona todas as sessões ao calendário.
     // Cada sessão é escolhida e confirmada individualmente pelo aluno.
@@ -892,10 +914,9 @@ export default function PlanoAutomatico() {
                     <button
                       type="button"
                       key={quantidade}
-                      className={`tenna-auto-choice ${months === quantidade ? 'is-selected' : ''} ${avaliarPrazoPlanoReal(quantidade, dataVestibulinho).ultrapassa ? 'is-after-exam' : ''}`}
+                      className={`tenna-auto-choice ${months === quantidade ? 'is-selected' : ''}`}
                       aria-pressed={months === quantidade}
                       aria-label={`${quantidade} ${quantidade === 1 ? 'mês' : 'meses'}`}
-                      title={avaliarPrazoPlanoReal(quantidade, dataVestibulinho).ultrapassa ? 'Este período ultrapassa a data do Vestibulinho, mas pode ser selecionado.' : undefined}
                       onClick={() => mudarMeses(quantidade)}
                       disabled={syncingPlan}
                     >
@@ -926,9 +947,6 @@ export default function PlanoAutomatico() {
                 </div>
               </div>
             </div>
-            {prazoNovaConfiguracao.conhecido && prazoNovaConfiguracao.ultrapassa && (
-              <p className="tenna-auto-simple-date-notice" role="status">Esse período ultrapassa a data do Vestibulinho. Você pode escolher menos meses para concluir a preparação antes da prova.</p>
-            )}
             {!combinacaoDisponivel && variacoesDisponiveis.length > 0 && (
               <p className="tenna-auto-simple-date-notice">Não há modelo publicado para {months} {months === 1 ? 'mês' : 'meses'} e {days} {days === 1 ? 'dia' : 'dias'} por semana.</p>
             )}
@@ -989,12 +1007,6 @@ export default function PlanoAutomatico() {
           {avisoPlano && <div className="studyplan-calendar-feedback" role="status"><Icon name="check" size={17}/>{avisoPlano}</div>}
           {syncingPlan && <p className="tenna-auto-sync-status" role="status">Preparando sua trilha de estudos...</p>}
           {syncError && <p className="tenna-auto-error" role="alert">{syncError}</p>}
-          {prazoSelecionado.conhecido && prazoSelecionado.ultrapassa && (
-            <div className="tenna-auto-date-warning" role="status">
-              <Icon name="calendar" size={18} />
-              <span>Seu plano está previsto para terminar depois do Vestibulinho. Considere ajustar a duração para priorizar os estudos antes da prova.</span>
-            </div>
-          )}
 
           <section className="studyplan-next" aria-labelledby="studyplan-next-heading">
             <div className="studyplan-next-main">

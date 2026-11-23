@@ -1,5 +1,7 @@
 import { API_URL } from '../../../services/api.js';
 import { useState } from 'react';
+import { ehSimuladoGeral, normalizarMateriaSimulado } from './dadosSimulados.js';
+import { estiloMateria } from './estiloMateria.js';
 
 // Tela de prova: preserva todas as questões e o salvamento automático de respostas.
 export function TelaSimulado({
@@ -18,6 +20,8 @@ export function TelaSimulado({
   const respondidas = questoes.filter((item) => Boolean(respostas[item.id])).length;
   const pendentes = questoes.length - respondidas;
   const progresso = questoes.length ? Math.round(100 * respondidas / questoes.length) : 0;
+  const simuladoGeral = ehSimuladoGeral(simuladoSelecionado);
+  const temaMateria = estiloMateria(normalizarMateriaSimulado(simuladoSelecionado)).classe;
   const tempoCritico = tempoRestante !== null && tempoRestante <= 60;
 
   function irParaQuestao(index) {
@@ -26,7 +30,7 @@ export function TelaSimulado({
   }
 
   return (
-    <main className="simulado-fullscreen simulado-prova">
+    <main className={`simulado-fullscreen simulado-prova simulado-tema simulado-tema-${temaMateria}`}>
       <div className="simulado-prova-inicio">
         <div className="simulado-prova-cabecalho">
           <div className="simulado-prova-cabecalho-texto">
@@ -86,14 +90,18 @@ export function TelaSimulado({
               <section className="simulado-prova-questao" id={`questao-${index}`} key={questao.id} aria-labelledby={`titulo-questao-${questao.id}`}>
                 <div className="simulado-prova-questao-topo">
                   <span>Questão {index + 1}</span>
+                  {(() => {
+                    const dificuldade = questao.dificuldade && questao.dificuldade !== 'Não classificada' ? questao.dificuldade : null;
+                    const etiquetas = [simuladoGeral && questao.materia, simuladoGeral && questao.topico, dificuldade].filter(Boolean);
+                    return etiquetas.length > 0 && (
+                      <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
+                        {etiquetas.map((etiqueta) => <span key={etiqueta}>{etiqueta}</span>)}
+                      </div>
+                    );
+                  })()}
                   <span className={respostas[questao.id] ? 'respondida' : 'pendente'}>
                     {respostas[questao.id] ? '✓ Respondida' : 'Não respondida'}
                   </span>
-                </div>
-                <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
-                  {questao.materia && <span>{questao.materia}</span>}
-                  {questao.topico && <span>{questao.topico}</span>}
-                  {questao.dificuldade && questao.dificuldade !== 'Não classificada' && <span>{questao.dificuldade}</span>}
                 </div>
                 <h2 id={`titulo-questao-${questao.id}`}>{questao.pergunta}</h2>
                 {questao.imagem && (

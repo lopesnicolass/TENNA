@@ -2381,3 +2381,19 @@ html[data-theme='dark'] .student-area .student-sidebar .student-sidebar-brand {
 /* Esconde o aviso de XP após a janela visível, sem atualizar estado em useEffect. */
 .xp-toast.show { animation: tenna-xp-toast-out .4s ease 1.8s forwards; }
 @keyframes tenna-xp-toast-out { to { opacity: 0; transform: translateY(-12px) scale(.9); } }
+
+
+/* Foguinho da meta de sequência: centralizado no quadradinho.
+   (A regra ".streak-modal-goal span { display:block }" anulava o flex do ícone.) */
+.streak-modal-goal .streak-modal-goal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-align: center;
+}

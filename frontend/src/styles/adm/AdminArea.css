@@ -1125,3 +1125,7 @@ html[data-theme='dark'] .admin-area .admin-sidebar .admin-theme-toggle-wrap .the
   .admin-area .admin-sidebar.admin-sidebar-collapsed .admin-theme-toggle-wrap .theme-toggle-label { display:inline; }
   .admin-area .admin-sidebar.admin-sidebar-collapsed .admin-preview-link { justify-content:flex-start; padding:6px 10px; }
 }
+
+
+/* Menu lateral: itens mais espaçados, ocupando melhor a altura da sidebar */
+.admin-area .admin-sidebar .admin-sidebar-navigation { gap: clamp(6px, 3vh, 30px); }

@@ -882,3 +882,210 @@ html[data-theme='dark'] .desempenho-page .desempenho-historico-detalhe strong { 
 
 
 html[data-theme='dark'] .desempenho-page .desempenho-diagnostico-ordem { color: #9fb8d4; }
+
+
+/* =====================================================================
+   DESEMPENHO — acabamento final (cards do diagnóstico e histórico)
+   ===================================================================== */
+/* Cards do diagnóstico: mesma altura, sem espaço morto embaixo. */
+.desempenho-page .desempenho-diagnostico-grid { align-items: stretch; }
+.desempenho-page .desempenho-diagnostico-grid > * { min-width: 0; display: flex; }
+.desempenho-page .desempenho-diagnostico-card,
+.desempenho-page .desempenho-diagnostico-card--clicavel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  width: 100%;
+  padding: 24px 26px;
+}
+.desempenho-page .desempenho-diagnostico-card--clicavel { padding-bottom: 26px; }
+.desempenho-page .desempenho-diagnostico-card .desempenho-diagnostico-acao { margin-top: auto; padding-top: 18px; }
+.desempenho-page .desempenho-revisoes-lista { margin-bottom: 0; }
+
+.desempenho-page .desempenho-diagnostico-materias {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 12px;
+  margin: 0;
+}
+.desempenho-page .desempenho-diagnostico-materia {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 auto;
+  gap: 9px;
+  padding: 15px 17px;
+  border: 1px solid #d6e6f7;
+  border-radius: 14px;
+  background: #f3f8fe;
+}
+.desempenho-page .desempenho-diagnostico-materia .desempenho-diagnostico-linha { margin: 0; }
+.desempenho-page .desempenho-diagnostico-materia .desempenho-diagnostico-barra { margin: 0; }
+html[data-theme='dark'] .desempenho-page .desempenho-diagnostico-materia {
+  border-color: #35516e;
+  background: #1d3550;
+}
+
+/* Histórico: linha aberta vira um cartão único, com os números em blocos. */
+.desempenho-page .desempenho-historico-entrada {
+  margin: 0;
+  border-bottom: 1px solid #e1eaf5;
+  border-radius: 14px;
+  transition: background-color .16s ease, border-color .16s ease;
+}
+.desempenho-page .desempenho-historico-entrada.aberta {
+  margin: 8px 0;
+  border: 1px solid #cfe1f5;
+  background: #f6faff;
+  overflow: hidden;
+}
+.desempenho-page .desempenho-historico-entrada.aberta .desempenho-historico-row--botao,
+.desempenho-page .desempenho-historico-entrada.aberta .desempenho-historico-row--botao:hover {
+  background: transparent;
+  border-radius: 0;
+  padding: 14px 18px;
+}
+.desempenho-page .desempenho-historico-row--botao { padding: 14px 18px; }
+.desempenho-page .desempenho-historico-seta {
+  width: 18px;
+  height: 18px;
+  justify-self: end;
+  color: #4a6280;
+  transition: transform .2s ease;
+}
+.desempenho-page .desempenho-historico-row--botao[aria-expanded='true'] .desempenho-historico-seta { transform: rotate(180deg); }
+.desempenho-page .desempenho-historico-detalhe {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 16px 18px 18px;
+  border: 0;
+  border-top: 1px dashed #c5daf0;
+  border-radius: 0;
+  background: transparent;
+}
+.desempenho-page .desempenho-historico-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1px solid #d8e7f7;
+  border-radius: 12px;
+  background: #fff;
+}
+.desempenho-page .desempenho-historico-stat small {
+  color: #557091;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.desempenho-page .desempenho-historico-stat strong {
+  color: #123e76;
+  font-size: 20px;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+.desempenho-page .desempenho-historico-stat strong em { color: #557091; font-size: 13px; font-style: normal; font-weight: 700; }
+.desempenho-page .desempenho-historico-stat.acertos strong { color: #168a58; }
+.desempenho-page .desempenho-historico-stat.erros strong { color: #c24a3d; }
+.desempenho-page .desempenho-historico-stat.materia strong { font-size: 15px; }
+
+html[data-theme='dark'] .desempenho-page .desempenho-historico-entrada.aberta { border-color: #3b5b79; background: #1d3550; }
+html[data-theme='dark'] .desempenho-page .desempenho-historico-detalhe { border-top-color: #3b5b79; background: transparent; }
+html[data-theme='dark'] .desempenho-page .desempenho-historico-stat { border-color: #3b5b79; background: #223b55; }
+html[data-theme='dark'] .desempenho-page .desempenho-historico-stat small,
+html[data-theme='dark'] .desempenho-page .desempenho-historico-stat strong em { color: #a9c2dd; }
+html[data-theme='dark'] .desempenho-page .desempenho-historico-stat strong { color: #eaf4ff; }
+html[data-theme='dark'] .desempenho-page .desempenho-historico-stat.acertos strong { color: #5fd8a0; }
+html[data-theme='dark'] .desempenho-page .desempenho-historico-stat.erros strong { color: #ff9a8c; }
+@media (max-width: 720px) {
+  .desempenho-page .desempenho-historico-detalhe { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+
+/* Seletor personalizado (filtros de Desempenho) — igual ao filtro dos Simulados. */
+.desempenho-page .desempenho-seletor { position: relative; }
+.desempenho-page .desempenho-seletor-rotulo { font-size: 12px; font-weight: 700; color: #436489; }
+.desempenho-page .desempenho-seletor-botao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  box-sizing: border-box;
+  width: clamp(170px, 15vw, 215px);
+  max-width: 100%;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 1px solid #cbdff3;
+  border-radius: 12px;
+  background: #fff;
+  color: #18467d;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(19, 73, 132, .03);
+  transition: border-color .16s, box-shadow .16s;
+}
+.desempenho-page .desempenho-seletor-botao svg { flex-shrink: 0; color: #537ba6; transition: transform .16s; }
+.desempenho-page .desempenho-seletor-botao.aberto svg { transform: rotate(180deg); }
+.desempenho-page .desempenho-seletor-botao:hover { border-color: #9cbee6; }
+.desempenho-page .desempenho-seletor-botao:focus-visible,
+.desempenho-page .desempenho-seletor-botao.aberto {
+  outline: none;
+  border-color: #3387e6;
+  box-shadow: 0 0 0 3px rgba(43, 130, 232, .12);
+}
+.desempenho-page .desempenho-seletor-menu {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 7px);
+  left: 0;
+  min-width: 100%;
+  width: max-content;
+  max-width: 280px;
+  padding: 6px;
+  border: 1px solid #d2e1f2;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 14px 32px rgba(18, 58, 109, .14);
+}
+.desempenho-page .desempenho-grafico-filtros .desempenho-seletor-menu { left: auto; right: 0; }
+.desempenho-page .desempenho-seletor-opcao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 40px;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: #173e68;
+  font: inherit;
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+.desempenho-page .desempenho-seletor-opcao:hover,
+.desempenho-page .desempenho-seletor-opcao:focus-visible { outline: none; background: #edf5ff; }
+.desempenho-page .desempenho-seletor-opcao.selecionada { background: #e8f2ff; color: #1555ad; font-weight: 700; }
+
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-rotulo { color: #c3d8ee; }
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-botao,
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-menu { background: #203a54; border-color: #456482; color: #ecf6ff; }
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-botao svg { color: #a1c9ee; }
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-opcao { color: #dceaff; }
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-opcao:hover,
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-opcao:focus-visible,
+html[data-theme='dark'] .desempenho-page .desempenho-seletor-opcao.selecionada { background: #294a69; color: #fff; }
+@media (max-width: 480px) {
+  .desempenho-page .desempenho-seletor { flex: 1 1 135px; }
+  .desempenho-page .desempenho-seletor-botao { width: 100%; }
+}

@@ -50,6 +50,18 @@ export function inicioDoMes(valor = new Date()) {
   return data ? dataCivil(new Date(data.getFullYear(), data.getMonth(), 1)) : null;
 }
 
+// Período fixo do cronograma: o último mês do plano é sempre o mês anterior ao do
+// Vestibulinho, e o primeiro é contado para trás a partir dele. Assim, o plano de
+// 2 meses de uma prova em dezembro vai de 1º de outubro a 30 de novembro, não
+// importa em que dia ou mês o estudante gere ou abra o cronograma. Sem a data da
+// prova, usa o mês atual como antes.
+export function inicioFixoDoPlano(meses, dataProva, hoje = new Date()) {
+  const prova = lerDataLocal(dataProva);
+  const quantidade = Number(meses);
+  if (!prova || !Number.isInteger(quantidade) || quantidade < 1) return inicioDoMes(hoje);
+  return dataCivil(new Date(prova.getFullYear(), prova.getMonth() - quantidade, 1));
+}
+
 const mesCivil = (inicio, indice) => new Date(inicio.getFullYear(), inicio.getMonth() + indice, 1);
 const ultimoDiaMes = (inicio, indice) => new Date(inicio.getFullYear(), inicio.getMonth() + indice + 1, 0);
 const nomeMes = (data) => new Intl.DateTimeFormat('pt-BR', { month: 'long', year: 'numeric' }).format(data);

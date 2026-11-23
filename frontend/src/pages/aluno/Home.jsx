@@ -876,67 +876,79 @@ export default function Home() {
       </div>
 
       {/* MODAL DE NÍVEIS */}
-      {showLevels && (
-        <div
-          className="modal-overlay"
-          onClick={() => setShowLevels(false)}
-        >
-          <div
-            className="modal-card levels-modal"
-            onClick={(event) => event.stopPropagation()}
-          >
-            <div className="modal-header levels-modal-header">
-              <div>
-                <h2>Níveis e XP</h2>
-                <p>Acompanhe sua evolução e descubra os próximos níveis.</p>
+      {showLevels && (() => {
+        const tituloNivel = title || LEVEL_TITLES[level - 1] || 'Estudante';
+        const progressoNivel = xpForNext > 0
+          ? Math.min(100, Math.max(0, Math.round((xpIntoLevel / xpForNext) * 100)))
+          : 100;
+        return (
+          <div className="modal-overlay" onClick={() => setShowLevels(false)}>
+            <div
+              className="modal-card levels-modal"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="levels-modal-title"
+              onClick={(event) => event.stopPropagation()}
+            >
+              <header className="levels-hero">
+                <div className="levels-hero-top">
+                  <div>
+                    <h2 id="levels-modal-title">Níveis e XP</h2>
+                    <p>Acompanhe sua evolução e descubra os próximos níveis.</p>
+                  </div>
+                  <button type="button" className="levels-close" aria-label="Fechar níveis" onClick={() => setShowLevels(false)}>×</button>
+                </div>
+
+                <div className="levels-current-feature">
+                  <div className="levels-feature-symbol" aria-hidden="true">★</div>
+                  <div className="levels-feature-copy">
+                    <span className="levels-feature-eyebrow">SEU NÍVEL ATUAL</span>
+                    <strong>Nível {level} · {tituloNivel}</strong>
+                    <small>{xpForNext > 0 ? `${xpIntoLevel} de ${xpForNext} XP neste nível · ${Math.max(0, xpForNext - xpIntoLevel)} XP para evoluir` : `${xp} XP acumulados`}</small>
+                  </div>
+                  <span className="levels-feature-total">{xp} <small>XP total</small></span>
+                </div>
+                <div
+                  className="levels-progress-track"
+                  role="progressbar"
+                  aria-label="Progresso no nível atual"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={progressoNivel}
+                >
+                  <span className="levels-progress-fill" style={{ width: `${progressoNivel}%` }} />
+                </div>
+              </header>
+
+              <div className="levels-body">
+                <div className="levels-list-heading">
+                  <span>Todos os níveis</span>
+                  <small>XP necessário em cada nível</small>
+                </div>
+                <div className="levels-list">
+                  {LEVEL_TITLES.map((nivelTitulo, index) => {
+                    const nivel = index + 1;
+                    const estado = nivel === level ? 'current' : nivel < level ? 'done' : 'future';
+
+                    return (
+                      <div key={nivel} className={`levels-row ${estado}`}>
+                        <div className="levels-row-badge">
+                          {estado === 'done' ? <Icon name="check" size={16} /> : nivel}
+                        </div>
+                        <div className="levels-row-info">
+                          <strong>{nivelTitulo}</strong>
+                          <span>{estado === 'current' ? 'Seu nível atual' : estado === 'done' ? 'Concluído' : `Nível ${nivel}`}</span>
+                        </div>
+                        <div className="levels-row-xp">{xpForLevel(nivel)} XP</div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <button type="button" className="levels-close" aria-label="Fechar níveis" onClick={() => setShowLevels(false)}>×</button>
             </div>
-            <div className="levels-current-feature">
-              <div className="levels-feature-symbol" aria-hidden="true">★</div>
-              <div className="levels-feature-copy">
-                <span className="levels-feature-eyebrow">SEU NÍVEL ATUAL</span>
-                <strong>Nível {level} · {title || LEVEL_TITLES[level - 1] || 'Estudante'}</strong>
-                <small>{xpForNext > 0 ? `${xpIntoLevel} de ${xpForNext} XP neste nível · ${Math.max(0, xpForNext - xpIntoLevel)} XP para evoluir` : `${xp} XP acumulados`}</small>
-              </div>
-            </div>
-            <div className="levels-list-heading">Todos os níveis</div>
-            <div className="levels-list">
-              {LEVEL_TITLES.map(
-                (nivelTitulo, index) => {
-                  const nivel = index + 1;
-
-                  return (
-                    <div
-                      key={nivel}
-                      className={`levels-row ${
-                        nivel === level
-                          ? 'current'
-                          : ''
-                      }`}
-                    >
-                      <div className="levels-row-badge">
-                        {nivel}
-                      </div>
-
-                      <div className="levels-row-info">
-                        <strong>{nivelTitulo}</strong>
-                        <span>{nivel === level ? 'Seu nível atual' : nivel < level ? 'Concluído' : `Nível ${nivel}`}</span>
-                      </div>
-
-                      <div className="levels-row-xp">
-                        {xpForLevel(nivel)} XP
-                      </div>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-
-
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }

@@ -129,9 +129,6 @@ export default function RankingXP({ xp, usuarioId }) {
           {alunosExibidos.map((aluno) => (
             <li className={`home-ranking-player home-ranking-place-${aluno.posicao}`} key={aluno.id}>
               <div className="home-ranking-player-head">
-                <span className="home-ranking-medal" role="img" aria-label={POSICAO_LABEL[aluno.posicao - 1]}>
-                  {aluno.posicao}<small>º</small>
-                </span>
                 <span className="home-ranking-placement">{POSICAO_LABEL[aluno.posicao - 1]}</span>
                 {aluno.posicao === 1 && (
                   <span className="home-ranking-winner-mark" role="img" aria-label="Líder do ranking">

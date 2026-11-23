@@ -29,6 +29,7 @@ export const ICONES = [
   'globe',
   'flask',
   'target',
+  'landmark',
 ];
 
 export function gerarSlug(texto) {

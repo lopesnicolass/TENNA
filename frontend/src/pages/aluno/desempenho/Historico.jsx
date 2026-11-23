@@ -1,4 +1,5 @@
 import { CartaoAmpliavel } from './CartaoAmpliavel.jsx';
+import { SeletorPersonalizado } from './SeletorPersonalizado.jsx';
 import { useMemo, useState } from 'react';
 import { normalizarMateriaDesempenho } from '../../../utils/desempenhoInsights.js';
 
@@ -38,19 +39,18 @@ export function Historico({ resultados, limitar, obterNomeSimulado, formatarData
         <span className="desempenho-contador">{filtrados.length} {filtrados.length === 1 ? 'tentativa' : 'tentativas'}</span>
       </div>
       {resultados.length > 0 && <div className="desempenho-historico-filtros">
-        <label className="desempenho-campo-filtro">Matéria
-          <select value={materia} onChange={(event) => trocarMateria(event.target.value)}>
-            <option value="todas">Todas as matérias</option>
-            {materias.map((nome) => <option key={nome} value={nome}>{nome}</option>)}
-          </select>
-        </label>
-        <label className="desempenho-campo-filtro">Período
-          <select value={periodo} onChange={(event) => trocarPeriodo(event.target.value)}>
-            <option value="todos">Todo o período</option>
-            <option value="30">Últimos 30 dias</option>
-            <option value="90">Últimos 90 dias</option>
-          </select>
-        </label>
+        <SeletorPersonalizado
+          rotulo="Matéria"
+          valor={materia}
+          opcoes={[{ valor: 'todas', texto: 'Todas as matérias' }, ...materias.map((nome) => ({ valor: nome, texto: nome }))]}
+          onChange={trocarMateria}
+        />
+        <SeletorPersonalizado
+          rotulo="Período"
+          valor={periodo}
+          opcoes={[{ valor: 'todos', texto: 'Todo o período' }, { valor: '30', texto: 'Últimos 30 dias' }, { valor: '90', texto: 'Últimos 90 dias' }]}
+          onChange={trocarPeriodo}
+        />
       </div>}
       {!visiveis.length ? <p className="desempenho-vazio">{resultados.length ? 'Nenhuma tentativa corresponde aos filtros selecionados.' : 'Seu histórico aparecerá após finalizar o primeiro simulado.'}</p> : <>
         <div className="desempenho-historico-lista">
@@ -61,7 +61,7 @@ export function Historico({ resultados, limitar, obterNomeSimulado, formatarData
             const total = Number(resultado.total_questoes ?? resultado.totalQuestoes);
             const acertos = Number(resultado.acertos);
             const possuiQuestoes = Number.isFinite(total) && Number.isFinite(acertos) && total > 0 && acertos >= 0 && acertos <= total;
-            return <div className="desempenho-historico-entrada" key={chave}>
+            return <div className={`desempenho-historico-entrada${expandido ? ' aberta' : ''}`} key={chave}>
               <button type="button" className="desempenho-historico-row desempenho-historico-row--botao" data-sem-ampliacao aria-expanded={expandido} onClick={() => setDetalheAberto(expandido ? null : chave)}>
                 <div className="desempenho-historico-identificacao">
                   <strong>{obterNomeSimulado(resultado, index)}</strong>
@@ -69,12 +69,15 @@ export function Historico({ resultados, limitar, obterNomeSimulado, formatarData
                 </div>
                 <div className="desempenho-barra desempenho-historico-barra" aria-hidden="true"><span style={{ width: `${valor}%` }}/></div>
                 <strong className="desempenho-historico-porcentagem">{porcentagem(valor)}</strong>
-                <span className="desempenho-historico-seta" aria-hidden="true">{expandido ? '⌃' : '⌄'}</span>
+                <svg className="desempenho-historico-seta" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6" /></svg>
               </button>
               {expandido && <div className="desempenho-historico-detalhe">
-                <span><strong>Nota</strong> {porcentagem(valor)}</span>
-                {possuiQuestoes && <><span><strong>Acertos</strong> {acertos} de {total}</span><span><strong>Erros</strong> {total - acertos}</span></>}
-                <span><strong>Matéria</strong> {obterMateria(resultado)}</span>
+                <div className="desempenho-historico-stat"><small>Nota</small><strong>{porcentagem(valor)}</strong></div>
+                {possuiQuestoes && <>
+                  <div className="desempenho-historico-stat acertos"><small>Acertos</small><strong>{acertos} <em>de {total}</em></strong></div>
+                  <div className="desempenho-historico-stat erros"><small>Erros</small><strong>{total - acertos}</strong></div>
+                </>}
+                <div className="desempenho-historico-stat materia"><small>Matéria</small><strong>{obterMateria(resultado)}</strong></div>
               </div>}
             </div>;
           })}

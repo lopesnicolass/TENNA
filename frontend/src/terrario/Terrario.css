@@ -3376,3 +3376,45 @@ html[data-theme='dark'] .terr-page .terr-timer-heading .terr-kicker { color: #9b
 html[data-theme='dark'] .terr-page .terr-timer-heading p { color: #bcd5e9; }
 html[data-theme='dark'] .terr-page .terr-timer-inner span,
 html[data-theme='dark'] .terr-page .terr-duration-value span { color: #bcd5e9; }
+
+/* Faixa "Próxima conquista": ícone sem o brilho ✦ e faixa um pouco mais compacta. */
+.terr-page .terr-scene-bottom { padding: 14px 22px 15px; gap: clamp(16px, 2.4vw, 32px); }
+.terr-page .terr-chapter-mark::after { content: none; display: none; }
+.terr-page .terr-chapter-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+}
+.terr-page .terr-chapter-mark svg { width: 24px; height: 24px; }
+.terr-page .terr-room-journey { gap: 13px; }
+.terr-page .terr-journey-copy strong { margin: 2px 0; font-size: 15px; }
+.terr-page .terr-journey-copy small { font-size: 11.5px; line-height: 1.4; }
+.terr-page .terr-room-progress .terr-room-progress-heading { margin-bottom: 7px; }
+
+/* Relógio de foco maior. O tamanho do número acompanha o círculo interno (cqw),
+   então o "25:00" e o "FOCANDO" nunca ficam cortados, em nenhum estado. */
+.terr-page.terr-page .terr-timer-card .terr-timer-clock {
+  width: 250px;
+  max-width: 92%;
+  height: auto;
+  aspect-ratio: 1;
+  padding: 11.5%;
+  container-type: inline-size;
+}
+.terr-page.terr-page .terr-timer-card .terr-timer-inner strong {
+  font-size: 31cqw;
+  letter-spacing: -.04em;
+  line-height: 1;
+}
+.terr-page.terr-page .terr-timer-card .terr-timer-inner span {
+  margin-top: 7px;
+  font-size: max(9px, 7cqw);
+  white-space: nowrap;
+}
+
+/* Cabeçalho: só o cartão de sementes, mais claro e translúcido. */
+.terr-page .terr-header .terr-wallet {
+  background: rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, .42);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .18);
+}

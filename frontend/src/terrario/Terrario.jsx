@@ -97,7 +97,7 @@ function TennaAnt({ animar = false }) {
 }
 
 export default function Terrario() {
-  const { level, title, recarregarGamificacao } = useGamification();
+  const { recarregarGamificacao } = useGamification();
   const [snapshot, setSnapshot] = useState(null);
   const snapshotRef = useRef(null);
   const sequenceRef = useRef(0);
@@ -760,7 +760,6 @@ export default function Terrario() {
         </div>
         <div className="terr-header-stats">
           <div className="terr-wallet"><span className="terr-seed-icon" aria-hidden="true"><img src={sementeTerrario} alt="" /></span><div><strong>{seeds}</strong><small>Sementes</small></div></div>
-          <div className="terr-level"><span>NÍVEL DO ALUNO</span><strong>{level} · {title}</strong></div>
         </div>
       </header>
 

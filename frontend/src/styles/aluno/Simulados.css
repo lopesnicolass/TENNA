@@ -2646,3 +2646,171 @@ html[data-theme='dark'] .simulado-resultado-disciplina-barra { background:#324e6
   .simulado-resultado-por-disciplina { padding:15px; }
   .simulado-resultado-disciplinas-grid { grid-template-columns:1fr; }
 }
+
+
+/* =====================================================================
+   SIMULADOS — tema por matéria (mesmas cores dos FlashCards)
+   Dentro de uma matéria, cabeçalho, cards, botões e detalhes usam a cor
+   da disciplina. Status continua indicado pelo selo de cada card.
+   ===================================================================== */
+.simulados-page.simulados-tema { --tema-cor: #1a57a5; }
+.simulados-page.simulados-tema-portugues  { --tema-cor: #208be3; }
+.simulados-page.simulados-tema-matematica { --tema-cor: #e3585b; }
+.simulados-page.simulados-tema-historia   { --tema-cor: #aa7959; }
+.simulados-page.simulados-tema-geografia  { --tema-cor: #36a363; }
+.simulados-page.simulados-tema-ciencias   { --tema-cor: #9061cd; }
+.simulados-page.simulados-tema-gerais     { --tema-cor: #1a57a5; }
+
+.simulados-page.simulados-tema .simulados-hero.simulados-hero-materia,
+.simulados-page.simulados-tema .simulados-hero[class*='simulados-hero-materia-'] {
+  background: linear-gradient(112deg, color-mix(in srgb, var(--tema-cor) 82%, #092e63) 0%, var(--tema-cor) 100%);
+  background-image: linear-gradient(112deg, color-mix(in srgb, var(--tema-cor) 82%, #092e63) 0%, var(--tema-cor) 100%);
+}
+.simulados-page.simulados-tema .simulados-breadcrumb > svg { color: rgba(255, 255, 255, .78); }
+
+.simulados-page.simulados-tema .simulados-conteudo-label { color: var(--tema-cor); }
+.simulados-page.simulados-tema .simulados-conteudo-heading { border-bottom-color: color-mix(in srgb, var(--tema-cor) 28%, #fff); }
+.simulados-page.simulados-tema .simulados-busca:focus,
+.simulados-page.simulados-tema .simulados-situacao-trigger:focus-visible,
+.simulados-page.simulados-tema .simulados-situacao-trigger.aberto {
+  border-color: var(--tema-cor);
+  outline-color: color-mix(in srgb, var(--tema-cor) 45%, #fff);
+}
+
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-card,
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-card-em-progresso,
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-card-concluido,
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-card-nao-iniciado {
+  --simulado-acento: var(--tema-cor);
+  border-color: color-mix(in srgb, var(--tema-cor) 24%, #fff);
+  background: linear-gradient(115deg, color-mix(in srgb, var(--tema-cor) 9%, #fff) 0%, #fff 88%);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--tema-cor) 12%, transparent);
+}
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-card:hover {
+  border-color: color-mix(in srgb, var(--tema-cor) 55%, #fff);
+  box-shadow: 0 13px 28px color-mix(in srgb, var(--tema-cor) 22%, transparent);
+}
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-card :is(h2, h3) {
+  color: color-mix(in srgb, var(--tema-cor) 38%, #0d2238);
+}
+.simulados-page.simulados-tema .simulado-card-topline .simulado-card-kicker {
+  color: color-mix(in srgb, var(--tema-cor) 80%, #123);
+}
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-meta span {
+  color: color-mix(in srgb, var(--tema-cor) 45%, #3c5166);
+}
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-btn {
+  background: var(--tema-cor);
+  box-shadow: 0 4px 10px color-mix(in srgb, var(--tema-cor) 28%, transparent);
+}
+.simulados-page.simulados-tema .simulados-conteudo-group .simulado-btn:hover {
+  background: color-mix(in srgb, var(--tema-cor) 85%, #000);
+}
+
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-hero.simulados-hero-materia,
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-hero[class*='simulados-hero-materia-'] {
+  background: linear-gradient(112deg, color-mix(in srgb, var(--tema-cor) 62%, #0a1b2e) 0%, color-mix(in srgb, var(--tema-cor) 82%, #0a1b2e) 100%);
+  background-image: linear-gradient(112deg, color-mix(in srgb, var(--tema-cor) 62%, #0a1b2e) 0%, color-mix(in srgb, var(--tema-cor) 82%, #0a1b2e) 100%);
+}
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-group .simulado-card,
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-group .simulado-card-em-progresso,
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-group .simulado-card-concluido,
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-group .simulado-card-nao-iniciado {
+  border-color: color-mix(in srgb, var(--tema-cor) 38%, #1b3048);
+  background: linear-gradient(115deg, color-mix(in srgb, var(--tema-cor) 22%, #15283d) 0%, #15283d 90%);
+  box-shadow: none;
+}
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-group .simulado-card :is(h2, h3) { color: #f1f7ff; }
+html[data-theme='dark'] .simulados-page.simulados-tema .simulado-card-topline .simulado-card-kicker,
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-label {
+  color: color-mix(in srgb, var(--tema-cor) 55%, #fff);
+}
+html[data-theme='dark'] .simulados-page.simulados-tema .simulados-conteudo-group .simulado-meta span { color: #c3d4e6; }
+
+/* Prova e correção: etiquetas (só em simulados gerais) ao lado de "Questão N". */
+.simulado-prova-questao-topo,
+.simulado-resultado-questao-topo { flex-wrap: wrap; }
+.simulado-prova-questao-topo .simulado-prova-classificacao,
+.simulado-resultado-questao-topo .simulado-prova-classificacao { margin: 0; flex: 1 1 auto; min-width: 0; }
+.simulado-prova-questao-topo > :last-child,
+.simulado-resultado-questao-topo > :last-child { margin-left: auto; }
+
+
+/* =====================================================================
+   PROVA E RESULTADO — tema por matéria (cores dos FlashCards)
+   ===================================================================== */
+.simulado-tema { --tema-cor: #1a57a5; }
+.simulado-tema-portugues  { --tema-cor: #208be3; }
+.simulado-tema-matematica { --tema-cor: #e3585b; }
+.simulado-tema-historia   { --tema-cor: #aa7959; }
+.simulado-tema-geografia  { --tema-cor: #36a363; }
+.simulado-tema-ciencias   { --tema-cor: #9061cd; }
+.simulado-tema-gerais     { --tema-cor: #1a57a5; }
+
+.simulado-tema .simulado-prova-cabecalho,
+.simulado-tema .simulado-resultado-cabecalho {
+  background: linear-gradient(112deg, color-mix(in srgb, var(--tema-cor) 80%, #092e63) 0%, var(--tema-cor) 100%);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--tema-cor) 22%, transparent);
+}
+.simulado-tema .simulado-prova-kicker,
+.simulado-tema .simulado-resultado-kicker { color: rgba(255, 255, 255, .85); }
+
+/* Andamento */
+.simulado-tema .simulado-prova-trilha span,
+.simulado-tema .simulado-resultado-barra span { background: var(--tema-cor); }
+.simulado-tema .simulado-prova-porcentagem,
+.simulado-tema .simulado-resultado-nota { color: var(--tema-cor); }
+.simulado-tema .simulado-prova-numero { border-color: color-mix(in srgb, var(--tema-cor) 35%, #fff); color: color-mix(in srgb, var(--tema-cor) 75%, #0d2238); }
+.simulado-tema .simulado-prova-numero.respondida { background: var(--tema-cor); border-color: var(--tema-cor); color: #fff; }
+.simulado-tema .simulado-prova-numero:focus-visible,
+.simulado-tema .simulado-prova-opcao:focus-visible,
+.simulado-tema .simulado-prova-finalizar:focus-visible { outline-color: color-mix(in srgb, var(--tema-cor) 60%, #fff); }
+
+/* Questões */
+.simulado-tema .simulado-prova-questao-topo > span:first-child { color: color-mix(in srgb, var(--tema-cor) 85%, #0d2238); }
+.simulado-tema .simulado-prova-questao { border-color: color-mix(in srgb, var(--tema-cor) 18%, #fff); }
+.simulado-tema .simulado-prova-opcao:hover:not(:disabled) { border-color: color-mix(in srgb, var(--tema-cor) 50%, #fff); }
+.simulado-tema .simulado-prova-opcao.selecionada {
+  border-color: var(--tema-cor);
+  background: color-mix(in srgb, var(--tema-cor) 10%, #fff);
+  color: #14283d;
+}
+.simulado-tema .simulado-prova-opcao.selecionada .simulado-prova-letra { background: var(--tema-cor); color: #fff; }
+.simulado-tema .simulado-prova-classificacao span {
+  border-color: color-mix(in srgb, var(--tema-cor) 30%, #fff);
+  background: color-mix(in srgb, var(--tema-cor) 10%, #fff);
+  color: color-mix(in srgb, var(--tema-cor) 75%, #0d2238);
+}
+
+/* Botões */
+.simulado-tema .simulado-prova-finalizar,
+.simulado-tema .simulado-resultado-botao.principal { background: var(--tema-cor); border-color: var(--tema-cor); color: #fff; }
+.simulado-tema .simulado-prova-finalizar:hover:not(:disabled) { background: color-mix(in srgb, var(--tema-cor) 85%, #000); box-shadow: 0 5px 14px color-mix(in srgb, var(--tema-cor) 30%, transparent); }
+.simulado-tema .simulado-resultado-botao.secundario {
+  background: color-mix(in srgb, var(--tema-cor) 10%, #fff);
+  border-color: color-mix(in srgb, var(--tema-cor) 30%, #fff);
+  color: color-mix(in srgb, var(--tema-cor) 80%, #0d2238);
+}
+.simulado-tema .simulado-resultado-botao.discreto { color: color-mix(in srgb, var(--tema-cor) 80%, #0d2238); }
+
+/* Tema escuro */
+html[data-theme='dark'] .simulado-tema .simulado-prova-cabecalho,
+html[data-theme='dark'] .simulado-tema .simulado-resultado-cabecalho {
+  background: linear-gradient(112deg, color-mix(in srgb, var(--tema-cor) 60%, #0a1b2e) 0%, color-mix(in srgb, var(--tema-cor) 82%, #0a1b2e) 100%);
+  box-shadow: none;
+}
+html[data-theme='dark'] .simulado-tema .simulado-prova-porcentagem,
+html[data-theme='dark'] .simulado-tema .simulado-resultado-nota,
+html[data-theme='dark'] .simulado-tema .simulado-prova-questao-topo > span:first-child { color: color-mix(in srgb, var(--tema-cor) 55%, #fff); }
+html[data-theme='dark'] .simulado-tema .simulado-prova-questao { border-color: color-mix(in srgb, var(--tema-cor) 30%, #1b3048); }
+html[data-theme='dark'] .simulado-tema .simulado-prova-numero { border-color: color-mix(in srgb, var(--tema-cor) 45%, #1b3048); color: #dae7f6; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-numero.respondida { background: var(--tema-cor); border-color: var(--tema-cor); color: #fff; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-opcao.selecionada { background: color-mix(in srgb, var(--tema-cor) 24%, #15283d); border-color: var(--tema-cor); color: #f1f7ff; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-opcao.selecionada .simulado-prova-letra { background: var(--tema-cor); color: #fff; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-classificacao span {
+  background: color-mix(in srgb, var(--tema-cor) 22%, #15283d);
+  border-color: color-mix(in srgb, var(--tema-cor) 45%, #1b3048);
+  color: #e3eefb;
+}
+html[data-theme='dark'] .simulado-tema .simulado-resultado-botao.secundario,
+html[data-theme='dark'] .simulado-tema .simulado-resultado-botao.discreto { color: #e3eefb; background: color-mix(in srgb, var(--tema-cor) 22%, #15283d); border-color: color-mix(in srgb, var(--tema-cor) 45%, #1b3048); }

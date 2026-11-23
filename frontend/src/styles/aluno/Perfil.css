@@ -399,3 +399,13 @@ html[data-theme='dark'] .perfil-page .perfil-achievements-counter small { color:
 html[data-theme='dark'] .perfil-switch { background: #4a6179; border-color: #5b738d; }
 html[data-theme='dark'] .perfil-switch.is-on { background: #2f86e0; border-color: #2f86e0; }
 @media (prefers-reduced-motion: reduce) { .perfil-switch, .perfil-switch-thumb { transition: none; } }
+
+/* Com o campo de senha aberto o card principal cresce; a coluna da direita
+   mantém a altura natural em vez de esticar junto. */
+.perfil-grid.perfil-grid-expandido { align-items: start; }
+.perfil-grid.perfil-grid-expandido .perfil-side-column {
+  align-self: start;
+  grid-template-rows: auto auto;
+}
+.perfil-grid.perfil-grid-expandido .perfil-conquistas-resumo .perfil-full-button,
+.perfil-grid.perfil-grid-expandido .perfil-ranking-card .perfil-ranking-toggle { margin-top: 10px; }

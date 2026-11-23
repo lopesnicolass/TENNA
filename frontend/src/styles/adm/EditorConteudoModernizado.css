@@ -31,3 +31,31 @@
 .tenna-editor-refresh .editor-sidebar{top:20px}
 @media(max-width:1050px){.tenna-editor-refresh .editor-layout{grid-template-columns:minmax(0,1fr)!important}.tenna-editor-refresh .editor-sidebar{position:static}.tenna-editor-refresh .tenna-blocos-simples{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:650px){.tenna-editor-refresh .editor-panel{padding:18px!important;border-radius:17px!important}.tenna-editor-refresh .editor-page-header h1{font-size:30px!important}.tenna-editor-refresh .editor-block-header{flex-wrap:wrap;padding:14px}.tenna-editor-refresh .editor-block-actions{width:100%;justify-content:flex-start}.tenna-editor-refresh .tenna-blocos-simples{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Modal de bloco: cabeçalho e rodapé sempre visíveis; só o corpo rola.
+   Antes, o corpo tinha altura fixa (100vh - 190px) e o rodapé era cortado. */
+.admin-area .editor-modal-overlay { align-items: center; overflow: hidden; }
+.admin-area .editor-modal-overlay .editor-modal {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 48px);
+  max-height: calc(100dvh - 48px);
+  overflow: hidden;
+}
+.admin-area .editor-modal-overlay .editor-modal-header,
+.admin-area .editor-modal-overlay .editor-modal-footer { flex: none; }
+.admin-area .editor-modal-overlay .editor-modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-width: 900px) {
+  .admin-area .editor-modal-overlay .editor-modal {
+    max-height: calc(100vh - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+}
+

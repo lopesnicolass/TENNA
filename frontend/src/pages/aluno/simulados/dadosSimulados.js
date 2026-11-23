@@ -28,6 +28,10 @@ export function normalizarMateriaSimulado(simulado) {
   return normalizarMateria(simulado.materia);
 }
 
+export function ehSimuladoGeral(simulado) {
+  return normalizarMateriaSimulado(simulado) === 'Simulados Gerais';
+}
+
 export function filtrarPorMateria(simulados, materia) {
   if (materia === 'Todas') return simulados;
   return simulados.filter((item) => normalizarMateriaSimulado(item) === normalizarMateria(materia));

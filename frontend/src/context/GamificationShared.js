@@ -12,7 +12,7 @@ export const LEVEL_TITLES = [
   'Estrategista',
   'Passei Direto',
   'Mestre ETEC',
-  'Sou Tenna'
+  'Sou ETECAMP'
 ];
 
 // XP necessário para entrar no próximo nível.

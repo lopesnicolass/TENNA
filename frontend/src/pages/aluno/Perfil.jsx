@@ -749,7 +749,7 @@ export default function Perfil() {
       {mensagem && <div className="perfil-alert perfil-alert-success" role="status"><Icon name="check" size={18} />{mensagem}</div>}
       {erro && <div className="perfil-alert perfil-alert-error" role="alert"><Icon name="question" size={18} />{erro}</div>}
 
-      <div className="perfil-grid">
+      <div className={`perfil-grid${editing.senha ? ' perfil-grid-expandido' : ''}`}>
         <form className="perfil-form-card" onSubmit={handleSave}>
           <div className="perfil-form-heading">
             <span className="perfil-heading-icon"><Icon name="shield" size={21} /></span>
@@ -885,10 +885,10 @@ export default function Perfil() {
 
           <div className="perfil-form-footer">
             <button type="submit" className="perfil-btn perfil-btn-primary perfil-save" disabled={salvando}>
-              <Icon name="check" size={17} />{salvando ? 'Salvando...' : 'Salvar alterações'}
+              {salvando ? 'Salvando...' : 'Salvar alterações'}
             </button>
             <button type="button" className="perfil-btn perfil-logout" onClick={handleLogout}>
-              <Icon name="arrowRight" size={16} /> Sair da conta
+              Sair da conta
             </button>
           </div>
         </form>
