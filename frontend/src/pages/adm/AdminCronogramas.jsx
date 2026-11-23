@@ -1,19 +1,13 @@
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from 'react';
 import '../../styles/adm/AdminCronogramas.css';
-import { API_URL } from '../../services/api.js';
+import { API_URL, obterToken } from '../../services/api.js';
 
 const TOTAL_MESES = 12;
 const TOTAL_SEMANAS = 4;
 const DIAS_ESTUDO = Array.from({ length: 7 }, (_, index) => index + 1);
 
 function getToken() {
-  return (
-    localStorage.getItem('token') ||
-    localStorage.getItem('authToken') ||
-    localStorage.getItem('accessToken') ||
-    localStorage.getItem('etecamp_token') ||
-    ''
-  );
+  return obterToken();
 }
 
 function criarGradeVazia(quantidadeMeses = 0) {

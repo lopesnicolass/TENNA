@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { request } from '../services/api.js';
+import { request, obterToken, removerToken } from '../services/api.js';
 
 function limparSessao() {
   localStorage.removeItem('etecamp_usuario');
-  localStorage.removeItem('etecamp_token');
-  localStorage.removeItem('token');
-  localStorage.removeItem('accessToken');
+  removerToken();
 
   sessionStorage.removeItem('etecamp_admin_preview');
 }
@@ -23,10 +21,7 @@ export default function AdminRoute() {
 
     async function validarAdmin() {
       const token =
-        localStorage.getItem('etecamp_token') ||
-        localStorage.getItem('token') ||
-        localStorage.getItem('accessToken') ||
-        '';
+        obterToken();
 
       if (!token) {
         limparSessao();

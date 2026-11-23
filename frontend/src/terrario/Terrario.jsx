@@ -176,6 +176,7 @@ export default function Terrario() {
     try { return prepararPreviaCompletaSala3(lerTeste(window.localStorage, `${TEST_STORAGE_PREFIX}sala3_${userKey()}`, [...ITEMS_SALA3, ...ITEMS_SALA3_LEGADOS]), ITEMS_SALA3); }
     catch { return prepararPreviaCompletaSala3({ iniciado: false, visible: [], positions: {}, scales: {} }, ITEMS_SALA3); }
   });
+  const [confirmCancel, setConfirmCancel] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(1);
   const [selected, setSelected] = useState('vasinho');
   const [drag, setDrag] = useState(null);
@@ -418,6 +419,7 @@ export default function Terrario() {
     busyRef.current = true;
     setBusy(true);
     setError('');
+    setConfirmCancel(false);
     const sequence = ++sequenceRef.current;
     try {
       const path = action === 'iniciar' ? '/terrario/foco/iniciar' : `/terrario/foco/${session.id}/${action}`;
@@ -779,7 +781,7 @@ export default function Terrario() {
                 <span aria-hidden="true">?</span> Como funciona?
               </button>
               <button type="button" className={`terr-decorate-button ${decorate ? 'active' : ''}`} onClick={alternarDecoracao} disabled={status === 'running' || (!modoTeste && (busy || loading))} aria-pressed={decorate}>
-                {decorate ? 'Concluir decoração' : '✦ Decorar sala'}
+                {decorate ? '✓ Concluir decoração' : '✦ Decorar sala'}
               </button>
             </div>
           </div>
@@ -1018,9 +1020,11 @@ export default function Terrario() {
                   {status === 'completed' ? `${currentDuration} min de estudo concluídos` : `Sessão de ${currentDuration} min ${status === 'paused' ? '· em pausa' : '· em andamento'}`}
                 </div>
               )}
-              {(status === 'completed' || status === 'paused') && (
+              {(confirmCancel && active || status === 'completed' || status === 'paused') && (
                 <div className="terr-focus-status-slot" aria-live="polite">
-                  {status === 'completed' ? (
+                  {confirmCancel && active ? (
+                    <p className="terr-focus-one-status is-warning" role="alert">Encerrar agora? Esta sessão não receberá recompensas.</p>
+                  ) : status === 'completed' ? (
                     <div className="terr-focus-summary" role="status">
                       <strong>🎉 Sessão concluída!</strong>
                       <div><span>🌱 +{session.sementesRecebidas} sementes</span><span>✦ +{session.xpRecebido} XP</span></div>
@@ -1030,18 +1034,25 @@ export default function Terrario() {
                   )}
                 </div>
               )}
-              <div className="terr-timer-buttons">
-                {status === 'running' ? (
-                  <button type="button" className="terr-primary" disabled={busy || loading} onClick={() => { void sendAction('pausar'); }}>Pausar</button>
-                ) : status === 'paused' ? (
-                  <button type="button" className="terr-primary" disabled={busy || loading} onClick={() => { void sendAction('continuar'); }}>Retomar</button>
-                ) : status === 'completed' ? (
-                  <button type="button" className="terr-primary" disabled={busy || loading} onClick={acknowledgeCompletion}>Nova sessão</button>
-                ) : (
-                  <button type="button" className="terr-primary" disabled={busy || loading || !server || !durationInputValida} onClick={() => { void sendAction('iniciar'); }}>Começar foco</button>
-                )}
-                {active && <button type="button" className="terr-secondary" disabled={busy || loading} onClick={() => { void sendAction('cancelar'); }}>Encerrar</button>}
-              </div>
+              {confirmCancel && active ? (
+                <div className="terr-timer-buttons terr-confirm-actions">
+                  <button type="button" className="terr-secondary" disabled={busy || loading} onClick={() => setConfirmCancel(false)}>Voltar ao foco</button>
+                  <button type="button" className="terr-secondary terr-confirm-danger" disabled={busy || loading} onClick={() => { void sendAction('cancelar'); }}>Sim, encerrar</button>
+                </div>
+              ) : (
+                <div className="terr-timer-buttons">
+                  {status === 'running' ? (
+                    <button type="button" className="terr-primary" disabled={busy || loading} onClick={() => { void sendAction('pausar'); }}>Pausar</button>
+                  ) : status === 'paused' ? (
+                    <button type="button" className="terr-primary" disabled={busy || loading} onClick={() => { void sendAction('continuar'); }}>Retomar</button>
+                  ) : status === 'completed' ? (
+                    <button type="button" className="terr-primary" disabled={busy || loading} onClick={acknowledgeCompletion}>Nova sessão</button>
+                  ) : (
+                    <button type="button" className="terr-primary" disabled={busy || loading || !server || !durationInputValida} onClick={() => { void sendAction('iniciar'); }}>Começar foco</button>
+                  )}
+                  {active && <button type="button" className="terr-secondary" disabled={busy || loading} onClick={() => setConfirmCancel(true)}>Encerrar</button>}
+                </div>
+              )}
             </div>
           </section>
         </aside>}

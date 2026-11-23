@@ -23,6 +23,7 @@ O arquivo `backend/.env` não é distribuído. Na primeira execução:
 2. Gere um segredo próprio para `JWT_SECRET` executando `node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"`.
 3. Substitua o valor de exemplo de `JWT_SECRET` pelo segredo gerado. Não reutilize segredos de produção ou de outros ambientes.
 4. Ajuste `FRONTEND_URL` caso o front-end seja servido em outro endereço.
+5. Se a API for publicada atrás de um proxy reverso, defina `TRUST_PROXY=1` para que o limite de tentativas de login use o IP real do usuário.
 
 Não compartilhe o `.env` nem publique o banco SQLite com dados pessoais. Antes de enviar o projeto para a banca ou publicar um repositório, use uma cópia anonimizada do banco e revise os arquivos da pasta `backend/uploads/`.
 
@@ -81,3 +82,7 @@ node scripts/verificar_integridade_banco.cjs
 ```
 
 A verificação não altera os dados. **Não execute scripts de reparo sem identificar um problema e fazer backup.**
+
+## Privacidade e histórico do Git
+
+Se o banco SQLite ou os PDFs de `backend/uploads/provas/` já foram versionados no passado, removê-los do commit atual **não** apaga o histórico. Use `limpar-historico.sh` (na raiz do projeto) numa cópia do repositório, confira o resultado e só então faça o `push --force`. Depois, peça a quem clonou o repositório que o clone novamente e redefina as senhas das contas que estavam no banco.

@@ -1,7 +1,7 @@
 import '../../styles/aluno/Perfil.css';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { limparSessao, request } from '../../services/api.js';
+import { limparSessao, request, obterToken } from '../../services/api.js';
 import Icon from '../../components/Icon.jsx';
 import { CATEGORIAS_CONQUISTAS, montarConquistas } from '../../utils/conquistas.js';
 import { usePreferenciaContagem } from '../../utils/usePreferenciaContagem.js';
@@ -258,9 +258,7 @@ export default function Perfil() {
       try {
 
         const token =
-          localStorage.getItem(
-            'etecamp_token'
-          );
+          obterToken();
 
         if (!token) {
 
@@ -380,9 +378,7 @@ export default function Perfil() {
     try {
 
       const token =
-        localStorage.getItem(
-          'etecamp_token'
-        );
+        obterToken();
 
       if (!token) {
 
@@ -544,9 +540,7 @@ export default function Perfil() {
     try {
 
       const token =
-        localStorage.getItem(
-          'etecamp_token'
-        );
+        obterToken();
 
       if (!token) {
 
@@ -677,9 +671,7 @@ export default function Perfil() {
     try {
 
       const token =
-        localStorage.getItem(
-          'etecamp_token'
-        );
+        obterToken();
 
       const usuarioSalvo =
         localStorage.getItem(

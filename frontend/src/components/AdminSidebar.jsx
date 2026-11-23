@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import logoIcon from '../assets/tenna_logo.webp';
 import ThemeToggle from './ThemeToggle.jsx';
-import { limparSessao, request } from '../services/api.js';
+import { limparSessao, request, obterToken } from '../services/api.js';
 
 // Mesmos ícones da sidebar do estudante, para as duas áreas terem a mesma identidade.
 const NAV_ITEMS = [
@@ -78,7 +78,7 @@ export default function AdminSidebar({ mobileOpen = false, onClose = () => {} })
     setSaindo(true);
 
     try {
-      const token = localStorage.getItem('etecamp_token') || localStorage.getItem('token');
+      const token = obterToken();
       const usuarioSalvo = localStorage.getItem('etecamp_usuario');
       const usuario = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
 

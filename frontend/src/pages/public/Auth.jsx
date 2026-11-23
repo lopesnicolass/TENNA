@@ -2,7 +2,7 @@ import '../../styles/public/Auth.css';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoWordmark from '../../assets/tenna_logo.webp';
-import { request } from '../../services/api.js';
+import { request, salvarToken } from '../../services/api.js';
 
 export default function Auth() {
   const navigate = useNavigate();
@@ -88,12 +88,7 @@ export default function Auth() {
         JSON.stringify(dados.usuario)
       );
 
-      localStorage.setItem(
-        'etecamp_token',
-        dados.token
-      );
-
-      localStorage.setItem('token', dados.token);
+      salvarToken(dados.token);
 
       window.dispatchEvent(
         new Event('etecamp-login')
