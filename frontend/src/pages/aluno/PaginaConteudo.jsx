@@ -13,6 +13,7 @@ import '../../styles/aluno/PaginaConteudo.css';
 import '../../styles/aluno/PaginaConteudoExtra.css';
 import '../../styles/aluno/PaginaConteudoRefinado.css';
 import { API_URL, obterToken } from '../../services/api.js';
+import { urlDoArquivo } from '../../utils/urlUpload.js';
 
 function GradeFlashcards({ flashcards }) {
   const [virados, setVirados] = useState({});
@@ -790,7 +791,7 @@ export default function PaginaConteudo() {
             {dados.url ? (
               <figure className="pagina-image">
                 <img
-                  src={dados.url}
+                  src={urlDoArquivo(dados.url)}
                   alt={
                     dados.alt ||
                     dados.titulo ||

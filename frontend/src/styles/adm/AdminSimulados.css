@@ -1085,3 +1085,13 @@ html[data-theme='dark'] .admin-simulados-page .admin-simulado-details span {
   .admin-simulados-page .admin-simulados-materia { padding: 16px; }
   .admin-simulados-page .admin-simulados-materia-header { margin: -16px -16px 0; padding: 15px 16px; }
 }
+
+/* Modo escuro: ícones das matérias sem brilho.
+   O fundo vem de um style inline, por isso o !important. */
+html[data-theme='dark'] .admin-simulados-page .admin-simulados-materia-icon {
+  background: color-mix(in srgb, var(--materia-cor, #2783d3) 38%, #182c40) !important;
+  border: 1px solid color-mix(in srgb, var(--materia-cor, #2783d3) 55%, #182c40);
+  color: color-mix(in srgb, var(--materia-cor, #2783d3) 35%, #fff);
+  box-shadow: none;
+  filter: none;
+}

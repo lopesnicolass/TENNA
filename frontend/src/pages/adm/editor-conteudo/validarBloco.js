@@ -17,7 +17,7 @@ export function pendenciaDoBloco(bloco) {
     case 'flashcards': return !(d.flashcardIds || []).length ? 'Selecione flashcards de revisão' : '';
     case 'questoes': return !(d.questaoIds || []).length ? 'Selecione questões' : '';
     case 'video': return vazio(d.url) ? 'Informe o link do vídeo' : '';
-    case 'imagem': return vazio(d.url) ? 'Informe a URL da imagem' : '';
+    case 'imagem': return vazio(d.url) ? 'Envie a imagem do bloco' : '';
     case 'pdf': return vazio(d.url) ? 'Informe a URL do PDF' : '';
     case 'simulado': return !d.simuladoId ? 'Selecione um simulado' : '';
     default: return '';

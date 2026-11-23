@@ -1516,3 +1516,175 @@
   background: var(--bg-secondary, rgba(85,135,190,.08));
 }
 .admin-cronogramas .tenna-admin-previa p { margin: 5px 0; }
+
+/* ==========================================================================
+   Modo escuro · Cronogramas (admin)
+   Cobre os elementos que ainda usavam cores claras fixas.
+   ========================================================================== */
+html[data-theme='dark'] .admin-cronogramas {
+  --crono-surface: #192c43;
+  --crono-surface-2: #20374f;
+  --crono-surface-3: #294563;
+  --crono-field: #122239;
+  --crono-border: #34516c;
+  --crono-border-strong: #416080;
+  --crono-text: #e8f1fc;
+  --crono-text-soft: #b7cce2;
+  --crono-accent: #83bfff;
+}
+
+/* Caixa "Programações cadastradas" (estava branca com texto invisível) */
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-existentes {
+  background: var(--crono-surface-2);
+  border-color: var(--crono-border);
+}
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-existentes > strong { color: var(--crono-text); }
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-existentes > p,
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-pills > span { color: var(--crono-text-soft); }
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-pills button {
+  background: var(--crono-field);
+  border-color: var(--crono-border-strong);
+  color: var(--crono-text);
+}
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-pills button:hover:not(.ativo) {
+  background: var(--crono-surface-3);
+}
+html[data-theme='dark'] .admin-cronogramas .tenna-variacoes-pills button.ativo {
+  background: #1968bf;
+  border-color: #408fe1;
+  color: #fff;
+}
+
+/* Resumo da programação */
+html[data-theme='dark'] .admin-cronogramas .tenna-variacao-resumo {
+  color: var(--crono-text-soft);
+  border-top-color: var(--crono-border);
+}
+html[data-theme='dark'] .admin-cronogramas .tenna-variacao-resumo strong { color: var(--crono-text); }
+html[data-theme='dark'] .admin-cronogramas .tenna-variacao-status-dot { background: var(--crono-accent); }
+
+/* Títulos e textos */
+html[data-theme='dark'] .admin-cronogramas .cronograma-card-header h2 { color: var(--crono-text); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-section-kicker { color: var(--crono-text-soft); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-form-group > span,
+html[data-theme='dark'] .admin-cronogramas .cronograma-configurado-actions > span { color: var(--crono-text-soft); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-configurado-actions > span {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* Chips "Publicado" e contador de conteúdos (brancos / texto invisível) */
+html[data-theme='dark'] .admin-cronogramas .cronograma-status-chip,
+html[data-theme='dark'] .admin-cronogramas .cronograma-item-count {
+  background: var(--crono-surface-3);
+  border: 1px solid var(--crono-border-strong);
+  color: var(--crono-text);
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-status-chip { background: #244e43; border-color: #31715d; color: #a9f0d0; }
+
+/* Cards de mês */
+html[data-theme='dark'] .admin-cronogramas .cronograma-mes-card {
+  background: var(--crono-surface-2);
+  border-color: var(--crono-border);
+  color: var(--crono-text);
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-mes-card strong { color: var(--crono-text); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-mes-card span { color: var(--crono-text-soft); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-mes-card:hover:not(.selecionado) { background: var(--crono-surface-3); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-mes-card.selecionado {
+  background: #1968bf;
+  border-color: #408fe1;
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-mes-card.selecionado :is(strong, span) { color: #fff; }
+
+/* Semanas e linhas de conteúdo */
+html[data-theme='dark'] .admin-cronogramas .cronograma-semana-block,
+html[data-theme='dark'] .admin-cronogramas .cronograma-item-row {
+  background: var(--crono-surface);
+  border-color: var(--crono-border);
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-semana-top {
+  background: var(--crono-surface-2);
+  border-color: var(--crono-border);
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-semana-vazia {
+  background: var(--crono-surface-2);
+  border-color: var(--crono-border-strong);
+  color: var(--crono-text);
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-semana-vazia strong { color: var(--crono-text); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-semana-vazia span { color: var(--crono-text-soft); }
+
+/* Botão de remover item (estava branco/rosa) */
+html[data-theme='dark'] .admin-cronogramas .cronograma-item-remover {
+  background: #4a2735;
+  border-color: #96506a;
+  color: #ffb4bd;
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-item-remover:hover {
+  background: #623042;
+  border-color: #b8657f;
+  color: #fff;
+}
+
+/* Botões */
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.secundario {
+  background: var(--crono-surface-3);
+  border-color: var(--crono-border-strong);
+  color: #dcecff;
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.secundario:hover:not(:disabled) {
+  background: #365675;
+  border-color: #6690b5;
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.texto { color: var(--crono-accent); }
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.texto:hover:not(:disabled) { color: #b9dcff; }
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.principal,
+html[data-theme='dark'] .admin-cronogramas .cronograma-programacao-acoes .cronograma-btn.principal {
+  background: #1968bf;
+  border-color: #408fe1;
+  color: #fff;
+  box-shadow: none;
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.principal:hover:not(:disabled) { background: #2278d6; }
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.perigo {
+  background: #4a2735;
+  border-color: #96506a;
+  color: #ffc2c8;
+}
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn.perigo:hover:not(:disabled) {
+  background: #a63d50;
+  border-color: #c9566b;
+  color: #fff;
+}
+/* "Publicar alterações" desabilitado continua legível */
+html[data-theme='dark'] .admin-cronogramas .cronograma-btn:disabled {
+  opacity: 1;
+  background: #22364d;
+  border-color: #34516c;
+  color: #7f99b4;
+  box-shadow: none;
+}
+
+/* Verificação de distribuição e prévia */
+html[data-theme='dark'] .admin-cronogramas .tenna-admin-avisos {
+  background: var(--crono-surface-2);
+  border-color: var(--crono-border-strong);
+  color: var(--crono-text);
+}
+html[data-theme='dark'] .admin-cronogramas .tenna-admin-avisos > p { color: var(--crono-text-soft); }
+html[data-theme='dark'] .admin-cronogramas .tenna-admin-previa > div {
+  background: var(--crono-field);
+  border-color: var(--crono-border);
+  color: var(--crono-text);
+}
+
+/* Modal de confirmação */
+html[data-theme='dark'] .cronograma-modal-backdrop { background: rgba(3, 10, 20, .62); }
+html[data-theme='dark'] .cronograma-modal {
+  background: var(--dark-surface-2, #192c43);
+  border-color: #34516c;
+  color: #e8f1fc;
+}
+html[data-theme='dark'] .cronograma-modal :is(h2, h3, strong) { color: #e8f1fc; }
+html[data-theme='dark'] .cronograma-modal p { color: #b7cce2; }

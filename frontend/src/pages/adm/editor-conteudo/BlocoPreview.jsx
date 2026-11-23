@@ -1,4 +1,5 @@
 import { Icon } from './icons.jsx';
+import { urlDoArquivo } from '../../../utils/urlUpload.js';
 import { youtubeEmbed } from './blocoHelpers.js';
 import { TextoFormatado } from '../../../components/conteudos/TextoFormatado.jsx';
 import { BlocoDidatico } from '../../../components/conteudos/BlocosDidaticos.jsx';
@@ -89,7 +90,7 @@ export function previewBloco(bloco) {
           {dados.url ? (
             <div className="editor-block-image">
               <img
-                src={dados.url}
+                src={urlDoArquivo(dados.url)}
                 alt={
                   dados.alt || ''
                 }

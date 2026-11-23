@@ -578,3 +578,96 @@
 @media (max-width: 700px) {
   .admin-flashcard-grid { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
 }
+
+/* ==========================================================================
+   Modo escuro · Flash Cards (admin)
+   ========================================================================== */
+/* Botão flutuante "+": usava var(--ink), que fica claro no tema escuro */
+html[data-theme='dark'] .fab-add {
+  background: #1968bf;
+  color: #fff;
+  box-shadow: 0 8px 22px -4px rgba(0, 0, 0, .55);
+}
+html[data-theme='dark'] .fab-add:hover { background: #2278d6; }
+
+/* Contadores de cards */
+html[data-theme='dark'] .admin-flashcard-section-count,
+html[data-theme='dark'] .admin-flashcard-content-header span {
+  background: #294563;
+  color: #e3f1ff;
+}
+
+/* Cards */
+html[data-theme='dark'] .admin-area .admin-flashcard-item {
+  background: linear-gradient(155deg, #1d3350 65%, #20395a);
+  border-color: #34516c;
+  color: #e8f1fc;
+  box-shadow: none;
+}
+html[data-theme='dark'] .admin-area .admin-flashcard-item:hover {
+  background: #2a4562;
+  border-color: #446584;
+}
+html[data-theme='dark'] .admin-area .admin-flashcard-item strong { color: #f1f6fe; }
+
+/* Mensagens */
+html[data-theme='dark'] .admin-flashcard-error {
+  background: #4a2735;
+  color: #ffd6d9;
+}
+html[data-theme='dark'] .admin-flashcard-conteudo.pendente { color: #f2b861; }
+
+/* Seletores personalizados (Matéria / Conteúdo e modal) */
+html[data-theme='dark'] .admin-area .flash-custom-trigger,
+html[data-theme='dark'] .admin-area .admin-flashcard-filter-field .flash-custom-trigger {
+  background: #122239;
+  border-color: #416080;
+  color: #e8f1fc;
+}
+html[data-theme='dark'] .admin-area .flash-custom-trigger:disabled,
+html[data-theme='dark'] .admin-area .admin-flashcard-filter-field .flash-custom-trigger:disabled {
+  background: #182b40;
+  color: #8ea6bf;
+}
+html[data-theme='dark'] .admin-area .flash-custom-options,
+html[data-theme='dark'] .admin-area .admin-flashcard-filter-field .flash-custom-options,
+html[data-theme='dark'] .flash-custom-options {
+  background: #192c43;
+  border-color: #416080;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, .4);
+}
+html[data-theme='dark'] .flash-custom-options button { color: #e8f1fc; }
+html[data-theme='dark'] .flash-custom-options button:hover,
+html[data-theme='dark'] .flash-custom-options button.selected {
+  background: #2a4562;
+  color: #fff;
+}
+html[data-theme='dark'] .flash-custom-empty { color: #a7bcd3; }
+
+/* Modal de criar/editar */
+html[data-theme='dark'] .admin-flashcard-modal {
+  background: #192c43;
+  border-color: #34516c;
+  color: #e8f1fc;
+}
+html[data-theme='dark'] .admin-flashcard-modal :is(h2, h3, label, .admin-flashcard-field > span) { color: #e8f1fc; }
+html[data-theme='dark'] .admin-flashcard-modal .modal-textarea,
+html[data-theme='dark'] .admin-flashcard-modal .admin-flashcard-field select {
+  background: #122239;
+  border-color: #416080;
+  color: #e8f1fc;
+}
+html[data-theme='dark'] .admin-flashcard-field select:disabled {
+  background: #182b40;
+  color: #8ea6bf;
+}
+html[data-theme='dark'] .admin-flashcard-modal .modal-actions .mural-btn.ghost {
+  background: #294563;
+  border-color: #42658a;
+  color: #e3f1ff;
+}
+html[data-theme='dark'] .admin-flashcard-modal .modal-actions .mural-btn.primary {
+  background: #1968bf;
+  border-color: #408fe1;
+  color: #fff;
+}

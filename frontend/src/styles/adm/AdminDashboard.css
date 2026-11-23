@@ -303,3 +303,66 @@
     padding: 6px 4px 12px;
   }
 }
+
+/* ==========================================================================
+   Modo escuro · Dashboard (admin)
+   ========================================================================== */
+/* Botão "Atualizar dados" no hero azul: deixa de ser um bloco branco */
+html[data-theme='dark'] .admin-area .admin-overview-hero .admin-refresh-btn {
+  background: rgba(8, 24, 50, .55);
+  border: 1px solid rgba(255, 255, 255, .28);
+  color: #fff;
+  box-shadow: none;
+}
+html[data-theme='dark'] .admin-area .admin-overview-hero .admin-refresh-btn:hover:not(:disabled) {
+  background: rgba(8, 24, 50, .72);
+  border-color: rgba(255, 255, 255, .45);
+  box-shadow: none;
+}
+
+/* Avatares dos cadastros recentes e ícones de arquivo (estavam brancos) */
+html[data-theme='dark'] .admin-area .admin-user-avatar,
+html[data-theme='dark'] .admin-area .admin-proof-file-icon {
+  background: #294563;
+  border: 1px solid #3b5a7a;
+  color: #cfe6ff;
+  box-shadow: none;
+}
+
+/* Chips Aluno / Admin / PDF */
+html[data-theme='dark'] .admin-area .admin-role-badge,
+html[data-theme='dark'] .admin-area .admin-pdf-badge {
+  background: #294563;
+  color: #d9eaff;
+}
+html[data-theme='dark'] .admin-area .admin-role-badge.is-admin {
+  background: #343f78;
+  color: #cdd4ff;
+}
+
+/* Pílulas de "Estado das informações" (verde claro com texto invisível) */
+html[data-theme='dark'] .admin-area .admin-health-badge {
+  background: #1f5a48;
+  color: #98f0c6;
+}
+html[data-theme='dark'] .admin-area .admin-health-badge.is-unavailable,
+html[data-theme='dark'] .admin-area .admin-overview-page .admin-health-badge.is-unavailable {
+  background: #5a2b36;
+  color: #ffb4bd;
+}
+html[data-theme='dark'] .admin-area .admin-health-row {
+  background: #1c3149;
+  border-color: #2b4560;
+}
+html[data-theme='dark'] .admin-area .admin-health-icon {
+  background: #294563;
+  color: #cfe6ff;
+}
+html[data-theme='dark'] .admin-area .admin-health-row strong { color: #f1f6fe; }
+html[data-theme='dark'] .admin-area .admin-health-row small { color: #b7cce2; }
+
+/* Links e textos de apoio */
+html[data-theme='dark'] .admin-area .admin-see-all,
+html[data-theme='dark'] .admin-area .admin-inline-action { color: #83bfff; }
+html[data-theme='dark'] .admin-area .admin-dashboard-footer { color: #b7cce2; }
+html[data-theme='dark'] .admin-area .admin-section-hint { background: #294563; color: #d9eaff; }

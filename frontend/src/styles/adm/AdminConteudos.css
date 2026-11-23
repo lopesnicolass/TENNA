@@ -283,3 +283,87 @@
  .admin-modal-refined .admin-field-row { gap: 14px; }
  .admin-modal-refined .admin-field-row .admin-check { min-height: 40px; }
 }
+
+/* ==========================================================================
+   Modo escuro · Conteúdos (admin)
+   ========================================================================== */
+/* Hover do cabeçalho da matéria: ficava branco (#fbfdff !important) */
+html[data-theme='dark'] .admin-area .content-subject-header:hover,
+html[data-theme='dark'] .admin-area .admin-content-subject-header:hover {
+  background: #243b56 !important;
+}
+html[data-theme='dark'] .admin-area .admin-content-subject,
+html[data-theme='dark'] .admin-area .content-subject-card {
+  background: #192c43 !important;
+  border-color: #34516c !important;
+  box-shadow: none;
+}
+html[data-theme='dark'] .admin-area .admin-content-subject:hover,
+html[data-theme='dark'] .admin-area .admin-content-subject.is-expanded {
+  border-color: #446584 !important;
+  box-shadow: none;
+}
+html[data-theme='dark'] .admin-area .admin-content-subject-header .admin-subject-main h3 { color: #f1f6fe; }
+html[data-theme='dark'] .admin-area .admin-content-subject-header .admin-subject-main p { color: #b7cce2; }
+html[data-theme='dark'] .admin-area .admin-content-chevron { color: #83bfff !important; }
+
+/* Ícone da matéria (cor vem de style inline): menos brilho */
+html[data-theme='dark'] .admin-area .admin-content-subject-header > div:first-child {
+  filter: saturate(.9) brightness(.95);
+  box-shadow: none;
+}
+
+/* Chip ATIVA / INATIVA (cor inline) */
+html[data-theme='dark'] .admin-area .admin-content-status {
+  background: #1f5a48 !important;
+  color: #98f0c6 !important;
+}
+
+/* Ícones dos cards de totais */
+html[data-theme='dark'] .admin-area .admin-content-stat-modern {
+  background: #192c43;
+  border-color: #34516c;
+  box-shadow: none;
+}
+html[data-theme='dark'] .admin-area .admin-content-stat-icon-modern {
+  background: color-mix(in srgb, var(--tone) 38%, #182c40);
+  border: 1px solid color-mix(in srgb, var(--tone) 55%, #182c40);
+  color: color-mix(in srgb, var(--tone) 55%, #fff);
+}
+html[data-theme='dark'] .admin-area .admin-content-stat-modern strong { color: #f1f6fe; }
+html[data-theme='dark'] .admin-area .admin-content-stat-modern span { color: #b7cce2; }
+
+/* Botão "Atualizar" e demais botões secundários da página */
+html[data-theme='dark'] .admin-area .page-header-actions .mural-btn.secondary,
+html[data-theme='dark'] .admin-area .admin-content-action.secondary {
+  background: #294563;
+  border-color: #42658a;
+  color: #e3f1ff;
+}
+html[data-theme='dark'] .admin-area .page-header-actions .mural-btn.secondary:hover:not(:disabled),
+html[data-theme='dark'] .admin-area .admin-content-action.secondary:hover:not(:disabled) {
+  background: #365675;
+  border-color: #6690b5;
+}
+
+/* Busca e filtros */
+html[data-theme='dark'] .admin-area .admin-content-toolbar input,
+html[data-theme='dark'] .admin-area .admin-content-search-modern,
+html[data-theme='dark'] .admin-area .admin-content-filter-modern,
+html[data-theme='dark'] .admin-area .admin-content-filter-panel {
+  background: #122239 !important;
+  border-color: #416080 !important;
+  color: #e8f1fc;
+}
+
+/* Modo escuro: bordas claras ao redor das linhas de tópicos (vinham com !important) */
+html[data-theme='dark'] .admin-area .admin-content-topic-row {
+  border: 1px solid #2b4560 !important;
+  background: #1c3149;
+}
+html[data-theme='dark'] .admin-area .admin-content-topic-row:hover {
+  border-color: #3b5a7a !important;
+  background: #20374f;
+}
+html[data-theme='dark'] .admin-area .admin-content-topic-area { border-top-color: #2b4560 !important; }
+html[data-theme='dark'] .admin-area .admin-content-subject-header + * { border-top-color: #2b4560; }

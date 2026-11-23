@@ -1,5 +1,6 @@
 import { Icon } from './icons.jsx';
 import { campo } from './Campo.jsx';
+import { CampoImagem } from './CampoImagem.jsx';
 import { youtubeEmbed } from './blocoHelpers.js';
 import { EditorTextoFormatavel } from './EditorTextoFormatavel.jsx';
 import { BlocosDidaticosFormulario } from './BlocosDidaticosFormulario.jsx';
@@ -263,19 +264,17 @@ export function BlocoFormulario({
               )
           )}
 
-          {campo(
-            'URL da imagem',
-            dados.url,
-            (valor) =>
-              atualizarDado(
-                'url',
-                valor
-              ),
-            {
-              placeholder:
-                'https://...',
-            }
-          )}
+          <CampoImagem
+            url={dados.url}
+            alt={dados.alt}
+            onEnviada={(caminho, nomeArquivo) => {
+              atualizarDado('url', caminho);
+              if (!String(dados.alt || '').trim()) {
+                atualizarDado('alt', String(nomeArquivo || '').replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' '));
+              }
+            }}
+            onRemover={() => atualizarDado('url', '')}
+          />
 
           {campo(
             'Texto alternativo',
@@ -297,18 +296,6 @@ export function BlocoFormulario({
               )
           )}
 
-          {dados.url && (
-            <div className="editor-preview">
-              <span>Prévia</span>
-
-              <img
-                src={dados.url}
-                alt={
-                  dados.alt || ''
-                }
-              />
-            </div>
-          )}
         </>
       );
 

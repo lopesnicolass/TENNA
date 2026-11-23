@@ -105,6 +105,7 @@ app.use(
 // =====================================================
 
 app.use('/uploads/questoes', express.static(path.join(__dirname, 'uploads', 'questoes')));
+app.use('/uploads/conteudos', express.static(path.join(__dirname, 'uploads', 'conteudos')));
 
 app.use(
     "/uploads/provas",
