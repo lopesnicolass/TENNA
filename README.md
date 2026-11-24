@@ -36,13 +36,13 @@ O sistema reúne funcionalidades como cronograma de estudos, calendário, conte�
 
 ## Imagens do Projeto
 
-### Cronograma de estudos
+### Página inicial (Home)
 
-![Cronograma da TENNA](design/telas/cronograma.png)
+![Página inicial da TENNA](design/telas/home.png)
 
-### Simulados
+### Página de destino
 
-![Simulados da TENNA](design/telas/simulados.png)
+![Página de destino da TENNA](design/telas/PaginaDestino.png)
 
 Mais telas estão na pasta [`design/telas`](design/telas).
 
@@ -81,11 +81,7 @@ Inicie o servidor (por padrão, em `http://localhost:3000`):
 npm start
 ```
 
-Opcional: para criar uma conta de administrador, preencha `ADMIN_EMAIL` e `ADMIN_PASSWORD` (mínimo de 12 caracteres) no `.env` e execute:
-
-```bash
-node criarAdmin.js
-```
+O banco de dados já acompanha o repositório (`backend/banco/vestibulinho.sqlite`) com a conta de administrador pronta, então não é necessário criar o admin. O script `node criarAdmin.js` só é usado se o banco for recriado do zero com os arquivos da pasta `database`.
 
 ### 3. Configurar o front-end
 
@@ -98,7 +94,14 @@ npm run dev
 
 Acesse o endereço disponibilizado pelo Vite no terminal (normalmente `http://localhost:5173`).
 
-### 4. Testes (opcional)
+### 4. Acesso para avaliação
+
+| Perfil | E-mail | Senha |
+| --- | --- | --- |
+| Administrador | admin@vestibulinho.com | Admin123 |
+| Aluno | crie uma conta na tela de cadastro | a senha escolhida (mínimo de 6 caracteres) |
+
+### 5. Testes (opcional)
 
 ```bash
 npm test                  # front-end (pasta tests)
@@ -107,9 +110,9 @@ cd backend && npm test    # back-end
 
 ## Como citar o projeto
 
-DE MOURA, Maria Luiza Duarte; DA SILVA, Nícolas; BANHO, Ruan Pablo dela Penha. TENNA: Plataforma de Estudos para o Vestibulinho. 2026. [Número de páginas] p.
+MOURA, Maria Luiza; SILVA, Nícolas; BANHO, Ruan Pablo. TENNA: Plataforma de Estudos para o Vestibulinho. 2026. 51 p.
 
-Em caso de dúvidas, entre em contato com [e-mail do integrante 1] ou com [e-mail do integrante 2].
+Em caso de dúvidas, entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com.
 
 ## Trabalho escrito
 
