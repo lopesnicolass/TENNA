@@ -24,7 +24,7 @@ test('status e aviso ocupam apenas uma região com confirmação compacta', () =
 });
 test('preserva animação de progresso e integração com servidor', () => {
   assert.match(jsx, /strokeDashoffset=\{ringOffset\}/);
-  assert.match(jsx, /setNotice\(''\)/);
+  assert.match(jsx, /setNotice\(action === 'cancelar'/);
   assert.match(jsx, /duracao: duration/);
   assert.match(jsx, /sendAction\('continuar'\)/);
   assert.match(jsx, /sendAction\('pausar'\)/);

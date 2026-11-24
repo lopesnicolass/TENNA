@@ -1,6 +1,6 @@
 import '../../styles/adm/AdminFlashCards.css';
 import { useEffect, useMemo, useState } from 'react';
-import { API_URL, obterToken } from '../../services/api.js';
+import { API_URL } from '../../services/api.js';
 
 const emptyForm = {
   primario: '',
@@ -52,7 +52,7 @@ export default function AdminFlashCards() {
       setErro('');
 
       const token =
-        obterToken();
+        localStorage.getItem('etecamp_token');
 
       const [respostaFlashcards, respostaConteudos] =
         await Promise.all([
@@ -189,7 +189,7 @@ export default function AdminFlashCards() {
 
     try {
       const token =
-        obterToken();
+        localStorage.getItem('etecamp_token');
 
       const resposta = await fetch(
         `${API_URL}/flashcards`,
@@ -277,7 +277,7 @@ export default function AdminFlashCards() {
 
     try {
       const token =
-        obterToken();
+        localStorage.getItem('etecamp_token');
 
       const resposta = await fetch(
         `${API_URL}/flashcards/${editing.id}`,
@@ -334,7 +334,7 @@ export default function AdminFlashCards() {
 
     try {
       const token =
-        obterToken();
+        localStorage.getItem('etecamp_token');
 
       const resposta = await fetch(
         `${API_URL}/flashcards/${editing.id}`,

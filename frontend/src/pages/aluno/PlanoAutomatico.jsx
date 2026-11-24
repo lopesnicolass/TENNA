@@ -550,7 +550,7 @@ export default function PlanoAutomatico() {
   }, [planoAnterior?.days, planoAnterior?.modeloAtualizadoEm, planoAnterior?.modeloId, planoAnterior?.months, planoAnterior?.plan]);
 
   async function carregarProgressoPlano() {
-    const token = obterToken();
+    const token = localStorage.getItem('token');
     if (!token) {
       setStudiedTopics({});
       return;
@@ -603,7 +603,7 @@ export default function PlanoAutomatico() {
       return;
     }
 
-    const token = obterToken();
+    const token = localStorage.getItem('token');
     if (!token) {
       window.alert('Sua sessão expirou. Faça login novamente.');
       return;

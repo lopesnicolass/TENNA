@@ -11,32 +11,14 @@ export const API_URL =
 // OBTER TOKEN
 // =====================================================
 
-const CHAVE_TOKEN = 'tenna_token';
-// Chaves usadas em versões anteriores. Lidas uma única vez e migradas.
-const CHAVES_LEGADAS = ['etecamp_token', 'token', 'accessToken', 'authToken'];
-
 export function obterToken() {
-    const atual = localStorage.getItem(CHAVE_TOKEN);
-    if (atual) return atual;
 
-    for (const chave of CHAVES_LEGADAS) {
-        const antigo = localStorage.getItem(chave);
-        if (antigo) {
-            salvarToken(antigo);
-            return antigo;
-        }
-    }
-    return '';
-}
-
-export function salvarToken(token) {
-    localStorage.setItem(CHAVE_TOKEN, token);
-    CHAVES_LEGADAS.forEach(chave => localStorage.removeItem(chave));
-}
-
-export function removerToken() {
-    localStorage.removeItem(CHAVE_TOKEN);
-    CHAVES_LEGADAS.forEach(chave => localStorage.removeItem(chave));
+    return (
+        localStorage.getItem('etecamp_token') ||
+        localStorage.getItem('token') ||
+        localStorage.getItem('accessToken') ||
+        ''
+    );
 }
 
 
@@ -45,10 +27,30 @@ export function removerToken() {
 // =====================================================
 
 export function limparSessao() {
-    removerToken();
-    localStorage.removeItem('etecamp_usuario');
-    sessionStorage.removeItem('etecamp_admin_preview');
-    window.dispatchEvent(new Event('etecamp-logout'));
+
+    localStorage.removeItem(
+        'etecamp_token'
+    );
+
+    localStorage.removeItem(
+        'token'
+    );
+
+    localStorage.removeItem(
+        'accessToken'
+    );
+
+    localStorage.removeItem(
+        'etecamp_usuario'
+    );
+
+    sessionStorage.removeItem(
+        'etecamp_admin_preview'
+    );
+
+    window.dispatchEvent(
+        new Event('etecamp-logout')
+    );
 }
 
 

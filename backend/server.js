@@ -85,22 +85,6 @@ require("./config/ensureTerrario");
 const app =
     express();
 
-// Atrás de proxy reverso (Render, Nginx, etc.) defina TRUST_PROXY=1 no .env;
-// sem isso o limite de requisições enxerga sempre o IP do proxy.
-if (process.env.TRUST_PROXY) {
-    const valor = process.env.TRUST_PROXY;
-    app.set('trust proxy', /^\d+$/.test(valor) ? Number(valor) : valor);
-}
-
-// Cabeçalhos básicos de segurança (sem dependência extra).
-// nosniff impede o navegador de "adivinhar" o tipo de arquivos enviados.
-app.disable('x-powered-by');
-app.use((req, res, next) => {
-    res.set('X-Content-Type-Options', 'nosniff');
-    res.set('Referrer-Policy', 'no-referrer');
-    next();
-});
-
 const origens = String(process.env.FRONTEND_URL || 'http://localhost:5173')
     .split(',').map(origem => origem.trim()).filter(Boolean);
 app.use(cors({
