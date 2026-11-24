@@ -6,29 +6,12 @@
 *.log
 npm-debug.log*
 
-# Segredos: somente exemplos podem ser versionados
-**/.env
-**/.env.*
-!**/.env.example
-
-# Banco, backups e dados locais (preservar as pastas)
-*.sqlite
-*.sqlite3
+# Banco e uploads SÃO versionados de propósito (para trocar de computador).
+# Ignora só arquivos temporários do SQLite, cópias e backups locais.
 *.sqlite-*
-*.db
-*.db-*
+*.sqlite3-*
 *.bak
 *.backup
-backend/banco/*
-!backend/banco/.gitkeep
-
-# PDFs e arquivos enviados pelos usuários
-backend/uploads/**
-!backend/uploads/
-!backend/uploads/provas/
-!backend/uploads/provas/.gitkeep
-!backend/uploads/questoes/
-!backend/uploads/questoes/.gitkeep
 
 # Artefatos e arquivos temporários
 *.zip

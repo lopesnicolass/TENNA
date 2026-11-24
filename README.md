@@ -6,8 +6,8 @@ O **Tenna** é uma aplicação web educacional desenvolvida como Trabalho de Con
 
 - `frontend/`: React 19 e Vite — interface do estudante e da administração.
 - `backend/`: Node.js, Express e SQLite — API, autenticação e persistência.
-- `backend/banco/vestibulinho.sqlite`: banco de dados local do projeto. Pode conter contas e dados de estudantes; mantenha esta cópia privada e faça backup antes de qualquer atualização.
-- `backend/uploads/`: arquivos enviados para questões e provas.
+- `backend/banco/vestibulinho.sqlite`: banco de dados do projeto. É versionado no Git de propósito, para o mesmo banco acompanhar o projeto entre computadores. Pode conter contas e dados de estudantes; por isso mantenha o repositório **privado** e faça backup antes de qualquer atualização.
+- `backend/uploads/`: arquivos enviados (conteúdos, questões e provas). Também são versionados, pois o banco faz referência a eles.
 - `frontend/tests/` e `backend/tests/`: testes automatizados.
 
 ## Pré-requisitos
@@ -17,14 +17,9 @@ O **Tenna** é uma aplicação web educacional desenvolvida como Trabalho de Con
 
 ## Configuração do backend
 
-O arquivo `backend/.env` não é distribuído. Na primeira execução:
+O arquivo `backend/.env` é versionado junto com o projeto, para funcionar em qualquer computador sem configuração extra. Ele contém o `JWT_SECRET` (mínimo de 32 caracteres) e pode ter também `PORT`, `FRONTEND_URL`, `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_NAME`, `ADMIN_EMAIL` e `ADMIN_PASSWORD`.
 
-1. Faça uma cópia de `backend/.env.example` com o nome `backend/.env`.
-2. Gere um segredo próprio para `JWT_SECRET` executando `node -e "console.log(require('crypto').randomBytes(48).toString('base64'))"`.
-3. Substitua o valor de exemplo de `JWT_SECRET` pelo segredo gerado. Não reutilize segredos de produção ou de outros ambientes.
-4. Ajuste `FRONTEND_URL` caso o front-end seja servido em outro endereço.
-
-Não compartilhe o `.env` nem publique o banco SQLite com dados pessoais. Antes de enviar o projeto para a banca ou publicar um repositório, use uma cópia anonimizada do banco e revise os arquivos da pasta `backend/uploads/`.
+Como o `.env`, o banco SQLite e a pasta `backend/uploads/` ficam no repositório, mantenha-o **privado**. Antes de enviar o projeto para a banca ou torná-lo público, remova o `.env` do versionamento, gere um novo `JWT_SECRET` e use uma cópia anonimizada do banco.
 
 ## Como executar
 
@@ -81,10 +76,3 @@ node scripts/verificar_integridade_banco.cjs
 ```
 
 A verificação não altera os dados. **Não execute scripts de reparo sem identificar um problema e fazer backup.**
-<<<<<<< HEAD
-=======
-
-## Privacidade e histórico do Git
-
-Se o banco SQLite ou os PDFs de `backend/uploads/provas/` já foram versionados no passado, removê-los do commit atual **não** apaga o histórico. Use `limpar-historico.sh` (na raiz do projeto) numa cópia do repositório, confira o resultado e só então faça o `push --force`. Depois, peça a quem clonou o repositório que o clone novamente e redefina as senhas das contas que estavam no banco.
->>>>>>> parent of 6b22a21 (Banco de demonstração sem dados de usuários)

@@ -470,15 +470,6 @@ export default function Mural() {
       return;
     }
 
-    const confirmar =
-      window.confirm(
-        'Tem certeza que deseja excluir este post-it?'
-      );
-
-    if (!confirmar) {
-      return;
-    }
-
     try {
 
       await request(
