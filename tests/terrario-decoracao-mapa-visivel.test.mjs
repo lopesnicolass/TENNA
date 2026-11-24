@@ -12,13 +12,15 @@ test('modo decoração utiliza as mesmas proporções dos cards do modo normal',
 });
 
 test('pirâmide ocupa a largura do card sem ficar minúscula por limite de altura', () => {
-  assert.match(jsx, /const larguraUtil = Math.max\(0, viewport.clientWidth - 20\)/);
+  assert.match(jsx, /const larguraUtil = Math.max\(0, viewport.clientWidth - 32\)/);
   assert.match(jsx, /Math.min\(1, larguraUtil \/ mapaDimensoes\.largura\)/);
   assert.doesNotMatch(jsx, /const escalaAltura|const alturaMapa|Math.min\(560, window.innerHeight/);
   assert.match(jsx, /observer\.observe\(viewport\)/);
-  assert.match(jsx, /height: `\$\{Math.ceil\(mapaDimensoes.altura \* zoomDecoracao\) \+ 8\}px`/);
-  assert.match(jsx, /transform: `scale\(\$\{zoomDecoracao\}\)`/);
-  assert.match(css, /\.terr-page\.is-decorating \.terr-world-viewport\.is-fitted\s*\{\s*overflow:\s*hidden;/);
+  assert.match(jsx, /width: `\$\{mapaDimensoes.largura \* zoomExibicao\}px`/);
+  assert.match(jsx, /height: `\$\{mapaDimensoes.altura \* zoomExibicao\}px`/);
+  assert.match(jsx, /transform: `scale\(\$\{zoomExibicao\}\)`/);
+  assert.match(jsx, /className=\"terr-world-zoom\"/);
+  assert.match(css, /\.terr-page\.is-decorating \.terr-world-viewport\.is-fitted\.is-zoomed\s*\{[^}]*overflow:\s*auto/s);
 });
 
 test('foco e editor continuam exclusivos e responsivos', () => {

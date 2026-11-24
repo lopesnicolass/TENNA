@@ -9,14 +9,15 @@ test('decoracao adapta o mapa ao espaco horizontal em vez de cortar as salas', (
   assert.match(jsx, /zoomDecoracao/);
   assert.match(jsx, /larguraUtil\s*\/\s*mapaDimensoes\.largura/);
   assert.match(jsx, /ResizeObserver\(ajustarZoom\)/);
-  assert.match(jsx, /transform:\s*`scale\(\$\{zoomDecoracao\}\)`/);
-  assert.match(jsx, /height:\s*`\$\{mapaDimensoes\.altura\s*\*\s*zoomDecoracao\}px`/);
+  assert.match(jsx, /transform:\s*`scale\(\$\{zoomExibicao\}\)`/);
+  assert.match(jsx, /height:\s*`\$\{mapaDimensoes\.altura\s*\*\s*zoomExibicao\}px`/);
+  assert.match(jsx, /ajustarZoomMapa\(1\)/);
 });
 
 test('o mapa em decoracao nao oferece rolagem dupla nem rouba movimento dos moveis', () => {
-  assert.match(jsx, /if \(decorate \|\| evt\.pointerType/);
+  assert.match(jsx, /if \(evt\.pointerType/);
   assert.match(jsx, /if \(decorate\) return;/);
-  assert.match(css, /\.terr-page\.is-decorating \.terr-world-viewport\.is-fitted\s*\{[^}]*overflow:\s*hidden/);
+  assert.match(css, /\.terr-page\.is-decorating \.terr-world-viewport\.is-fitted\.is-zoomed\s*\{[^}]*overflow:\s*auto/s);
   assert.match(css, /\.terr-page\.is-decorating \.terr-world-fit\s*\{/);
 });
 

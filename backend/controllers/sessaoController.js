@@ -3,6 +3,7 @@ const {
     encerrarSessao,
     encerrarSessaoPorId
 } = require("../models/sessaoModel");
+const terrario = require('../models/terrarioModel');
 
 
 // =====================================================
@@ -32,7 +33,7 @@ function listarSessoesAtivas(req, res) {
 // ENCERRAR SESSÃO
 // =====================================================
 
-function sair(req, res) {
+async function sair(req, res) {
 
     const usuarioId = Number(req.params.usuarioId);
 
@@ -55,6 +56,17 @@ function sair(req, res) {
         });
     }
 
+    try {
+        // Pausa o foco antes de invalidar o login. No caso de um encerramento
+        // administrativo, usa o ID da conta que está sendo desconectada.
+        await terrario.pausarFocoAoSair(usuarioId);
+    } catch (erro) {
+        console.error("❌ Erro ao pausar o foco durante o logout:", erro);
+        return res.status(500).json({
+            mensagem: "Não foi possível pausar o foco. Tente sair novamente."
+        });
+    }
+
     // O próprio usuário sai somente da sessão autenticada; admins podem
     // desconectar todas as sessões de outra conta.
     const encerrar = Number(req.usuario.id) === usuarioId
@@ -72,7 +84,7 @@ function sair(req, res) {
         }
 
         return res.status(200).json({
-            mensagem: "Sessão encerrada com sucesso."
+            mensagem: "Sessão encerrada com sucesso. O foco foi pausado quando estava ativo."
         });
     });
 }

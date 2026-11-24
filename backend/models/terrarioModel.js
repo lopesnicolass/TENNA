@@ -235,11 +235,41 @@ async function buscarEstado(usuarioId, agora = Date.now()) {
     sessao: atual ? {
       id: atual.id, materia: atual.materia, duracao: atual.duracao_minutos,
       estado: atual.estado, restanteSegundos: restante,
+      terminaEmMs: atual.estado === 'em_andamento'
+        ? atual.ativo_desde_ms + atual.restante_segundos * 1000
+        : null,
       sementesRecebidas: atual.sementes_recebidas,
       xpRecebido: atual.xp_recebido
     } : null,
     agoraServidor: agora
   };
+}
+
+async function pausarFocoAoSair(usuarioId, agora = Date.now()) {
+  // O logout também precisa interromper o foco no servidor. Isso evita que
+  // uma sessão continue acumulando tempo e receba recompensas depois que
+  // o estudante saiu da conta.
+  const sessao = await obter(`SELECT * FROM terrario_sessoes
+    WHERE usuario_id=? AND estado IN ('em_andamento', 'pausada')
+    ORDER BY id DESC LIMIT 1`, [usuarioId]);
+
+  if (!sessao || sessao.estado !== 'em_andamento') return false;
+
+  const terminaEm = sessao.ativo_desde_ms + sessao.restante_segundos * 1000;
+  if (agora >= terminaEm) {
+    // Se o período terminou antes do logout, a conclusão legítima é mantida.
+    await creditarConclusao(usuarioId, sessao.id, agora);
+    return true;
+  }
+
+  const resultado = await executar(`UPDATE terrario_sessoes
+    SET estado='pausada',
+      restante_segundos=MAX(0, restante_segundos - CAST((? - ativo_desde_ms)/1000 AS INTEGER)),
+      ativo_desde_ms=NULL
+    WHERE id=? AND usuario_id=? AND estado='em_andamento'`,
+  [agora, sessao.id, usuarioId]);
+
+  return resultado.changes === 1;
 }
 
 async function iniciar(usuarioId, materia, duracao, agora = Date.now()) {
@@ -296,4 +326,4 @@ async function acao(usuarioId, id, tipo, agora = Date.now()) {
   return { status: 400, mensagem: 'Ação inválida.' };
 }
 
-module.exports = { DURACOES, RECOMPENSAS, MATERIAS, buscarEstado, iniciar, acao, creditarConclusao, comprarItem, personalizarItem };
+module.exports = { DURACOES, RECOMPENSAS, MATERIAS, buscarEstado, iniciar, acao, creditarConclusao, pausarFocoAoSair, comprarItem, personalizarItem };

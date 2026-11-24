@@ -1,78 +1,80 @@
-# Tenna — Plataforma de estudos para o Vestibulinho
+# TENNA — Plataforma de Estudos para o Vestibulinho
 
-O **Tenna** é uma aplicação web educacional desenvolvida como Trabalho de Conclusão de Curso (TCC). Reúne conteúdos de estudo, cronograma, calendário, mural, flashcards, banco de questões, simulados, indicadores de desempenho, ranking e área administrativa.
+![Logo da TENNA](src/assets/tenna_logo.webp)
 
-## Tecnologias e estrutura
+## Descrição
 
-- `frontend/`: React 19 e Vite — interface do estudante e da administração.
-- `backend/`: Node.js, Express e SQLite — API, autenticação e persistência.
-- `backend/banco/vestibulinho.sqlite`: banco de dados do projeto. É versionado no Git de propósito, para o mesmo banco acompanhar o projeto entre computadores. Pode conter contas e dados de estudantes; por isso mantenha o repositório **privado** e faça backup antes de qualquer atualização.
-- `backend/uploads/`: arquivos enviados (conteúdos, questões e provas). Também são versionados, pois o banco faz referência a eles.
-- `frontend/tests/` e `backend/tests/`: testes automatizados.
+A TENNA é uma plataforma web educacional desenvolvida como Trabalho de Conclusão de Curso (TCC), com o objetivo de auxiliar estudantes na organização e no acompanhamento de sua preparação para o Vestibulinho.
 
-## Pré-requisitos
+O sistema reúne funcionalidades como cronograma de estudos, calendário, conteúdos, flashcards, banco de questões, simulados e acompanhamento de desempenho. Também conta com recursos de gamificação para incentivar a continuidade dos estudos.
 
-- Node.js 22.23.4 ou superior na linha 22 (ou uma versão LTS posterior compatível) e npm.
-- Dois terminais para executar frontend e backend separadamente.
+## Equipe
 
-## Configuração do backend
+- Ruan Pablo — [Função]
+- [Nome do integrante 2] — [Função]
+- [Nome do integrante 3] — [Função]
 
-O arquivo `backend/.env` é versionado junto com o projeto, para funcionar em qualquer computador sem configuração extra. Ele contém o `JWT_SECRET` (mínimo de 32 caracteres) e pode ter também `PORT`, `FRONTEND_URL`, `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_NAME`, `ADMIN_EMAIL` e `ADMIN_PASSWORD`.
+## Tecnologias Utilizadas
 
-Como o `.env`, o banco SQLite e a pasta `backend/uploads/` ficam no repositório, mantenha-o **privado**. Antes de enviar o projeto para a banca ou torná-lo público, remova o `.env` do versionamento, gere um novo `JWT_SECRET` e use uma cópia anonimizada do banco.
+- HTML5, CSS3 e JavaScript (ES Modules)
+- React (19.2.8), React Router DOM (7.18.2) e Vite (8.2.1)
+- Node.js (22.19.0) e Express (5.2.1)
+- SQLite (3)
 
-## Como executar
+## Imagens do Projeto
 
-Abra um terminal na pasta `backend`:
+### Página inicial
+
+![Página inicial da TENNA](design/telas/home.png)
+
+### Funcionalidade principal
+
+![Funcionalidade da TENNA](design/telas/funcionalidade.png)
+
+## Como executar o projeto
+
+### Pré-requisitos
+
+- Node.js instalado
+- npm instalado
+
+### 1. Clonar o repositório
+
+```bash
+git clone URL_DO_REPOSITORIO
+cd TENNA
+```
+
+### 2. Configurar o back-end
 
 ```bash
 cd backend
-npm ci
+npm install
+```
+
+Configure as variáveis de ambiente conforme o arquivo `.env.example` e inicie o servidor:
+
+```bash
 npm start
 ```
 
-Abra outro terminal na pasta `frontend`:
+### 3. Configurar o front-end
+
+Abra outro terminal na pasta principal do projeto:
 
 ```bash
-cd frontend
-npm ci
+npm install
 npm run dev
 ```
 
-Acesse o endereço exibido pelo Vite, normalmente **http://localhost:5173**. Mantenha os dois terminais abertos enquanto usa a aplicação.
+Acesse o endereço disponibilizado pelo Vite no terminal.
 
-## Banco de questões e simulados
+## Como citar o projeto
 
-O projeto utiliza a tabela `questoes` existente como banco central. Na inicialização, uma migração não destrutiva complementa os registros com disciplina, conteúdo, dificuldade e habilidade, e cria o registro de tentativas dos simulados. Os simulados antigos permanecem como provas por disciplina. Questões antigas cuja associação ao conteúdo não pode ser deduzida com segurança devem ser classificadas pelo administrador na tela **Simulados → Banco de questões**.
+[SOBRENOME], [Nome do aluno 1]; [SOBRENOME], [Nome do aluno 2]; [SOBRENOME], [Nome do aluno 3]. TENNA: Plataforma de Estudos para o Vestibulinho. 2026. [Número de páginas] p.
 
-Os simulados gerais permitem misturar questões de diferentes disciplinas. A seleção e a ordem de cada tentativa são registradas pelo servidor; a matéria e o conteúdo continuam identificados durante a prova e na correção.
+## Trabalho escrito
 
-## Testes e compilação
+O trabalho escrito poderá ser consultado pelo Repositório Institucional do Centro Paula Souza:
 
-No terminal da pasta `backend`:
-
-```bash
-npm test
-npm audit
-```
-
-No terminal da pasta `frontend`:
-
-```bash
-npm test
-npm run lint
-npm run build
-npm audit
-```
-
-O build é criado em `frontend/dist/` e pode ser regenerado. As pastas `node_modules/` são recriadas com `npm ci`.
-
-## Integridade do banco
-
-Para verificar o SQLite, a partir da pasta `backend`:
-
-```bash
-node scripts/verificar_integridade_banco.cjs
-```
-
-A verificação não altera os dados. **Não execute scripts de reparo sem identificar um problema e fazer backup.**
+https://ric.cps.sp.gov.br/

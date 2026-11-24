@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { request } from '../services/api.js';
-import { remainingFromServer } from '../terrario/focusClock.js';
+import { clockNow, remainingFromServer } from '../terrario/focusClock.js';
 import { useGamification } from '../context/GamificationShared.js';
 import './FocoNoSite.css';
 
@@ -21,7 +21,7 @@ export default function FocoNoSite({ onFocusRunningChange, onToggleCleanFocus, c
   const { recarregarGamificacao } = useGamification();
   const [snapshot, setSnapshot] = useState(null);
   const snapshotRef = useRef(null);
-  const [agora, setAgora] = useState(Date.now);
+  const [agora, setAgora] = useState(clockNow);
   const [busy, setBusy] = useState(false);
   const [erro, setErro] = useState('');
   const emOperacaoRef = useRef(false);
@@ -31,7 +31,7 @@ export default function FocoNoSite({ onFocusRunningChange, onToggleCleanFocus, c
   const estadoAnteriorRef = useRef(null);
 
   const aplicarEstado = useCallback((data) => {
-    const recebidoEm = Date.now();
+    const recebidoEm = clockNow();
     snapshotRef.current = { data, recebidoEm };
     if (!mountedRef.current) return;
     setSnapshot({ data, recebidoEm });
@@ -127,7 +127,7 @@ export default function FocoNoSite({ onFocusRunningChange, onToggleCleanFocus, c
 
   useEffect(() => {
     if (!rodando) return undefined;
-    const intervalo = window.setInterval(() => setAgora(Date.now()), 1000);
+    const intervalo = window.setInterval(() => setAgora(clockNow()), 250);
     return () => window.clearInterval(intervalo);
   }, [rodando]);
   useEffect(() => {

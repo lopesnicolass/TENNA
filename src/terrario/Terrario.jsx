@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useGamification } from '../context/GamificationShared.js';
 import { obterToken, request } from '../services/api.js';
-import { remainingFromServer } from './focusClock.js';
+import { clockNow, remainingFromServer } from './focusClock.js';
 import { deveAnimarTenna } from './comportamentoFoco.js';
 import { moverComDeslocamento, passouDoLimiteArrasto, clampPosition } from './dragPosition.js';
 import { construirJornada } from './jornada.js';
@@ -106,7 +106,7 @@ export default function Terrario() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
-  const [now, setNow] = useState(() => Date.now());
+  const [now, setNow] = useState(() => clockNow());
   const [duration, setDuration] = useState(25);
   const [durationDraft, setDurationDraft] = useState('25');
   const materia = 'Estudo livre';
@@ -192,6 +192,8 @@ export default function Terrario() {
   // O mapa é desenhado em 1280x1040; o zoom afeta somente a exibição,
   // sem alterar as coordenadas percentuais nem as posições dos móveis.
   const [zoomDecoracao, setZoomDecoracao] = useState(0.58);
+  const [zoomManual, setZoomManual] = useState(1);
+  const zoomExibicao = zoomDecoracao * zoomManual;
   const salasRefs = useRef({});
 
   useEffect(() => {
@@ -214,7 +216,7 @@ export default function Terrario() {
     validarEstadoTerrario(data);
     const previous = snapshotRef.current?.data?.sessao;
     const current = data?.sessao;
-    const receivedAt = Date.now();
+    const receivedAt = clockNow();
     snapshotRef.current = { data, receivedAt };
     setSnapshot({ data, receivedAt });
     setNow(receivedAt);
@@ -310,16 +312,15 @@ export default function Terrario() {
     ? { largura: 1280, altura: 1040 }
     : { largura: 1280, altura: 605 };
 
-  // No editor, o mapa usa a largura útil do cenário e cresce verticalmente.
-  // Limitar pela altura da janela deixava as três salas pequenas demais em
-  // notebooks; a página pode rolar normalmente, sem barras dentro do mapa.
-  // Os móveis mantêm suas coordenadas percentuais em cada sala.
+  // No editor, o mapa começa enquadrado pela largura disponível. Quando o
+  // estudante amplia, o viewport permite navegar pelo mapa sem alterar as
+  // coordenadas percentuais nem as posições persistidas dos móveis.
   useEffect(() => {
     if (!decorate || formatoDoMapa === 'individual') return undefined;
     const viewport = viewportRef.current;
     if (!viewport) return undefined;
     const ajustarZoom = () => {
-      const larguraUtil = Math.max(0, viewport.clientWidth - 20);
+      const larguraUtil = Math.max(0, viewport.clientWidth - 32);
       if (!larguraUtil) return;
       const proximoZoom = Math.max(0.1, Math.min(1, larguraUtil / mapaDimensoes.largura));
       setZoomDecoracao((anterior) =>
@@ -353,6 +354,22 @@ export default function Terrario() {
     });
   }, [decorate, selectedRoom, formatoDoMapa, jornada.totalConquistadas]);
 
+  function ajustarZoomMapa(proximoZoom) {
+    const viewport = viewportRef.current;
+    const larguraAtual = Math.max(1, viewport?.scrollWidth || 1);
+    const alturaAtual = Math.max(1, viewport?.scrollHeight || 1);
+    const centroX = viewport ? (viewport.scrollLeft + viewport.clientWidth / 2) / larguraAtual : 0.5;
+    const centroY = viewport ? (viewport.scrollTop + viewport.clientHeight / 2) / alturaAtual : 0.5;
+
+    setZoomManual(Math.max(0.7, Math.min(2, Math.round(proximoZoom * 10) / 10)));
+    if (viewport) {
+      window.requestAnimationFrame(() => {
+        viewport.scrollLeft = Math.max(0, centroX * viewport.scrollWidth - viewport.clientWidth / 2);
+        viewport.scrollTop = Math.max(0, centroY * viewport.scrollHeight - viewport.clientHeight / 2);
+      });
+    }
+  }
+
   function alternarDecoracao() {
     // Uma sessão de foco ativa mantém o cronômetro disponível.
     if (active && !decorate) return;
@@ -364,7 +381,7 @@ export default function Terrario() {
   }
 
   function iniciarNavegacao(evt) {
-    if (decorate || evt.pointerType !== 'mouse' || evt.button !== 0 || evt.target.closest('button, a, input, select')) return;
+    if (evt.pointerType !== 'mouse' || evt.button !== 0 || evt.target.closest('button, a, input, select')) return;
     const viewport = evt.currentTarget;
     panRef.current = {
       id: evt.pointerId, x: evt.clientX, y: evt.clientY,
@@ -387,7 +404,7 @@ export default function Terrario() {
 
   useEffect(() => {
     if (status !== 'running') return undefined;
-    const timer = window.setInterval(() => setNow(Date.now()), 500);
+    const timer = window.setInterval(() => setNow(clockNow()), 250);
     return () => window.clearInterval(timer);
   }, [status]);
 
@@ -802,12 +819,27 @@ export default function Terrario() {
             </div>
           )}
           <div className="terr-scene-shell">
-            <div className={`terr-world-viewport is-${formatoDoMapa} ${decorate && formatoDoMapa !== 'individual' ? 'is-fitted' : ''}`}
-              style={decorate && formatoDoMapa !== 'individual' ? { height: `${Math.ceil(mapaDimensoes.altura * zoomDecoracao) + 8}px` } : undefined}
+            <div className={`terr-world-viewport is-${formatoDoMapa} ${decorate && formatoDoMapa !== 'individual' ? 'is-fitted' : ''} ${decorate && formatoDoMapa !== 'individual' && zoomManual > 1 ? 'is-zoomed' : ''}`}
+              style={decorate && formatoDoMapa !== 'individual' && zoomManual <= 1
+                ? { height: `${Math.ceil(mapaDimensoes.altura * zoomExibicao) + 8}px` }
+                : undefined}
               tabIndex={0} role="region" aria-label={decorate ? 'Mapa do formigueiro para decoração' : `Sala ${selectedRoom} do formigueiro`}
               ref={viewportRef} onPointerDown={iniciarNavegacao}
               onPointerMove={moverNavegacao} onPointerUp={terminarNavegacao}
               onPointerCancel={terminarNavegacao}>
+              {decorate && formatoDoMapa !== 'individual' && (
+                <div className="terr-world-zoom" role="group" aria-label="Zoom do terrário">
+                  <button type="button" aria-label="Diminuir zoom" title="Diminuir zoom"
+                    disabled={zoomManual <= 0.7}
+                    onClick={() => ajustarZoomMapa(zoomManual - 0.1)}>−</button>
+                  <span aria-live="polite">{Math.round(zoomManual * 100)}%</span>
+                  <button type="button" aria-label="Aumentar zoom" title="Aumentar zoom"
+                    disabled={zoomManual >= 2}
+                    onClick={() => ajustarZoomMapa(zoomManual + 0.1)}>+</button>
+                  <button type="button" className="terr-world-zoom-fit" title="Voltar ao enquadramento inicial"
+                    onClick={() => ajustarZoomMapa(1)}>Ajustar</button>
+                </div>
+              )}
               <nav className="terr-world-toolbar" aria-label="Navegação entre as salas">
                 <span className="terr-world-hint">{decorate ? 'Selecione uma sala para decorar' : 'Escolha a sala para visualizar'}</span>
                 <div className="terr-world-room-buttons" role="group" aria-label="Selecionar sala">
@@ -826,12 +858,12 @@ export default function Terrario() {
               </nav>
               <div className={decorate && formatoDoMapa !== 'individual' ? 'terr-world-fit' : 'terr-world-unscaled'}
                 style={decorate && formatoDoMapa !== 'individual' ? {
-                  width: `${mapaDimensoes.largura * zoomDecoracao}px`,
-                  height: `${mapaDimensoes.altura * zoomDecoracao}px`,
+                  width: `${mapaDimensoes.largura * zoomExibicao}px`,
+                  height: `${mapaDimensoes.altura * zoomExibicao}px`,
                 } : undefined}>
                 <div className={`terr-world-board is-${formatoDoMapa}`}
                   style={decorate && formatoDoMapa !== 'individual' ? {
-                    transform: `scale(${zoomDecoracao})`,
+                    transform: `scale(${zoomExibicao})`,
                     transformOrigin: 'top left',
                     margin: 0,
                   } : undefined}>

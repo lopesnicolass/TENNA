@@ -74,12 +74,15 @@ test('Terrário: iniciar, pausar, continuar, concluir e impedir prêmio repetido
   const t = Date.now();
   const started = await model.iniciar(1, 'Matemática', 15, t);
   assert.ok(started.lastID > 0);
+  const estadoInicial = await model.buscarEstado(1, t + 1000);
+  assert.equal(estadoInicial.sessao.terminaEmMs, t + 15 * 60 * 1000);
   await assert.rejects(model.iniciar(1, 'Matemática', 25, t), /UNIQUE constraint failed/);
   const incomplete = await model.acao(1, started.lastID, 'concluir', t + 5000);
   assert.equal(incomplete.status, 409);
   assert.equal((await model.acao(1, started.lastID, 'pausar', t + 2000)).status, 200);
   let state = await model.buscarEstado(1, t + 400000);
   assert.equal(state.sessao.estado, 'pausada');
+  assert.equal(state.sessao.terminaEmMs, null);
   const restart = await model.acao(1, started.lastID, 'continuar', t + 5000);
   assert.equal(restart.status, 200);
   const done = await model.acao(1, started.lastID, 'concluir', t + 1000000);
@@ -91,6 +94,27 @@ test('Terrário: iniciar, pausar, continuar, concluir e impedir prêmio repetido
   assert.equal(state.xpTotal, 10);
   assert.equal(banco.prepare("SELECT COUNT(*) n FROM xp_eventos_verificados WHERE action='foco_concluido'").get().n, 1);
   assert.equal((await model.acao(2, started.lastID, 'concluir', t + 1100000)).status, 404);
+  banco.close();
+});
+
+test('Terrário: logout pausa o foco e preserva o tempo restante sem recompensas', async () => {
+  const { banco, model } = novoBanco();
+  const inicio = Date.now();
+  const started = await model.iniciar(1, 'Matemática', 25, inicio);
+
+  assert.equal(await model.pausarFocoAoSair(1, inicio + 123400), true);
+  let state = await model.buscarEstado(1, inicio + 900000);
+  assert.equal(state.sessao.id, started.lastID);
+  assert.equal(state.sessao.estado, 'pausada');
+  assert.equal(state.sessao.restanteSegundos, 25 * 60 - 123);
+  assert.equal(state.sementes, 0);
+  assert.equal(state.xpTotal, 0);
+
+  // Repetir o logout não consome mais tempo de uma sessão já pausada.
+  assert.equal(await model.pausarFocoAoSair(1, inicio + 500000), false);
+  state = await model.buscarEstado(1, inicio + 900000);
+  assert.equal(state.sessao.restanteSegundos, 25 * 60 - 123);
+
   banco.close();
 });
 

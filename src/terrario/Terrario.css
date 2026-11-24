@@ -3418,3 +3418,108 @@ html[data-theme='dark'] .terr-page .terr-duration-value span { color: #bcd5e9; }
   border-color: rgba(255, 255, 255, .42);
   box-shadow: inset 0 1px rgba(255, 255, 255, .18);
 }
+
+
+/* Zoom do mapa no modo de personalização. O zoom escala apenas a visualização;
+   as coordenadas e o tamanho salvo de cada móvel continuam inalterados. */
+.terr-page.is-decorating .terr-world-viewport.is-fitted:not(.is-zoomed) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  max-height: none;
+  overflow: clip;
+  padding: 12px;
+  cursor: default;
+  touch-action: pan-y;
+}
+.terr-page.is-decorating .terr-world-viewport.is-fitted.is-zoomed {
+  display: block;
+  height: clamp(470px, 53vw, 665px);
+  min-height: 360px;
+  max-height: calc(100dvh - 190px);
+  overflow: auto;
+  padding: 12px;
+  cursor: grab;
+  touch-action: pan-x pan-y;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #9b704f #d2a17b;
+}
+.terr-page.is-decorating .terr-world-viewport.is-fitted.is-zoomed:active { cursor: grabbing; }
+.terr-page.is-decorating .terr-world-viewport.is-fitted .terr-world-fit {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  margin: auto;
+}
+.terr-page.is-decorating .terr-world-viewport.is-fitted .terr-world-board {
+  overflow: visible;
+}
+.terr-page.is-decorating .terr-world-zoom {
+  position: absolute;
+  z-index: 125;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 43px;
+  padding: 5px;
+  border: 1px solid rgba(255, 250, 243, .7);
+  border-radius: 13px;
+  background: rgba(255, 247, 235, .97);
+  box-shadow: 0 5px 16px rgba(72, 41, 22, .2);
+  backdrop-filter: blur(6px);
+}
+.terr-page.is-decorating .terr-world-zoom button {
+  display: grid;
+  place-items: center;
+  min-width: 31px;
+  min-height: 31px;
+  padding: 4px 8px;
+  border: 1px solid #e2c9ad;
+  border-radius: 9px;
+  background: #fffaf3;
+  color: #69462d;
+  font-size: 19px;
+  font-weight: 850;
+  line-height: 1;
+}
+.terr-page.is-decorating .terr-world-zoom button:hover:not(:disabled) {
+  border-color: #b47d54;
+  background: #f8ead9;
+}
+.terr-page.is-decorating .terr-world-zoom button:disabled {
+  opacity: .42;
+  cursor: not-allowed;
+}
+.terr-page.is-decorating .terr-world-zoom span {
+  min-width: 43px;
+  color: #69462d;
+  font-size: 10px;
+  font-weight: 900;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.terr-page.is-decorating .terr-world-zoom .terr-world-zoom-fit {
+  min-width: 52px;
+  font-size: 10px;
+  font-weight: 800;
+}
+html[data-theme='dark'] .terr-page.is-decorating .terr-world-zoom {
+  border-color: #6c563f;
+  background: rgba(42, 48, 50, .96);
+}
+html[data-theme='dark'] .terr-page.is-decorating .terr-world-zoom button {
+  border-color: #6b5847;
+  background: #35424a;
+  color: #f0dfcb;
+}
+html[data-theme='dark'] .terr-page.is-decorating .terr-world-zoom span { color: #f0dfcb; }
+@media (max-width: 700px) {
+  .terr-page.is-decorating .terr-world-zoom { top: 9px; left: 9px; gap: 3px; min-height: 39px; }
+  .terr-page.is-decorating .terr-world-zoom button { min-width: 28px; min-height: 28px; padding: 3px 6px; }
+  .terr-page.is-decorating .terr-world-zoom .terr-world-zoom-fit { min-width: 45px; }
+  .terr-page.is-decorating .terr-world-viewport.is-fitted.is-zoomed { max-height: none; }
+}
