@@ -81,3 +81,10 @@ node scripts/verificar_integridade_banco.cjs
 ```
 
 A verificação não altera os dados. **Não execute scripts de reparo sem identificar um problema e fazer backup.**
+<<<<<<< HEAD
+=======
+
+## Privacidade e histórico do Git
+
+Se o banco SQLite ou os PDFs de `backend/uploads/provas/` já foram versionados no passado, removê-los do commit atual **não** apaga o histórico. Use `limpar-historico.sh` (na raiz do projeto) numa cópia do repositório, confira o resultado e só então faça o `push --force`. Depois, peça a quem clonou o repositório que o clone novamente e redefina as senhas das contas que estavam no banco.
+>>>>>>> parent of 6b22a21 (Banco de demonstração sem dados de usuários)
