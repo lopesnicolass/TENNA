@@ -92,10 +92,16 @@ export function TelaResultado({
                     <span>Questão {index + 1}</span>
                     {(() => {
                       const dificuldade = questao.dificuldade && questao.dificuldade !== 'Não classificada' ? questao.dificuldade : null;
-                      const etiquetas = [simuladoGeral && questao.materia, simuladoGeral && questao.topico, dificuldade].filter(Boolean);
+                      const nivel = dificuldade ? dificuldade.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase() : '';
+                      const classeDificuldade = ['facil', 'media', 'dificil'].includes(nivel) ? `dificuldade-${nivel}` : '';
+                      const etiquetas = [
+                        simuladoGeral && questao.materia && { texto: questao.materia },
+                        simuladoGeral && questao.topico && { texto: questao.topico },
+                        dificuldade && { texto: dificuldade, classe: classeDificuldade }
+                      ].filter(Boolean);
                       return etiquetas.length > 0 && (
                         <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
-                          {etiquetas.map((etiqueta) => <span key={etiqueta}>{etiqueta}</span>)}
+                          {etiquetas.map((etiqueta) => <span key={etiqueta.texto} className={etiqueta.classe || undefined}>{etiqueta.texto}</span>)}
                         </div>
                       );
                     })()}

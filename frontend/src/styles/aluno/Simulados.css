@@ -2814,3 +2814,11 @@ html[data-theme='dark'] .simulado-tema .simulado-prova-classificacao span {
 }
 html[data-theme='dark'] .simulado-tema .simulado-resultado-botao.secundario,
 html[data-theme='dark'] .simulado-tema .simulado-resultado-botao.discreto { color: #e3eefb; background: color-mix(in srgb, var(--tema-cor) 22%, #15283d); border-color: color-mix(in srgb, var(--tema-cor) 45%, #1b3048); }
+
+/* Dificuldade da questão na correção: fácil = verde, média = amarelo, difícil = vermelho */
+.simulado-tema .simulado-prova-classificacao span.dificuldade-facil { background:#e3f6e8; border-color:#8fd3a2; color:#14602b; }
+.simulado-tema .simulado-prova-classificacao span.dificuldade-media { background:#fff6d6; border-color:#e8cc62; color:#7a5b00; }
+.simulado-tema .simulado-prova-classificacao span.dificuldade-dificil { background:#fde4e4; border-color:#eb9a9a; color:#9b1c1c; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-classificacao span.dificuldade-facil { background:#17402a; border-color:#2f7a4d; color:#b9efcb; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-classificacao span.dificuldade-media { background:#4a3d10; border-color:#9a8120; color:#f7e3a0; }
+html[data-theme='dark'] .simulado-tema .simulado-prova-classificacao span.dificuldade-dificil { background:#4d1c1f; border-color:#a14349; color:#f7c0c3; }

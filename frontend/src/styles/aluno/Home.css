@@ -1699,9 +1699,13 @@ html[data-theme='dark'] .home-page .home-ranking-message button { background: #1
 .home-page .home-hero-text p { color: #ffffff; font-size: 15px; }
 .home-page .home-hero-kicker { color: #ffffff; font-size: 12px; }
 .home-page .home-hero-level {
-  background: rgba(7,35,90,.28);
-  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.20); /* card de nível mais clarinho */
+  border-color: rgba(255,255,255,.38);
   box-shadow: none;
+}
+.home-page .home-hero-level-clickable:hover {
+  background: rgba(255,255,255,.28);
+  border-color: rgba(255,255,255,.50);
 }
 .home-page .home-hero-level-badge { border-radius: 14px; box-shadow: none; }
 .home-page .home-hero-xp-label { font-size: 13px; color: #ffffff; }

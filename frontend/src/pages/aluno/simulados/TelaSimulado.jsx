@@ -91,8 +91,8 @@ export function TelaSimulado({
                 <div className="simulado-prova-questao-topo">
                   <span>Questão {index + 1}</span>
                   {(() => {
-                    const dificuldade = questao.dificuldade && questao.dificuldade !== 'Não classificada' ? questao.dificuldade : null;
-                    const etiquetas = [simuladoGeral && questao.materia, simuladoGeral && questao.topico, dificuldade].filter(Boolean);
+                    // A dificuldade só aparece na correção (TelaResultado), nunca durante a prova.
+                    const etiquetas = [simuladoGeral && questao.materia, simuladoGeral && questao.topico].filter(Boolean);
                     return etiquetas.length > 0 && (
                       <div className="simulado-prova-classificacao" aria-label="Classificação da questão">
                         {etiquetas.map((etiqueta) => <span key={etiqueta}>{etiqueta}</span>)}
