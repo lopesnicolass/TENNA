@@ -10,9 +10,9 @@ O sistema reúne funcionalidades como cronograma de estudos, calendário, conte�
 
 ## Equipe
 
-- Ruan Pablo — [Função]
-- [Nome do integrante 2] — [Função]
-- [Nome do integrante 3] — [Função]
+- Maria Luiza Duarte de Moura — Documentação 
+- Nícolas da Silva — Back-end
+- Ruan Pablo dela Penha Banho — Front-end
 
 ## Tecnologias Utilizadas
 
