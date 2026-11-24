@@ -243,6 +243,21 @@ function excluir(req, res) {
 }
 
 
+
+// EXCLUIR A PRÓPRIA CONTA (estudante autenticado)
+function excluirMinhaConta(req, res) {
+    const usuarioId = Number(req.usuario.id);
+    if (!usuarioId) return res.status(400).json({ mensagem: 'Usuário inválido.' });
+    excluirUsuario(usuarioId, (erro, alterados) => {
+        if (erro) {
+            console.error('Erro ao excluir a própria conta:', erro);
+            return res.status(500).json({ mensagem: 'Não foi possível excluir a conta.' });
+        }
+        if (!alterados) return res.status(404).json({ mensagem: 'Conta não encontrada.' });
+        return res.status(200).json({ mensagem: 'Conta excluída com sucesso.' });
+    });
+}
+
 // =====================================================
 // EXPORTAR
 // =====================================================
@@ -253,6 +268,7 @@ module.exports = {
     buscarMeuPerfil,
     editarPerfil,
     editarFoto,
+    excluirMinhaConta,
     excluir
 
 };

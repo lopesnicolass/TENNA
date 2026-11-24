@@ -8,6 +8,7 @@ const {
     buscarMeuPerfil,
     editarPerfil,
     editarFoto,
+    excluirMinhaConta,
     excluir
 } = require("../controllers/usuarioController");
 
@@ -149,7 +150,11 @@ router.get(
 
 
 // =====================================================
-// EXCLUIR USUÁRIO — ADMIN
+router.delete("/me", autenticarToken, excluirMinhaConta);
+
+
+// =====================================================
+// // EXCLUIR USUÁRIO — ADMIN
 // =====================================================
 
 router.delete(

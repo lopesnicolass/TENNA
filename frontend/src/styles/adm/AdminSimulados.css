@@ -1095,3 +1095,6 @@ html[data-theme='dark'] .admin-simulados-page .admin-simulados-materia-icon {
   box-shadow: none;
   filter: none;
 }
+
+.admin-simulados-toast { position: fixed; top: 22px; right: 24px; z-index: 1200; padding: 13px 18px; border: 1px solid #b9e5ce; border-radius: 13px; background: #effaf4; color: #17643a; box-shadow: 0 10px 30px rgba(20,45,75,.12); font-weight: 650; animation: adminSimToastIn .2s ease-out; }
+@keyframes adminSimToastIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }

@@ -86,6 +86,13 @@ export default function AdminSimulados() {
   const [excluindo, setExcluindo] = useState(false);
 
   const [erro, setErro] = useState('');
+  const [mensagemSucesso, setMensagemSucesso] = useState('');
+
+  useEffect(() => {
+    if (!mensagemSucesso) return;
+    const timer = setTimeout(() => setMensagemSucesso(''), 3500);
+    return () => clearTimeout(timer);
+  }, [mensagemSucesso]);
 
   useEffect(() => {
     carregarSimulados();
@@ -1079,15 +1086,11 @@ export default function AdminSimulados() {
       if (simuladoEditando) {
         await editarSimulado();
 
-        alert(
-          'Simulado atualizado com sucesso!'
-        );
+        setMensagemSucesso('Simulado atualizado com sucesso!');
       } else {
         await criarSimulado();
 
-        alert(
-          'Simulado cadastrado com sucesso!'
-        );
+        setMensagemSucesso('Simulado cadastrado com sucesso!');
       }
 
       setShowModal(false);
@@ -1111,10 +1114,7 @@ export default function AdminSimulados() {
         'Não foi possível salvar o simulado.'
       );
 
-      alert(
-        error.message ||
-        'Não foi possível salvar o simulado.'
-      );
+      // O erro é exibido na área de feedback da página, sem alerta nativo.
     } finally {
       setSalvando(false);
     }
@@ -1165,6 +1165,7 @@ export default function AdminSimulados() {
 
   return (
     <div className="admin-simulados-page">
+      {mensagemSucesso && <div className="admin-simulados-toast" role="status">{mensagemSucesso}</div>}
       <div className="page-header admin-simulados-heading">
         <div><h1>Simulados</h1><p>Gerencie simulados e mantenha um banco centralizado de questões por disciplina, conteúdo e dificuldade.</p></div>
         <div className="admin-simulados-heading-actions">

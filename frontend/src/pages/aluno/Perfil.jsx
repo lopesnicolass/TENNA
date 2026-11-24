@@ -75,6 +75,10 @@ export default function Perfil() {
   const [filtroConquistas, setFiltroConquistas] = useState('Todas');
   const [participaRanking, setParticipaRanking] = useState(null);
   const [modalConquistasAberto, setModalConquistasAberto] = useState(false);
+  const [modalExcluirConta, setModalExcluirConta] = useState(false);
+  const [confirmacaoExcluir, setConfirmacaoExcluir] = useState('');
+  const [excluindoConta, setExcluindoConta] = useState(false);
+  const [erroExcluirConta, setErroExcluirConta] = useState('');
   const [posicaoRanking, setPosicaoRanking] = useState(null);
   const [erroPosicaoRanking, setErroPosicaoRanking] = useState(false);
   const [salvandoRanking, setSalvandoRanking] = useState(false);
@@ -723,6 +727,21 @@ export default function Perfil() {
 
   }
 
+
+  async function handleExcluirConta() {
+    if (emVisualizacaoAdmin || confirmacaoExcluir !== 'EXCLUIR' || excluindoConta) return;
+    setExcluindoConta(true);
+    setErroExcluirConta('');
+    try {
+      await request('/usuarios/me', { method: 'DELETE' });
+      limparSessao();
+      navigate('/login');
+    } catch (falha) {
+      setErroExcluirConta(falha.message || 'Não foi possível excluir sua conta.');
+      setExcluindoConta(false);
+    }
+  }
+
   // =====================================================
   // EXIBIÇÃO DO PERFIL
   // =====================================================
@@ -885,15 +904,23 @@ export default function Perfil() {
             <button type="submit" className="perfil-btn perfil-btn-primary perfil-save" disabled={salvando}>
               {salvando ? 'Salvando...' : 'Salvar alterações'}
             </button>
-            <button
-              type="button"
-              className="perfil-btn perfil-logout"
-              onClick={handleLogout}
-              disabled={emVisualizacaoAdmin}
-              title={emVisualizacaoAdmin ? 'Indisponível na visualização de estudante. Use "Sair" no menu do administrador.' : undefined}
-            >
-              Sair da conta
-            </button>
+            <div className="perfil-footer-account-actions">
+              <button type="button" className="perfil-btn perfil-delete-account"
+                onClick={() => { setConfirmacaoExcluir(''); setErroExcluirConta(''); setModalExcluirConta(true); }}
+                disabled={emVisualizacaoAdmin}
+                title={emVisualizacaoAdmin ? 'Indisponível na visualização de estudante.' : undefined}>
+                Apagar conta
+              </button>
+              <button
+                type="button"
+                className="perfil-btn perfil-logout"
+                onClick={handleLogout}
+                disabled={emVisualizacaoAdmin}
+                title={emVisualizacaoAdmin ? 'Indisponível na visualização de estudante. Use "Sair" no menu do administrador.' : undefined}
+              >
+                Sair da conta
+              </button>
+            </div>
           </div>
         </form>
 
@@ -1055,6 +1082,29 @@ export default function Perfil() {
           </div>
         </div>
       )}
+      {modalExcluirConta && (
+        <div className="perfil-modal-backdrop perfil-delete-backdrop" onMouseDown={(e) => { if (e.target === e.currentTarget && !excluindoConta) setModalExcluirConta(false); }}>
+          <section className="perfil-delete-panel" role="dialog" aria-modal="true" aria-labelledby="perfil-excluir-titulo">
+            <div className="perfil-delete-heading">
+              <h2 id="perfil-excluir-titulo">Tem certeza que deseja apagar sua conta?</h2>
+            </div>
+            <div className="perfil-delete-warning">
+              <p>Ao apagar sua conta, seu perfil e os dados associados serão removidos permanentemente. <strong>Você não poderá recuperar sua conta depois.</strong></p>
+            </div>
+            <p className="perfil-delete-instruction">Para continuar, digite <strong>EXCLUIR</strong> no campo abaixo.</p>
+            <input className="perfil-delete-confirm-input" value={confirmacaoExcluir} onChange={(e) => setConfirmacaoExcluir(e.target.value)}
+              placeholder="Digite EXCLUIR" aria-label="Digite EXCLUIR para confirmar" autoComplete="off" />
+            {erroExcluirConta && <p className="perfil-delete-error" role="alert">{erroExcluirConta}</p>}
+            <div className="perfil-delete-actions">
+              <button type="button" className="perfil-btn perfil-btn-outline" onClick={() => setModalExcluirConta(false)} disabled={excluindoConta}>Cancelar</button>
+              <button type="button" className="perfil-btn perfil-delete-confirm-button" onClick={handleExcluirConta} disabled={confirmacaoExcluir !== 'EXCLUIR' || excluindoConta}>
+                {excluindoConta ? 'Apagando...' : 'Apagar definitivamente'}
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
+
     </main>
   );
 }
