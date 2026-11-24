@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "node --test tests/*.test.cjs",
-    "start": "node server.js",
-    "demo": "node scripts/usarBancoDemo.cjs"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

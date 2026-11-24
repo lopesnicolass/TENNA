@@ -6,8 +6,7 @@ O **Tenna** é uma aplicação web educacional desenvolvida como Trabalho de Con
 
 - `frontend/`: React 19 e Vite — interface do estudante e da administração.
 - `backend/`: Node.js, Express e SQLite — API, autenticação e persistência.
-- `backend/banco/vestibulinho.sqlite`: banco de dados **local** do projeto. Pode conter contas e dados de estudantes, por isso **não é versionado**; mantenha esta cópia privada e faça backup antes de qualquer atualização.
-- `backend/banco/demo/vestibulinho-demo.sqlite`: banco de **demonstração** versionado, com todo o conteúdo do sistema e sem dados de usuários reais.
+- `backend/banco/vestibulinho.sqlite`: banco de dados local do projeto. Pode conter contas e dados de estudantes; mantenha esta cópia privada e faça backup antes de qualquer atualização.
 - `backend/uploads/`: arquivos enviados para questões e provas.
 - `frontend/tests/` e `backend/tests/`: testes automatizados.
 
@@ -26,26 +25,7 @@ O arquivo `backend/.env` não é distribuído. Na primeira execução:
 4. Ajuste `FRONTEND_URL` caso o front-end seja servido em outro endereço.
 5. Se a API for publicada atrás de um proxy reverso, defina `TRUST_PROXY=1` para que o limite de tentativas de login use o IP real do usuário.
 
-Não compartilhe o `.env` nem publique o banco SQLite com dados pessoais.
-
-## Banco de dados (primeira execução)
-
-O banco real não vai para o Git. Quem clona o projeto instala o banco de demonstração, que já traz matérias, conteúdos, questões, simulados, flashcards e provas. Na pasta `backend`:
-
-```bash
-npm run demo
-```
-
-Contas de demonstração (use somente para avaliar o sistema):
-
-| Perfil | E-mail | Senha |
-| --- | --- | --- |
-| Administrador | `admin@tenna.demo` | `AdminDemo#2026` |
-| Aluno | `aluno@tenna.demo` | `AlunoDemo#2026` |
-
-O comando nunca altera um banco que já exista. Para substituí-lo pelo de demonstração (com backup automático), use `npm run demo -- --forcar`. Se você já tem o seu `vestibulinho.sqlite` (por exemplo, em outro computador), copie-o para `backend/banco/` em vez de rodar o comando.
-
-Ao mudar de computador, leve também, fora do Git: `backend/.env`, `backend/banco/vestibulinho.sqlite` e a pasta `backend/uploads/`.
+Não compartilhe o `.env` nem publique o banco SQLite com dados pessoais. Antes de enviar o projeto para a banca ou publicar um repositório, use uma cópia anonimizada do banco e revise os arquivos da pasta `backend/uploads/`.
 
 ## Como executar
 
@@ -103,6 +83,6 @@ node scripts/verificar_integridade_banco.cjs
 
 A verificação não altera os dados. **Não execute scripts de reparo sem identificar um problema e fazer backup.**
 
-## Privacidade
+## Privacidade e histórico do Git
 
-O repositório não contém `.env`, contas, senhas nem fotos de estudantes. O único banco versionado é o de demonstração. Se for publicar o sistema para uso real, defina um `JWT_SECRET` novo, não use as contas de demonstração e mantenha o banco e a pasta `uploads/` fora do Git.
+Se o banco SQLite ou os PDFs de `backend/uploads/provas/` já foram versionados no passado, removê-los do commit atual **não** apaga o histórico. Use `limpar-historico.sh` (na raiz do projeto) numa cópia do repositório, confira o resultado e só então faça o `push --force`. Depois, peça a quem clonou o repositório que o clone novamente e redefina as senhas das contas que estavam no banco.
