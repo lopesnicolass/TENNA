@@ -21,12 +21,24 @@ npm-debug.log*
 *.backup
 backend/banco/*
 !backend/banco/.gitkeep
+# Único banco versionado: o de DEMONSTRAÇÃO (sem dados de usuários reais)
+!backend/banco/demo/
+!backend/banco/demo/vestibulinho-demo.sqlite
 
 # PDFs e arquivos enviados pelos usuários
 backend/uploads/**
 !backend/uploads/
 !backend/uploads/provas/
 !backend/uploads/provas/.gitkeep
+# Provas oficiais anteriores usadas pela demonstração (nomes exatos; novos envios continuam ignorados)
+!backend/uploads/provas/1791419382765-arquivo_prova-Prova.pdf
+!backend/uploads/provas/1791419382773-arquivo_gabarito-Gabarito.pdf
+!backend/uploads/provas/1791419446309-arquivo_prova-Prova--1-.pdf
+!backend/uploads/provas/1791419446318-arquivo_gabarito-Gabarito-retificado.pdf
+!backend/uploads/provas/1792092268418-arquivo_prova-A-CADERNO-VESTIBULINHO-2SEM2026.pdf
+!backend/uploads/provas/1792092268429-arquivo_gabarito-A-GABARITO-VESTIBULINHO-2SEM2026.pdf
+!backend/uploads/provas/1792092301065-arquivo_prova-A-CADERNO-VESTIBULINHO-2SEM2026.pdf
+!backend/uploads/provas/1792092301072-arquivo_gabarito-A-GABARITO-VESTIBULINHO-2SEM2026.pdf
 !backend/uploads/questoes/
 !backend/uploads/questoes/.gitkeep
 
