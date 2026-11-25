@@ -31,13 +31,16 @@ Pré-requisitos: ter o **Node.js 22 (ou mais novo)** e o npm instalados. O proje
 
 O projeto tem duas partes que rodam ao mesmo tempo: o **back-end** (pasta `backend`, porta 3000) e o **site** (pasta principal, porta 5173). Por isso serão usados dois terminais.
 
-**1. Baixar o projeto**
-- `git clone https://github.com/lopesnicolass/tcc.git`
-- `cd tcc`
+**1. Baixar o projeto (pelo ZIP do GitHub)**
+- Abrir o repositório no GitHub: https://github.com/lopesnicolass/tcc
+- Clicar no botão verde **Code** e depois em **Download ZIP**
+- Extrair o arquivo (botão direito → **Extrair tudo**). Será criada a pasta `tcc-main`. Dica: extrair em uma pasta simples, como a Área de Trabalho ou `C:\projetos`
+- Abrir o **VS Code** → **Arquivo** → **Abrir Pasta** → escolher a pasta extraída. A pasta certa é a que mostra, na lista de arquivos, o `package.json`, as pastas `backend` e `src` e o `README.md`. Se aparecer só outra pasta `tcc-main` dentro dela, abrir essa
+- Abrir o terminal em **Terminal** → **Novo Terminal**
 
-(ou baixar o ZIP pelo GitHub, extrair e abrir a pasta no VS Code)
+(Se preferir usar o Git: `git clone https://github.com/lopesnicolass/tcc.git`, depois `cd tcc` e abrir a pasta no VS Code.)
 
-**2. Rodar o back-end** (abrir o terminal em Terminal → Novo Terminal)
+**2. Rodar o back-end** (no terminal que você abriu)
 - `cd backend`
 - `npm install`
 - `cp .env.example .env` (no Windows sem Git Bash: `copy .env.example .env`)
@@ -46,7 +49,7 @@ O projeto tem duas partes que rodam ao mesmo tempo: o **back-end** (pasta `backe
 Deve aparecer "Servidor rodando na porta 3000". Não fechar esse terminal.
 
 **3. Rodar o site** (abrir outro terminal, botão + no painel do terminal)
-- Entrar na pasta principal do projeto, onde está o `package.json` (a pasta `tcc`). Se o novo terminal abrir dentro de `backend`, use `cd ..`
+- Entrar na pasta principal do projeto, onde está o `package.json`. Se o novo terminal abrir dentro de `backend`, use `cd ..`
 - `npm install`
 - `npm run dev` → para rodar o site
 - O terminal vai mostrar um link (normalmente `http://localhost:5173`)
@@ -65,7 +68,7 @@ Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` 
 - *Mudou a porta do back-end (`PORT` no `.env`):* criar na pasta principal um arquivo `.env` com `VITE_API_URL=http://localhost:NOVA_PORTA` e reiniciar o `npm run dev`.
 
 ## Como citar o projeto
-MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
+MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 50 p.
 
 Em caso de dúvidas entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com
 
