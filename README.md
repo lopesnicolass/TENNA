@@ -29,13 +29,13 @@ O sistema reúne cronograma de estudos, calendário com as datas importantes do 
 ## Como executar o projeto (passo-a-passo)
 Pré-requisito: ter o Node.js 22 (ou mais novo) instalado.
 
-- Extrair o arquivo zip (será criada a pasta `tcc-main`)
+- Extrair o arquivo zip (será criada a pasta `TENNA-main`)
 - Entrar no editor de código (exemplo: VS Code)
-- Abrir a pasta `tcc-main` extraída (Arquivo → Abrir Pasta)
+- Abrir a pasta `TENNA-main` extraída (Arquivo → Abrir Pasta)
 
 Abrir o terminal (Terminal → Novo Terminal) e digitar:
 
-- `cd tcc-main`
+- `cd TENNA-main`
 - `cd backend`
 - `npm install`
 - `cp .env.example .env`
@@ -45,7 +45,7 @@ Não fechar esse terminal
 
 Abrir outro terminal (botão + no painel do terminal) e digitar:
 
-- `cd tcc-main`
+- `cd TENNA-main`
 - `npm install`
 - `npm run dev` → para rodar o site
 - O terminal vai mostrar um link
