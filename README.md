@@ -53,7 +53,7 @@ Deve aparecer "Servidor rodando na porta 3000". Não fechar esse terminal.
 Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` só precisa ser feito na primeira vez. O banco de dados já acompanha o projeto em `backend/banco/vestibulinho.sqlite`.
 
 ## Como citar o projeto
-MOURA, Maria Luiza; DA SILVA, Nícolas; BANHO, Ruan Pablo. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
+MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha Banho. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
 
 Em caso de dúvidas entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com
 
