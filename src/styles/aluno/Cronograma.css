@@ -4067,3 +4067,82 @@ html[data-theme='dark'] .student-area .calendar-page .calendar-day.outside { opa
 html[data-theme='dark'] .student-area .calendar-page .calendar-day.outside .calendar-day-number { color: #9fb3cc !important; }
 html[data-theme='dark'] .student-area .calendar-page .calendar-empty-day strong { color: #dbe8f7 !important; }
 html[data-theme='dark'] .student-area .calendar-page .calendar-empty-day p { color: #aebfd4 !important; }
+
+
+/* =========================================================
+   CALENDÁRIO — RESPONSIVIDADE MOBILE (regras finais)
+   Remove larguras mínimas antigas (720px) que empurravam o cartão
+   para fora da tela e deixa a barra do mês e os botões caberem.
+   ========================================================= */
+@media (max-width: 760px) {
+  .dashboard .calendar-page,
+  .dashboard .calendar-page .calendar-layout,
+  .dashboard .calendar-page .calendar-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+  .dashboard .calendar-page .calendar-layout { grid-template-columns: minmax(0, 1fr); }
+  .dashboard .calendar-page .calendar-card { overflow: hidden; }
+  .dashboard .calendar-page .calendar-toolbar {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    min-height: 0;
+    padding: 16px 14px 12px;
+  }
+  .dashboard .calendar-page .calendar-toolbar-left { width: 100%; min-width: 0; align-items: stretch; }
+  .dashboard .calendar-page .calendar-month-nav {
+    width: 100%;
+    min-width: 0;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .dashboard .calendar-page .calendar-month-nav h2 {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+    font-size: clamp(17px, 5vw, 21px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dashboard .calendar-page .calendar-toolbar-actions {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .dashboard .calendar-page .calendar-toolbar-actions .calendar-today { flex: 0 0 auto; }
+  .dashboard .calendar-page .calendar-toolbar-actions .calendar-delete-plan {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    padding-inline: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .dashboard .calendar-page .calendar-weekdays,
+  .dashboard .calendar-page .calendar-grid {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+  .dashboard .calendar-page .calendar-day { min-width: 0; min-height: 58px; }
+  .dashboard .calendar-page .calendar-bottom-cards,
+  .dashboard .calendar-page .calendar-sidebar-card,
+  .dashboard .calendar-page .calendar-important-overview { min-width: 0; max-width: 100%; box-sizing: border-box; }
+}
+@media (max-width: 380px) {
+  .dashboard .calendar-page .calendar-toolbar { padding: 14px 10px 10px; }
+  .dashboard .calendar-page .calendar-weekdays span { font-size: 9px; }
+  .dashboard .calendar-page .calendar-day-number { width: 24px; height: 24px; flex-basis: 24px; font-size: 11px; }
+}

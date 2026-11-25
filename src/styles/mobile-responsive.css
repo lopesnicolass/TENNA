@@ -293,3 +293,20 @@
   .student-area .student-sidebar,
   .admin-area .admin-sidebar { transition: none; }
 }
+
+
+/* Cabeçalho mobile do aluno na mesma cor da sidebar (#092a53). */
+@media (max-width: 760px) {
+  .student-area .tenna-mobile-topbar {
+    background: #092a53;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    box-shadow: 0 4px 16px rgba(3, 18, 42, .28);
+  }
+  .student-area .tenna-mobile-menu-button {
+    border-color: rgba(255, 255, 255, .22);
+    background: rgba(255, 255, 255, .09);
+    color: #fff;
+  }
+  .student-area .tenna-mobile-menu-button:hover { background: rgba(255, 255, 255, .17); }
+  .student-area .tenna-mobile-area-label { color: #cfe2f8; }
+}

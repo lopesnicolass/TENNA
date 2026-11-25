@@ -18,4 +18,6 @@ npm-debug.log*
 *.tmp
 .DS_Store
 Thumbs.db
-backend/.env
+# Variáveis de ambiente (segredos). Só o .env.example vai para o GitHub.
+**/.env
+**/.env.local

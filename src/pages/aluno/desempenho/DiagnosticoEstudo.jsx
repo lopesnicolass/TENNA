@@ -102,7 +102,7 @@ export function DiagnosticoEstudo({ materias, sugestoes, possuiResultados }) {
           <h2 id="diagnostico-vazio-titulo">Seu plano de revisão começa aqui</h2>
           <p>Faça um simulado para descobrir como está sua preparação. Seus resultados aparecerão por matéria e por assunto quando houver dados.</p>
         </div>
-        <Link className="desempenho-diagnostico-btn" to="/simulados">Fazer simulado <span aria-hidden="true">→</span></Link>
+        <Link className="desempenho-diagnostico-btn" to="/simulados">Fazer simulado</Link>
       </section>
     );
   }

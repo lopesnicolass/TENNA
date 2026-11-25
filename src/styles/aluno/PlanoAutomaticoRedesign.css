@@ -1840,3 +1840,38 @@ html[data-theme='dark'] .tenna-auto-plan .studyplan-bulk-modal > .studyplan-sche
 .tenna-auto-plan .studyplan-bulk-compact-count span { padding: 0 5px; }
 html[data-theme='dark'] .tenna-auto-plan .studyplan-bulk-compact-count { color: #c3d9f0; }
 html[data-theme='dark'] .tenna-auto-plan .studyplan-bulk-compact-count strong { color: #a5d2ff; }
+
+
+/* Período de estudo exibido em cada opção de meses (ex.: "Outubro e novembro"). */
+.tenna-auto-plan .tenna-auto-month-choices .tenna-auto-choice { min-height: 78px; }
+.tenna-auto-plan .tenna-auto-choice-period {
+  display: block;
+  max-width: 100%;
+  margin-top: 4px;
+  font-size: 12.5px;
+  font-style: normal;
+  line-height: 1.25;
+  font-weight: 800;
+  text-align: center;
+  color: #0b1f3a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tenna-auto-plan .tenna-auto-choice-period-short { display: none; }
+.tenna-auto-plan .tenna-auto-choice.is-selected .tenna-auto-choice-period { color: #fff; }
+html[data-theme='dark'] .tenna-auto-plan .tenna-auto-choice-period { color: #fff; }
+html[data-theme='dark'] .tenna-auto-plan .tenna-auto-choice.is-selected .tenna-auto-choice-period { color: #fff; }
+@media (max-width: 1280px) {
+  .tenna-auto-plan .tenna-auto-choice-period-long { display: none; }
+  .tenna-auto-plan .tenna-auto-choice-period-short { display: inline; }
+}
+@media (max-width: 1100px) {
+  .tenna-auto-plan .tenna-auto-choice-period-long { display: inline; }
+  .tenna-auto-plan .tenna-auto-choice-period-short { display: none; }
+}
+@media (max-width: 700px) {
+  .tenna-auto-plan .tenna-auto-choice-period-long { display: none; }
+  .tenna-auto-plan .tenna-auto-choice-period-short { display: inline; }
+  .tenna-auto-plan .tenna-auto-choice-period { font-size: 11px; }
+}

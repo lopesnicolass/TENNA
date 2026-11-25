@@ -39,6 +39,35 @@ const STORAGE_KEY =
 const pad = (n) =>
   String(n).padStart(2, '0');
 // Exibe o mês real de cada etapa, incluindo planos que atravessam o ano.
+// Período de estudo de cada opção de duração (ex.: 2 meses -> "Outubro e novembro").
+// Usa a mesma regra do plano gerado: contagem regressiva a partir do mês da prova.
+const MESES_LONGOS = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const MESES_CURTOS = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+const capitalizar = (texto) => texto.charAt(0).toUpperCase() + texto.slice(1);
+
+function periodoDaDuracao(quantidade, dataProva) {
+  const inicio = inicioFixoDoPlano(quantidade, dataProva);
+  const [anoInicio, mesInicio] = inicio.split('-').map(Number);
+  const indiceFim = (mesInicio - 1) + (quantidade - 1);
+  const mesFim = indiceFim % 12;
+  const anoFim = anoInicio + Math.floor(indiceFim / 12);
+  const iniciais = mesInicio - 1;
+  const cruzaAno = anoFim !== anoInicio;
+  const juncao = quantidade === 2 ? ' e ' : ' a ';
+  const anoCurto = (ano) => String(ano).slice(-2);
+  if (quantidade === 1) {
+    return { longo: capitalizar(MESES_LONGOS[iniciais]), curto: capitalizar(MESES_CURTOS[iniciais]) };
+  }
+  if (cruzaAno) {
+    const texto = `${capitalizar(MESES_CURTOS[iniciais])}/${anoCurto(anoInicio)}${juncao}${MESES_CURTOS[mesFim]}/${anoCurto(anoFim)}`;
+    return { longo: texto, curto: texto };
+  }
+  return {
+    longo: `${capitalizar(MESES_LONGOS[iniciais])}${juncao}${MESES_LONGOS[mesFim]}`,
+    curto: `${capitalizar(MESES_CURTOS[iniciais])}${juncao}${MESES_CURTOS[mesFim]}`,
+  };
+}
+
 function nomeMesEtapa(mes) {
   const data = typeof mes?.inicio === 'string' ? mes.inicio : '';
   const partes = /^(\d{4})-(0[1-9]|1[0-2])-\d{2}$/.exec(data);
@@ -69,11 +98,15 @@ function getUser() {
 function getUserKey() {
   const usuario =
     getUser();
-  return String(
+  const id = String(
     usuario.id ||
     usuario.usuarioId ||
     'anonimo'
   );
+  // O e-mail entra na chave para que dois usuários com o mesmo id (ex.: banco recriado)
+  // nunca compartilhem o plano guardado no navegador.
+  const email = String(usuario.email || '').trim().toLowerCase();
+  return email ? `${id}_${email}` : id;
 }
 function carregarPlanoSalvo(valorExterno = undefined) {
   try {
@@ -910,20 +943,28 @@ export default function PlanoAutomatico() {
               <div className="tenna-auto-simple-field" role="group" aria-label="Quantos meses você quer estudar?">
                 <span>Quantos meses você quer estudar?</span>
                 <div className="tenna-auto-choice-grid tenna-auto-month-choices">
-                  {mesesDisponiveis.map((quantidade) => (
+                  {mesesDisponiveis.map((quantidade) => {
+                    const periodo = periodoDaDuracao(quantidade, dataVestibulinho);
+                    return (
                     <button
                       type="button"
                       key={quantidade}
                       className={`tenna-auto-choice ${months === quantidade ? 'is-selected' : ''}`}
                       aria-pressed={months === quantidade}
-                      aria-label={`${quantidade} ${quantidade === 1 ? 'mês' : 'meses'}`}
+                      aria-label={`${quantidade} ${quantidade === 1 ? 'mês' : 'meses'}: ${periodo.longo}`}
+                      title={`${quantidade} ${quantidade === 1 ? 'mês' : 'meses'}: ${periodo.longo}`}
                       onClick={() => mudarMeses(quantidade)}
                       disabled={syncingPlan}
                     >
                       <strong>{quantidade}</strong>
                       <small>{quantidade === 1 ? 'mês' : 'meses'}</small>
+                      <em className="tenna-auto-choice-period">
+                        <span className="tenna-auto-choice-period-long">{periodo.longo}</span>
+                        <span className="tenna-auto-choice-period-short">{periodo.curto}</span>
+                      </em>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
