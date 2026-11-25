@@ -22,11 +22,8 @@ O sistema reúne cronograma de estudos, calendário com as datas importantes do 
 ## Algumas imagens para demonstrar o site desenvolvido
 
 ![Página de destino](design/telas/Publica/PaginaDestino.png)
-
 ![Tela inicial do aluno](design/telas/Estudante/PaginaInicial.png)
-
 ![Terrário](design/telas/Estudante/TelaTerrario.png)
-
 ![Painel do administrador](design/telas/Administrador/DashboardAdministrador.png)
 
 ## Como executar o projeto (passo-a-passo)
@@ -56,7 +53,7 @@ Deve aparecer "Servidor rodando na porta 3000". Não fechar esse terminal.
 Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` só precisa ser feito na primeira vez. O banco de dados já acompanha o projeto em `backend/banco/vestibulinho.sqlite`.
 
 ## Como citar o projeto
-MOURA, Maria Luiza Duarte de; DA SILVA, Nícolas; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
+MOURA, Maria Luiza Duarte de; DA SILVA, Nícolas; BANHO, Ruan Pablo. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
 
 Em caso de dúvidas entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com
 
