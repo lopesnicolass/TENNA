@@ -27,29 +27,30 @@ O sistema reúne cronograma de estudos, calendário com as datas importantes do 
 ![Painel do administrador](design/telas/Administrador/DashboardAdministrador.png)
 
 ## Como executar o projeto (passo-a-passo)
-Pré-requisitos: ter o **Node.js 22 (ou mais novo)** e o npm instalados. O projeto foi feito com o Node 22.19.0.
+Pré-requisito: ter o **Node.js 22 (ou mais novo)** instalado (https://nodejs.org). O projeto foi feito com o Node 22.19.0.
 
-O projeto tem duas partes que rodam ao mesmo tempo: o **back-end** (pasta `backend`, porta 3000) e o **site** (pasta principal, porta 5173). Por isso serão usados dois terminais.
+O projeto tem duas partes que rodam ao mesmo tempo: o **back-end** (porta 3000) e o **site** (porta 5173). Por isso serão usados dois terminais.
 
-**1. Baixar o projeto (pelo ZIP do GitHub)**
-- Abrir o repositório no GitHub: https://github.com/lopesnicolass/tcc
-- Clicar no botão verde **Code** e depois em **Download ZIP**
-- Extrair o arquivo (botão direito → **Extrair tudo**). Será criada a pasta `tcc-main`. Dica: extrair em uma pasta simples, como a Área de Trabalho ou `C:\projetos`
-- Abrir o **VS Code** → **Arquivo** → **Abrir Pasta** → escolher a pasta extraída. A pasta certa é a que mostra, na lista de arquivos, o `package.json`, as pastas `backend` e `src` e o `README.md`. Se aparecer só outra pasta `tcc-main` dentro dela, abrir essa
-- Abrir o terminal em **Terminal** → **Novo Terminal**
+**1. Baixar o projeto**
+- No GitHub, clicar no botão verde **Code** e depois em **Download ZIP**
+- Extrair o arquivo zip (botão direito → **Extrair tudo**). Será criada a pasta `tcc-main`
+- Entrar no editor de código (exemplo: VS Code)
+- Abrir a pasta `tcc-main` extraída (Arquivo → Abrir Pasta). A pasta certa é a que mostra o `package.json`, as pastas `backend` e `src` e o `README.md`. Se aparecer só outra pasta `tcc-main` dentro dela, abrir essa
 
-(Se preferir usar o Git: `git clone https://github.com/lopesnicolass/tcc.git`, depois `cd tcc` e abrir a pasta no VS Code.)
+**2. Rodar o back-end**
 
-**2. Rodar o back-end** (no terminal que você abriu)
+Abrir o terminal (Terminal → Novo Terminal) e digitar:
 - `cd backend`
 - `npm install`
-- `cp .env.example .env` (no Windows sem Git Bash: `copy .env.example .env`)
+- `cp .env.example .env` → cria o arquivo de configuração (no Prompt de Comando do Windows, usar `copy .env.example .env`)
 - `npm start` → para rodar o back-end
 
-Deve aparecer "Servidor rodando na porta 3000". Não fechar esse terminal.
+Deve aparecer "Servidor rodando na porta 3000". **Não fechar esse terminal.**
 
-**3. Rodar o site** (abrir outro terminal, botão + no painel do terminal)
-- Entrar na pasta principal do projeto, onde está o `package.json`. Se o novo terminal abrir dentro de `backend`, use `cd ..`
+**3. Rodar o site**
+
+Abrir outro terminal (botão **+** no painel do terminal) e digitar:
+- `cd ..` (só se o terminal abrir dentro da pasta `backend`; o site roda na pasta principal, onde está o `package.json`)
 - `npm install`
 - `npm run dev` → para rodar o site
 - O terminal vai mostrar um link (normalmente `http://localhost:5173`)
@@ -59,13 +60,13 @@ Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` 
 
 **4. Primeiro acesso**
 - **Aluno:** na página inicial, clicar em cadastrar, criar uma conta e entrar com ela.
-- **Administrador:** no terminal do back-end, abrir o arquivo `backend/.env`, trocar `ADMIN_EMAIL` e `ADMIN_PASSWORD` (a senha precisa ter no mínimo 12 caracteres) e rodar `node criarAdmin.js`. Depois, entrar no site com esse e-mail e senha.
+- **Administrador:** abrir o arquivo `backend/.env`, trocar `ADMIN_EMAIL` e `ADMIN_PASSWORD` (a senha precisa ter no mínimo 12 caracteres) e, no terminal do back-end, digitar `node criarAdmin.js`. Depois, entrar no site com esse e-mail e senha.
 
 **Problemas comuns**
-- *"Defina JWT_SECRET..." ao iniciar o back-end:* o arquivo `.env` não foi criado. Repetir o `cp .env.example .env` dentro da pasta `backend`.
-- *O site abre, mas não carrega dados ou não faz login:* conferir se o back-end está rodando (passo 2) e se mostrou a mensagem da porta 3000.
+- *Erro "a execução de scripts foi desabilitada neste sistema" ao usar o `npm` no Windows:* abrir um terminal do tipo **Command Prompt** (no VS Code: seta ao lado do **+** no painel do terminal → Command Prompt) e repetir o comando.
+- *"Defina JWT_SECRET..." ao iniciar o back-end:* o arquivo `.env` não foi criado. Repetir o comando `cp .env.example .env` dentro da pasta `backend`.
+- *O site abre, mas não carrega dados ou não faz login:* conferir se o back-end está rodando e se mostrou a mensagem da porta 3000.
 - *Erro no `npm install` do back-end (sqlite3 ou bcrypt):* conferir se a versão do Node é a 22 e rodar o `npm install` de novo.
-- *Mudou a porta do back-end (`PORT` no `.env`):* criar na pasta principal um arquivo `.env` com `VITE_API_URL=http://localhost:NOVA_PORTA` e reiniciar o `npm run dev`.
 
 ## Como citar o projeto
 MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 50 p.
