@@ -5,7 +5,7 @@ import { estiloMateria } from './estiloMateria.js';
 
 
 const CAPAS_SIMULADOS = import.meta.glob(
-  '../../../assets/simulados/*.png',
+  '../../../assets/simulados/*.webp',
   {
     eager: true,
     import: 'default',

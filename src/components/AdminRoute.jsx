@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { request } from '../services/api.js';
+import { serializarUsuarioLocal } from '../utils/usuarioLocal.js';
 
 function limparSessao() {
   localStorage.removeItem('etecamp_usuario');
@@ -60,7 +61,7 @@ export default function AdminRoute() {
 
         localStorage.setItem(
           'etecamp_usuario',
-          JSON.stringify(usuarioAtual)
+          serializarUsuarioLocal(usuarioAtual)
         );
 
         if (

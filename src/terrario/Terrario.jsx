@@ -9,7 +9,7 @@ import { salasVisiveisNoMapa, formatoMapa } from './mapaSalas.js';
 import { mensagemErroTerrario, validarEstadoTerrario } from './terrarioErrors.js';
 import GuiaTerrario, { chaveGuiaTerrario } from './GuiaTerrario.jsx';
 import './Terrario.css';
-import sementeTerrario from './assets/semente-terrario.png';
+import sementeTerrario from './assets/semente-terrario.webp';
 
 import salaImg from './assets/ninho-atualizado.webp';
 import tennaAnimada from './assets/tenna-antenas.webp';

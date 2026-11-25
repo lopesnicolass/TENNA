@@ -156,7 +156,7 @@
 .perfil-full-button { width: 100%; justify-content: space-between; padding: 12px 15px; }
 .perfil-ranking-title-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 7px; }
 .perfil-ranking-title-row h2 { margin-bottom: 4px !important; }
-.perfil-ranking-status { display: inline-flex; align-items: center; gap: 5px; padding: 5px 8px; border-radius: 99px; background: var(--color-surface-muted); color: var(--muted); font-size: 12px; font-weight: 800; }
+.perfil-ranking-status { display: inline-flex; align-items: center; justify-content: center; min-width: 104px; gap: 5px; padding: 5px 8px; border-radius: 99px; background: var(--color-surface-muted); color: var(--muted); font-size: 12px; font-weight: 800; }
 .perfil-ranking-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #95a8bb; }
 .perfil-ranking-status.is-participating { color: var(--color-success); background: var(--color-success-soft); }
 .perfil-ranking-status.is-participating::before { background: #38a36a; }

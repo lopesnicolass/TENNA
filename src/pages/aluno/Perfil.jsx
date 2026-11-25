@@ -5,6 +5,14 @@ import { limparSessao, request } from '../../services/api.js';
 import Icon from '../../components/Icon.jsx';
 import { CATEGORIAS_CONQUISTAS, montarConquistas } from '../../utils/conquistas.js';
 import { usePreferenciaContagem } from '../../utils/usePreferenciaContagem.js';
+import { serializarUsuarioLocal } from '../../utils/usuarioLocal.js';
+
+async function lerPosicaoRanking(idUsuario) {
+  const dados = await request('/gamificacao/ranking');
+  const indiceTop3 = Array.isArray(dados?.top3) ? dados.top3.findIndex((aluno) => Number(aluno.id) === Number(idUsuario)) : -1;
+  const posicao = Number(dados?.minhaPosicao ?? (indiceTop3 >= 0 ? indiceTop3 + 1 : 0));
+  return Number.isInteger(posicao) && posicao > 0 ? posicao : null;
+}
 
 export default function Perfil() {
 
@@ -74,6 +82,7 @@ export default function Perfil() {
   const [atualizacaoConquistas, setAtualizacaoConquistas] = useState(0);
   const [filtroConquistas, setFiltroConquistas] = useState('Todas');
   const [participaRanking, setParticipaRanking] = useState(null);
+  const [carregandoRanking, setCarregandoRanking] = useState(true);
   const [modalConquistasAberto, setModalConquistasAberto] = useState(false);
   const [modalExcluirConta, setModalExcluirConta] = useState(false);
   const [confirmacaoExcluir, setConfirmacaoExcluir] = useState('');
@@ -86,31 +95,20 @@ export default function Perfil() {
 
   useEffect(() => {
     let ativo = true;
-    request('/gamificacao/ranking/configuracao')
-      .then((dados) => { if (ativo) setParticipaRanking(Boolean(dados.participando)); })
-      .catch(() => { if (ativo) setErroRanking('Não foi possível consultar sua participação no ranking.'); });
+    // Configuração e posição são consultadas juntas: o card só muda uma vez, sem piscar.
+    Promise.allSettled([
+      request('/gamificacao/ranking/configuracao'),
+      lerPosicaoRanking(usuarioInicial?.id)
+    ]).then(([configuracao, posicao]) => {
+      if (!ativo) return;
+      if (configuracao.status === 'fulfilled') setParticipaRanking(Boolean(configuracao.value?.participando));
+      else setErroRanking('Não foi possível consultar sua participação no ranking.');
+      if (posicao.status === 'fulfilled') { setPosicaoRanking(posicao.value); setErroPosicaoRanking(false); }
+      else { setPosicaoRanking(null); setErroPosicaoRanking(true); }
+      setCarregandoRanking(false);
+    });
     return () => { ativo = false; };
-  }, []);
-
-  useEffect(() => {
-    let ativo = true;
-    async function consultarPosicao() {
-      try {
-        const dados = await request('/gamificacao/ranking');
-        const idUsuario = Number(usuarioInicial?.id);
-        const indiceTop3 = Array.isArray(dados?.top3) ? dados.top3.findIndex((aluno) => Number(aluno.id) === idUsuario) : -1;
-        const posicao = Number(dados?.minhaPosicao ?? (indiceTop3 >= 0 ? indiceTop3 + 1 : 0));
-        if (ativo) {
-          setPosicaoRanking(Number.isInteger(posicao) && posicao > 0 ? posicao : null);
-          setErroPosicaoRanking(false);
-        }
-      } catch {
-        if (ativo) { setPosicaoRanking(null); setErroPosicaoRanking(true); }
-      }
-    }
-    consultarPosicao();
-    return () => { ativo = false; };
-  }, [participaRanking, usuarioInicial?.id]);
+  }, [usuarioInicial?.id]);
 
   useEffect(() => {
     if (!modalConquistasAberto) return;
@@ -130,7 +128,13 @@ export default function Perfil() {
         method: 'PUT',
         body: JSON.stringify({ participando: !participaRanking })
       });
-      setParticipaRanking(Boolean(dados.participando));
+      const participando = Boolean(dados.participando);
+      let posicao = null;
+      let erroPosicao = false;
+      try { posicao = await lerPosicaoRanking(usuarioInicial?.id); } catch { erroPosicao = true; }
+      setParticipaRanking(participando);
+      setPosicaoRanking(posicao);
+      setErroPosicaoRanking(erroPosicao);
     } catch (falha) {
       setErroRanking(falha.message || 'Não foi possível alterar sua participação.');
     } finally {
@@ -187,6 +191,11 @@ export default function Perfil() {
 
     if (!dados || !tipo) {
       return null;
+    }
+
+    // O servidor envia a foto já em base64 (texto): basta montar o data URL.
+    if (typeof dados === 'string') {
+      return `data:${tipo};base64,${dados}`;
     }
 
     let dadosArray = null;
@@ -318,10 +327,7 @@ export default function Perfil() {
 
         localStorage.setItem(
           'etecamp_usuario',
-          JSON.stringify({
-            ...usuario,
-            foto_perfil: null
-          })
+          serializarUsuarioLocal(usuario)
         );
 
       } catch (erro) {
@@ -422,10 +428,7 @@ export default function Perfil() {
 
       localStorage.setItem(
         'etecamp_usuario',
-        JSON.stringify({
-          ...dados.usuario,
-          foto_perfil: null
-        })
+        serializarUsuarioLocal(dados.usuario)
       );
 
       setValues((prev) => ({
@@ -621,7 +624,7 @@ export default function Perfil() {
 
       localStorage.setItem(
         'etecamp_usuario',
-        JSON.stringify(
+        serializarUsuarioLocal(
           usuarioAtualizado
         )
       );
@@ -983,7 +986,9 @@ export default function Perfil() {
               <strong>{participaRanking && posicaoRanking ? `${posicaoRanking}º` : '—'}</strong>
               <div>
                 <span>{participaRanking && posicaoRanking ? 'Sua posição atual' : 'Sua posição'}</span>
-                <small>{participaRanking
+                <small>{carregandoRanking
+                  ? 'Carregando sua posição…'
+                  : participaRanking
                   ? posicaoRanking ? 'Continue avançando!' : erroPosicaoRanking ? 'Não foi possível consultar' : 'Ainda não disponível'
                   : 'Entre para descobrir'}</small>
               </div>

@@ -27,32 +27,32 @@ const SUBJECTS = [
 
 const FEATURES = [
   {
-    image: 'flashcards.png',
+    image: 'flashcards.webp',
     title: 'Flashcards',
     desc: 'Revise os conteúdos mais cobrados em cartões rápidos, no seu ritmo.',
   },
   {
-    image: 'simulados.png',
+    image: 'simulados.webp',
     title: 'Simulados',
     desc: 'Faça provas no estilo do Vestibulinho e veja sua nota na hora.',
   },
   {
-    image: 'cronograma.png',
+    image: 'cronograma.webp',
     title: 'Cronograma',
     desc: 'Um plano de estudos que se adapta aos meses e dias que você tem disponível.',
   },
   {
-    image: 'desempenho.png',
+    image: 'desempenho.webp',
     title: 'Desempenho',
     desc: 'Acompanhe gráficos com sua evolução e descubra onde focar.',
   },
   {
-    image: 'mural.png',
+    image: 'mural.webp',
     title: 'Mural',
     desc: 'Troque dúvidas e dicas com outros estudantes se preparando com você.',
   },
   {
-    image: 'xp_conquistas.png',
+    image: 'xp_conquistas.webp',
     title: 'XP e conquistas',
     desc: 'Ganhe pontos a cada estudo e suba de nível conforme avança.',
   },

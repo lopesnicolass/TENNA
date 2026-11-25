@@ -433,8 +433,8 @@
     5px 14px 20px -11px rgba(30,20,10,.36),
     14px 30px 40px -24px rgba(30,20,10,.25);
   transform: rotate(var(--tilt));
-  animation: muralPostitIn .38s var(--ease-bouncy) both;
-  animation-delay: var(--postit-delay);
+  /* 'backwards' (não 'both'): ao terminar, o hover volta a controlar o transform. */
+  animation: muralPostitIn .38s var(--ease-bouncy) backwards;
   outline: none;
 }
 

@@ -784,7 +784,9 @@ export default function Mural() {
                   style={{
                     '--tilt':
                       `${TILTS[
-                        index %
+                        Math.abs(
+                          Number(postit.id) || index
+                        ) %
                         TILTS.length
                       ]}deg`
                   }}

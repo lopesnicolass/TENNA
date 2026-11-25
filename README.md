@@ -1,5 +1,5 @@
-# TENNA — Plataforma de Estudos para o Vestibulinho
-Desenvolvimento de uma plataforma web para auxiliar estudantes na preparação para o Vestibulinho da ETEC de Campo Limpo Paulista.
+# Titulo do Projeto e a logo
+Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista.
 
 ![Logo da TENNA](src/assets/tenna_logo.webp)
 
@@ -18,20 +18,16 @@ O sistema reúne cronograma de estudos, calendário com as datas importantes do 
 - React (19.2.8), React Router DOM (7.18.2) e Vite (8.2.1)
 - Node.js (22.19.0) e Express (5.2.1)
 - SQLite (3), pelo pacote `sqlite3` (6.0.1)
-- Autenticação com `jsonwebtoken` (9.0.3) e `bcrypt` (6.0.0)
 
 ## Algumas imagens para demonstrar o site desenvolvido
-Página de destino:
 
-![Página de destino](design/telas/PaginaDestino.png)
+![Página de destino](design/telas/Publica/PaginaDestino.png)
 
-Tela inicial do aluno:
+![Tela inicial do aluno](design/telas/Estudante/PaginaInicial.png)
 
-![Tela inicial do aluno](design/telas/PaginaInicial.png)
+![Terrário](design/telas/Estudante/TelaTerrario.png)
 
-Painel do administrador:
-
-![Painel do administrador](design/telas/DashboardAdministrador.png)
+![Painel do administrador](design/telas/Administrador/DashboardAdministrador.png)
 
 ## Como executar o projeto (passo-a-passo)
 Pré-requisitos: ter o Node.js e o npm instalados.
@@ -59,30 +55,8 @@ Deve aparecer "Servidor rodando na porta 3000". Não fechar esse terminal.
 
 Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` só precisa ser feito na primeira vez. O banco de dados já acompanha o projeto em `backend/banco/vestibulinho.sqlite`.
 
-**4. Acesso para avaliação**
-
-| Perfil | E-mail | Senha |
-| --- | --- | --- |
-| Administrador | admin@vestibulinho.com | Admin123 |
-| Aluno | criar uma conta na tela de cadastro | a senha escolhida (mínimo de 6 caracteres) |
-
-**5. Testes (opcional)**
-- `npm test` (front-end, na pasta principal)
-- `cd backend` e `npm test` (back-end)
-
-## Estrutura do repositório
-```
-📁 docs       → Documentação do TCC (questionário, fichamentos, teste de usabilidade)
-📁 src        → Código-fonte do front-end (React)
-📁 backend    → Código-fonte do back-end (Node.js + Express)
-📁 design     → Protótipo, diagrama de casos de uso, DER, identidade visual e telas
-📁 database   → Scripts SQL (schema.sql e seed.sql) e informações do banco
-📁 tests      → Testes automatizados do front-end
-📄 README.md  → Apresentação do projeto
-```
-
 ## Como citar o projeto
-MOURA, Maria Luiza Duarte de; DA SILVA, Nícolas; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para auxiliar estudantes na preparação para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
+MOURA, Maria Luiza Duarte de; DA SILVA, Nícolas; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 51 p.
 
 Em caso de dúvidas entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com
 

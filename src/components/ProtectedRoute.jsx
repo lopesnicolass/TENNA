@@ -13,6 +13,7 @@ import {
     obterToken,
     limparSessao
 } from '../services/api.js';
+import { serializarUsuarioLocal } from '../utils/usuarioLocal.js';
 
 
 // =====================================================
@@ -160,7 +161,7 @@ export default function ProtectedRoute() {
 
                 localStorage.setItem(
                     'etecamp_usuario',
-                    JSON.stringify(
+                    serializarUsuarioLocal(
                         usuario
                     )
                 );

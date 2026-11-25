@@ -38,6 +38,17 @@ function listarTodosUsuarios(req, res) {
 }
 
 
+// A foto fica como BLOB no SQLite. Enviada como Buffer, o JSON vira uma lista de
+// números (~4x maior). Em base64 ela ocupa bem menos e o navegador monta a imagem direto.
+function prepararUsuarioParaResposta(usuario) {
+    if (!usuario) return usuario;
+    const copia = { ...usuario };
+    if (Buffer.isBuffer(copia.foto_perfil_dados)) {
+        copia.foto_perfil_dados = copia.foto_perfil_dados.toString('base64');
+    }
+    return copia;
+}
+
 // =====================================================
 // BUSCAR MEU PERFIL
 // =====================================================
@@ -70,7 +81,7 @@ function buscarMeuPerfil(req, res) {
             }
 
             return res.status(200).json({
-                usuario
+                usuario: prepararUsuarioParaResposta(usuario)
             });
 
         }
@@ -119,7 +130,7 @@ async function editarPerfil(req, res) {
             await promisificar(atualizarPerfil, usuarioId, nomeNormalizado, emailNormalizado);
         }
         const usuarioAtualizado = await promisificar(buscarUsuarioPorId, usuarioId);
-        return res.status(200).json({ mensagem: 'Perfil atualizado com sucesso!', usuario: usuarioAtualizado });
+        return res.status(200).json({ mensagem: 'Perfil atualizado com sucesso!', usuario: prepararUsuarioParaResposta(usuarioAtualizado) });
     } catch (erro) {
         console.error('Erro ao atualizar perfil:', erro);
         return res.status(500).json({ mensagem: 'Não foi possível concluir a atualização do perfil.' });

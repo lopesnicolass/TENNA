@@ -1,19 +1,19 @@
 // Refúgio do Conhecimento: a mesma linguagem de ilustração do Ninho Inicial.
 // IDs e compras anteriores preservados; preços ajustados à recompensa de foco. A cadeira avulsa foi retirada;
 // as compras antigas dela continuam registradas no backend, sem ser vendida novamente.
-import mesa2 from './assets/sala2/mesa2.png';
-import estante2 from './assets/sala2/estante2.png';
-import mural2 from './assets/sala2/mural2.png';
-import calendario2 from './assets/sala2/calendario2.png';
-import globo2 from './assets/sala2/globo2.png';
-import puff2 from './assets/sala2/puff2.png';
-import planta2 from './assets/sala2/planta_pendente2.png';
-import luz2 from './assets/sala2/luz_fio2.png';
-import caixa2 from './assets/sala2/caixa2.png';
-import tapete2 from './assets/sala2/tapete_redondo2.png';
-import vaso2 from './assets/sala2/planta_vaso2.png';
-import livros2 from './assets/sala2/pilha_livros2.png';
-import avisos2 from './assets/sala2/quadro_avisos2.png';
+import mesa2 from './assets/sala2/mesa2.webp';
+import estante2 from './assets/sala2/estante2.webp';
+import mural2 from './assets/sala2/mural2.webp';
+import calendario2 from './assets/sala2/calendario2.webp';
+import globo2 from './assets/sala2/globo2.webp';
+import puff2 from './assets/sala2/puff2.webp';
+import planta2 from './assets/sala2/planta_pendente2.webp';
+import luz2 from './assets/sala2/luz_fio2.webp';
+import caixa2 from './assets/sala2/caixa2.webp';
+import tapete2 from './assets/sala2/tapete_redondo2.webp';
+import vaso2 from './assets/sala2/planta_vaso2.webp';
+import livros2 from './assets/sala2/pilha_livros2.webp';
+import avisos2 from './assets/sala2/quadro_avisos2.webp';
 
 export const ITEMS_SALA2 = [
   { id:'s2_mesa', name:'Escrivaninha com cadeira', price:8, img:mesa2, width:33, x:50, y:62, zone:'chao', subtitle:'Mesa, livros, luminária e cadeira encaixada' },
