@@ -38,6 +38,26 @@ const STORAGE_KEY =
   'tenna_plano_automatico';
 const pad = (n) =>
   String(n).padStart(2, '0');
+
+// Mostra o período real que cada opção cobre, usando a mesma regra do plano:
+// o último mês de estudo é sempre o mês anterior ao Vestibulinho.
+function formatarFaixaMeses(quantidade, dataProva) {
+  const inicioISO = inicioFixoDoPlano(Number(quantidade), dataProva);
+  if (!inicioISO) return '';
+
+  const [anoInicio, mesInicio] = inicioISO.split('-').map(Number);
+  const primeiro = new Date(anoInicio, mesInicio - 1, 1);
+  const ultimo = new Date(anoInicio, mesInicio - 1 + Number(quantidade) - 1, 1);
+  const nomeMes = (data) => new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(data);
+  const capitalizar = (texto) => texto.charAt(0).toUpperCase() + texto.slice(1);
+
+  if (Number(quantidade) === 1) return capitalizar(nomeMes(primeiro));
+  if (primeiro.getFullYear() !== ultimo.getFullYear()) {
+    return `${capitalizar(nomeMes(primeiro))}/${primeiro.getFullYear()} a ${capitalizar(nomeMes(ultimo))}/${ultimo.getFullYear()}`;
+  }
+  return `${capitalizar(nomeMes(primeiro))} a ${capitalizar(nomeMes(ultimo))}`;
+}
+
 // Exibe o mês real de cada etapa, incluindo planos que atravessam o ano.
 function nomeMesEtapa(mes) {
   const data = typeof mes?.inicio === 'string' ? mes.inicio : '';
@@ -916,12 +936,13 @@ export default function PlanoAutomatico() {
                       key={quantidade}
                       className={`tenna-auto-choice ${months === quantidade ? 'is-selected' : ''}`}
                       aria-pressed={months === quantidade}
-                      aria-label={`${quantidade} ${quantidade === 1 ? 'mês' : 'meses'}`}
+                      aria-label={`${quantidade} ${quantidade === 1 ? 'mês' : 'meses'}: ${formatarFaixaMeses(quantidade, dataVestibulinho)}`}
                       onClick={() => mudarMeses(quantidade)}
                       disabled={syncingPlan}
                     >
                       <strong>{quantidade}</strong>
                       <small>{quantidade === 1 ? 'mês' : 'meses'}</small>
+                      <span className="tenna-auto-choice-period">{formatarFaixaMeses(quantidade, dataVestibulinho)}</span>
                     </button>
                   ))}
                 </div>

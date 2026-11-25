@@ -35,7 +35,6 @@ export const PAREDE_POSICOES = Object.freeze({
   mesa: Object.freeze({ x: 50, y: 56 }),
   prateleira: Object.freeze({ x: 26, y: 36 }),
   guarda_roupa: Object.freeze({ x: 59, y: 51 }),
-  s2_mesa: Object.freeze({ x: 50, y: 62 }),
 });
 export function posicaoEncostada(id) {
   return PAREDE_POSICOES[id] || null;
@@ -49,9 +48,6 @@ export function limitesParaItem(item, escala = 1) {
   // A regra permanece isolada dos outros móveis das Salas 1 e 3.
   const excecoes = {
     guarda_roupa: { yMin: 42 },
-    s2_mesa: { yMin: 43 },
-    s2_luzes: { yMin: 12 },
-    s2_planta: { yMin: 16 },
     // Relógio e calendário acompanham a faixa curva à direita na Sala 3.
     s3_relogio: { xMax: 88 },
     s3_calendario: { xMax: 88, yMax: 55 },

@@ -31,7 +31,7 @@ import bancoTroncoImg from './assets/14_banquinho_de_tronco.webp';
 import guardaRoupaImg from './assets/15_guarda_roupa_de_folhas.webp';
 import { limitesParaItem, posicionarItemNaZona, ESCALA_MIN, ESCALA_MAX, ajustarEscala, posicaoEncostada } from './posicionamentoItens.js';
 import { ITEMS_SALA2, DESTAQUES_SALA2 } from './sala2Itens.js';
-import { ITEMS_SALA3, ITEMS_SALA3_LEGADOS } from './sala3Itens.js';
+import { ITEMS_SALA3 } from './sala3Itens.js';
 import { distribuirMoveis, ehMovelDeEstudoAntigo } from './catalogoSalas.js';
 import { TEST_STORAGE_PREFIX, baseTeste, lerTeste, alternarItemTeste, moverItemTeste, redimensionarItemTeste, prepararPreviaCompletaSala3, montarAmbienteSala3 } from './modoTeste.js';
 
@@ -59,7 +59,7 @@ const DURACOES_RAPIDAS = [15, 25, 45];
 const DURACAO_MINIMA = 1;
 const DURACAO_MAXIMA = 120;
 const ANEL_CIRCUNFERENCIA = 2 * Math.PI * 90;
-const TODOS_ITENS = [...ITEMS, ...ITEMS_SALA2, ...ITEMS_SALA3, ...ITEMS_SALA3_LEGADOS];
+const TODOS_ITENS = [...ITEMS, ...ITEMS_SALA2, ...ITEMS_SALA3];
 // Modo de apresentação desativado: o servidor controla salas, compras e inventário.
 // As decorações da prévia ficam isoladas no localStorage e não são importadas
 // para a conta do estudante ao voltar ao funcionamento real.
@@ -173,7 +173,7 @@ export default function Terrario() {
   });
   const chaveTeste3 = useMemo(() => `${TEST_STORAGE_PREFIX}sala3_${userKey()}`, []);
   const [testeSalvo3, setTesteSalvo3] = useState(() => {
-    try { return prepararPreviaCompletaSala3(lerTeste(window.localStorage, `${TEST_STORAGE_PREFIX}sala3_${userKey()}`, [...ITEMS_SALA3, ...ITEMS_SALA3_LEGADOS]), ITEMS_SALA3); }
+    try { return prepararPreviaCompletaSala3(lerTeste(window.localStorage, `${TEST_STORAGE_PREFIX}sala3_${userKey()}`, ITEMS_SALA3), ITEMS_SALA3); }
     catch { return prepararPreviaCompletaSala3({ iniciado: false, visible: [], positions: {}, scales: {} }, ITEMS_SALA3); }
   });
   const [selectedRoom, setSelectedRoom] = useState(1);
@@ -499,11 +499,8 @@ export default function Terrario() {
     () => distribuirMoveis(ITEMS, ITEMS_SALA2, ownedInventory, jornada.segundaConquistada),
     [ownedInventory, jornada.segundaConquistada]
   );
-  // Protótipos antigos da Sala 3 só permanecem disponíveis para quem já os comprou.
-  const catalogoSala3 = useMemo(() => [
-    ...ITEMS_SALA3,
-    ...ITEMS_SALA3_LEGADOS.filter((item) => ownedInventory.some((owned) => owned.id === item.id)),
-  ], [ownedInventory]);
+  // A Sala da Prova mantém somente os sete itens da composição aprovada.
+  const catalogoSala3 = ITEMS_SALA3;
   const itensDaSala = (numero) => numero === 3 ? catalogoSala3 : numero === 2 ? catalogoSala2 : catalogoSala1;
   const salaSelecionadaPodeDecorar = selectedRoom === 1 || ((selectedRoom === 2 || selectedRoom === 3) && roomDetail.conquistada);
   const totalItensSalaSelecionada = itensDaSala(selectedRoom).length;
@@ -551,7 +548,7 @@ export default function Terrario() {
   }, [chaveTeste, testeSalvo]);
   useEffect(() => {
     if (!testeSalvo2.iniciado) return;
-    try { localStorage.setItem(chaveTeste2, JSON.stringify({ visible: testeSalvo2.visible, positions: testeSalvo2.positions, scales: testeSalvo2.scales, layoutV3: true, layoutV4: true })); }
+    try { localStorage.setItem(chaveTeste2, JSON.stringify({ visible: testeSalvo2.visible, positions: testeSalvo2.positions, scales: testeSalvo2.scales })); }
     catch { /* O teste continua disponível mesmo sem armazenamento. */ }
   }, [chaveTeste2, testeSalvo2]);
   useEffect(() => {
@@ -705,7 +702,6 @@ export default function Terrario() {
       visible: selectedRoom === 2 ? [...DESTAQUES_SALA2] : itensDaSala(selectedRoom).map((item) => item.id),
       ...(selectedRoom === 2 ? {
         positions: Object.fromEntries(ITEMS_SALA2.map((item) => [item.id, { x: item.x, y: item.y }])),
-        layoutV3: true, layoutV4: true,
       } : {}),
     }));
     setDecorate(true);
@@ -930,7 +926,7 @@ export default function Terrario() {
                             <button type="button" key={item.id}
                               data-item-id={item.id} data-zona={item.zone}
                               className={`terr-scene-item ${((decorate && selectedRoom === 3) || modoTeste) ? 'movable' : ''} ${selected === item.id && decorate && selectedRoom === 3 ? 'selected' : ''}`}
-                              style={{ left: `${pos.x}%`, top: `${pos.y}%`, width: `${item.width * (scalePreview?.id === item.id ? scalePreview.scale : ajustarEscala(decorSala3.scales?.[item.id] ?? 1))}%`, zIndex: item.id === 's3_kit' ? 86 : item.zone === 'parede' || item.zone === 'pendurado' ? 12 : item.zone === 'tapete' ? 14 : Math.round(pos.y) }}
+                              style={{ left: `${pos.x}%`, top: `${pos.y}%`, width: `${item.width * (scalePreview?.id === item.id ? scalePreview.scale : ajustarEscala(decorSala3.scales?.[item.id] ?? 1))}%`, zIndex: item.zone === 'parede' || item.zone === 'pendurado' ? 12 : item.zone === 'tapete' ? 14 : Math.round(pos.y) }}
                               onPointerDown={(evt) => startDragging(evt, item.id)} onPointerMove={moveDragging}
                               onPointerUp={finishDragging} onPointerCancel={finishDragging}
                               onKeyDown={(evt) => updateWithKeyboard(evt, item)} onClick={() => { setSelectedRoom(3); setSelected(item.id); }}

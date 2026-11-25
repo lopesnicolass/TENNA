@@ -1067,12 +1067,6 @@ html[data-theme='dark'] .terr-world-room-buttons button:not(.active) { color:#ba
    ou sob o cursor; os 14 retângulos pontilhados deixavam o cenário poluído. */
 .terr-world-board .terr-scene-item.movable:not(:hover):not(.selected):not(:focus-visible) { outline:none; }
 
-/* Calendário da Sala 2 levemente inclinado para acompanhar a parede direita. */
-.terr-world-room-2 .terr-sala2-item[data-item-id='s2_calendario'] {
-  transform: translate(-50%, -90%) rotate(9deg);
-  transform-origin: 50% 72%;
-}
-
 /* A Tenna tem a mesma escala nas três salas; na Sala 3 ela fica à direita da carteira. */
 .terr-world-room-3 .terr-character { left:73%; top:78%; }
 .terr-world-room-3 .terr-scene-item[data-item-id='s3_mesa'] { filter:drop-shadow(0 6px 4px rgba(74,42,16,.2)); }
@@ -1099,10 +1093,6 @@ html[data-theme='dark'] .terr-world-room-buttons button:not(.active) { color:#ba
   transform: translate(-50%, -90%) rotate(9deg);
   transform-origin: 50% 70%;
 }
-.terr-world-room-3 .terr-scene-item[data-item-id="s3_kit"] {
-  filter: drop-shadow(0 3px 2px rgba(57,35,18,.15));
-}
-
 /* Sala 3: teto permanece fechado, sem etiqueta flutuando sobre as raízes. */
 .terr-world-room-3 .terr-scene-story { display:none; }
 /* Contraste e sombras iguais aos móveis de madeira das outras salas. */
@@ -1413,7 +1403,7 @@ html[data-theme='dark'] .terr-decor-quick-actions button {
 /* 27/10: uma sala inteira no modo normal e mapa completo na decoração.
    Não modificar o tamanho original das salas: o arraste depende da geometria. */
 .terr-page:not(.is-decorating) .terr-world-board.is-individual {
-  width: min(100%, clamp(470px, 70vh, 690px));
+  width: min(100%, clamp(470px, 65%, 690px));
 }
 .terr-page:not(.is-decorating) .terr-world-board.is-individual .terr-world-room-heading {
   display: none;
@@ -3534,4 +3524,30 @@ html[data-theme-changing='true'] .terr-page *::after {
   transition: none !important;
   animation-play-state: paused !important;
   scroll-behavior: auto !important;
+}
+
+/* Geometria estável do painel entre os temas claro e escuro.
+   Reserva a canaleta vertical enquanto o Terrário está montado para que a
+   largura útil do conteúdo não oscile ao trocar o color-scheme do navegador. */
+html:has(.terr-page) {
+  scrollbar-gutter: stable;
+}
+
+.terr-page .terr-layout {
+  width: 100%;
+  min-width: 0;
+}
+
+.terr-page .terr-scene-card {
+  width: 100%;
+  max-width: none;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* O tema escuro mantém profundidade visual no card principal, sem alterar
+   suas dimensões, bordas ou a área útil da cena. */
+html[data-theme='dark'] .terr-page .terr-scene-card {
+  box-shadow: 0 14px 30px -24px rgba(0, 0, 0, .58),
+              0 3px 14px rgba(0, 0, 0, .2);
 }

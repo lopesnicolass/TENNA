@@ -59,21 +59,20 @@ const statements = [
   `INSERT INTO terrario_catalogo(item_id,preco) VALUES
     ('prateleira',6),('quadro',4),('estante',8),('lampiao',4),
     ('bau',6),('tapete',2),('mesa_redonda',8),('almofada',2),('banquinho_tronco',2) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
-  // Preços acessíveis da Sala 2; compras anteriores continuam sendo de seus donos.
+  // Sala 2: catálogo reduzido aos dois itens do cenário aprovado.
   `INSERT INTO terrario_catalogo(item_id,preco) VALUES
-    ('s2_mesa',8),('s2_cadeira',4),('s2_estante',8),
-    ('s2_mural',4),('s2_calendario',2),('s2_globo',6),
-    ('s2_puff',4),('s2_planta',2),('s2_luzes',6),('s2_caixa',2) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
-  // Complementos da Sala 2 com valores proporcionais às recompensas de foco.
-  `INSERT INTO terrario_catalogo(item_id,preco) VALUES
-    ('s2_tapete_redondo',4),('s2_vaso',2),('s2_livros',2),('s2_avisos',4) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
-  // Sala 3: disponíveis para compra ao alcançar a etapa de prova.
-  // O upsert reajusta preços sem alterar inventário ou saldo das compras anteriores.
+    ('s2_globo',6),('s2_tapete_redondo',4) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
+  // Sala 3: os sete itens da composição do Vestibulinho.
   `INSERT INTO terrario_catalogo(item_id,preco) VALUES
     ('s3_mesa',10),('s3_lousa',6),('s3_relogio',2),('s3_mochila',4),
-    ('s3_kit',2),('s3_calendario',2),('s3_painel',6),('s3_tapete',4),
-    ('s3_cadeira',4),('s3_estante',8),('s3_livros',2),('s3_puff',4),
-    ('s3_vaso',2),('s3_luzes',6),('s3_caixa',2) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
+    ('s3_calendario',2),('s3_painel',6),('s3_tapete',4) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
+  // Remove apenas os produtos do catálogo que não fazem parte dos cenários atuais.
+  // Registros de inventário já comprados são mantidos para não apagar dados dos alunos.
+  `DELETE FROM terrario_catalogo WHERE item_id IN (
+    's2_mesa','s2_cadeira','s2_estante','s2_mural','s2_calendario','s2_puff',
+    's2_planta','s2_luzes','s2_caixa','s2_vaso','s2_livros','s2_avisos',
+    's3_kit','s3_cadeira','s3_estante','s3_livros','s3_puff','s3_vaso','s3_luzes','s3_caixa'
+  )`,
   // O guarda-roupa tem o mesmo preço na loja do frontend e no banco de dados
   // para permitir compras reais. Preços existentes são atualizados no reinício.
   `INSERT INTO terrario_catalogo(item_id,preco) VALUES ('guarda_roupa',8) ON CONFLICT(item_id) DO UPDATE SET preco=excluded.preco`,
