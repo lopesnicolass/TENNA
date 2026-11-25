@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { Suspense, useCallback, useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar.jsx';
 import MobileNavigationBar from '../components/MobileNavigationBar.jsx';
 import '../styles/dashboard.css';
@@ -130,7 +130,11 @@ export default function DashboardLayout() {
       )}
 
       <main className="dashboard-content">
-        <Outlet />
+        <Suspense fallback={<div className="rota-carregando" role="status" aria-live="polite">Carregando página…</div>}>
+          <div className="dashboard-route-view" key={location.pathname}>
+            <Outlet />
+          </div>
+        </Suspense>
       </main>
     </div>
   );

@@ -507,7 +507,7 @@
   background: var(--card);
   box-shadow: 0 12px 30px -24px rgba(13, 71, 161, .58);
   transition: transform .2s var(--bouncy), box-shadow .2s ease;
-  animation: popIn .4s var(--bouncy) backwards;
+  animation: popIn .3s var(--ease-standard) backwards;
 }
 
 .conteudos-page .content-subject-list .content-subject-card:nth-child(1) { animation-delay: .03s; }

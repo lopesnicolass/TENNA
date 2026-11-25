@@ -450,3 +450,88 @@ html[data-theme='dark'] .perfil-delete-warning { background: #3a2429; border-col
   .perfil-delete-panel { padding: 22px 18px; }
   .perfil-delete-actions .perfil-btn { flex: 1; }
 }
+
+/* Estabilidade visual ao abrir o Perfil.
+   O estado da foto e os dados de conquistas chegam de forma assíncrona; os
+   espaços abaixo evitam que os controles mudem de posição quando os textos atualizam. */
+.perfil-page .perfil-photo-actions {
+  flex: 0 0 140px;
+  width: 140px;
+  align-items: stretch;
+}
+.perfil-page .perfil-photo-actions > .perfil-btn {
+  width: 100%;
+  min-width: 140px;
+  min-height: 42px;
+  white-space: nowrap;
+  transform: none !important;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease;
+}
+
+/* Os números e textos do resumo mantêm a mesma área antes e depois da consulta. */
+.perfil-page .perfil-conquistas-resumo,
+.perfil-page .perfil-conquistas-resumo *,
+.perfil-page .perfil-conquistas-resumo *::before,
+.perfil-page .perfil-conquistas-resumo *::after {
+  animation: none !important;
+  transform: none !important;
+  transition-property: background-color, border-color, color, box-shadow, fill, stroke !important;
+}
+.perfil-page .perfil-progress-main {
+  min-height: 110px;
+}
+.perfil-page .perfil-progress-ring {
+  flex-shrink: 0;
+}
+.perfil-page .perfil-progress-ring strong {
+  min-width: 4ch;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+}
+.perfil-page .perfil-progress-info > strong {
+  display: flex;
+  align-items: baseline;
+  min-height: 30px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.perfil-page .perfil-progress-info > small {
+  display: -webkit-box;
+  min-height: 30px;
+  max-height: 30px;
+  overflow: hidden;
+  line-height: 15px;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.perfil-page .perfil-next-goal {
+  height: 62px;
+  min-height: 62px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.perfil-page .perfil-next-goal > div {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.perfil-page .perfil-next-goal > div strong {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.perfil-page .perfil-next-goal > small {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 560px) {
+  .perfil-page .perfil-photo-actions {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+  .perfil-page .perfil-photo-actions > .perfil-btn {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+}

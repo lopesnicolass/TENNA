@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import AdminSidebar from '../components/AdminSidebar.jsx';
 import MobileNavigationBar from '../components/MobileNavigationBar.jsx';
 import '../styles/dashboard.css';
@@ -32,7 +32,11 @@ export default function AdminLayout() {
       {mobileMenuOpen && <button type="button" className="tenna-mobile-scrim" aria-label="Fechar menu" onClick={() => setMobileMenuOpen(false)} />}
       <AdminSidebar mobileOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
       <main className="dashboard-content">
-        <Outlet />
+        <Suspense fallback={<div className="rota-carregando" role="status" aria-live="polite">Carregando página…</div>}>
+          <div className="dashboard-route-view" key={location.pathname}>
+            <Outlet />
+          </div>
+        </Suspense>
       </main>
     </div>
   );

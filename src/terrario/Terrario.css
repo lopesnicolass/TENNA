@@ -3523,3 +3523,15 @@ html[data-theme='dark'] .terr-page.is-decorating .terr-world-zoom span { color: 
   .terr-page.is-decorating .terr-world-zoom .terr-world-zoom-fit { min-width: 45px; }
   .terr-page.is-decorating .terr-world-viewport.is-fitted.is-zoomed { max-height: none; }
 }
+
+/* Estabilidade visual ao alternar claro/escuro.
+   Pausa por um instante as transições e animações do Terrário enquanto as
+   cores são recalculadas; depois disso, os hovers e a animação da Tenna voltam. */
+html[data-theme-changing='true'] .terr-page,
+html[data-theme-changing='true'] .terr-page *,
+html[data-theme-changing='true'] .terr-page *::before,
+html[data-theme-changing='true'] .terr-page *::after {
+  transition: none !important;
+  animation-play-state: paused !important;
+  scroll-behavior: auto !important;
+}

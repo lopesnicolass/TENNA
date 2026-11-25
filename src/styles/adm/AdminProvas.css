@@ -4,7 +4,7 @@
   width:100%;
   max-width:1200px;
   margin:0 auto;
-  animation:popIn .35s var(--bouncy);
+  animation:popIn .3s var(--ease-standard) backwards;
 }
 
 .admin-provas-header{

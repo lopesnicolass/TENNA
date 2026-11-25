@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'tenna_theme';
+let themeChangeTimer = null;
 
 function getInitialTheme() {
   try {
@@ -14,8 +15,19 @@ function getInitialTheme() {
 }
 
 function applyTheme(theme) {
-  document.documentElement.dataset.theme = theme;
-  document.documentElement.style.colorScheme = theme;
+  const root = document.documentElement;
+
+  // Durante a troca de tema, evita que transições globais de tamanho/posição
+  // façam os móveis e elementos do Terrário parecerem deslizar pela cena.
+  root.dataset.themeChanging = 'true';
+  root.dataset.theme = theme;
+  root.style.colorScheme = theme;
+
+  if (themeChangeTimer !== null) window.clearTimeout(themeChangeTimer);
+  themeChangeTimer = window.setTimeout(() => {
+    delete root.dataset.themeChanging;
+    themeChangeTimer = null;
+  }, 280);
 }
 
 export default function ThemeToggle({ className = '' }) {
