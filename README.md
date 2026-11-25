@@ -27,9 +27,8 @@ O sistema reúne cronograma de estudos, calendário com as datas importantes do 
 ![Painel do administrador](design/telas/Administrador/DashboardAdministrador.png)
 
 ## Como executar o projeto (passo-a-passo)
-Pré-requisito: ter o Node.js 22 (ou mais novo) instalado (https://nodejs.org).
+Pré-requisito: ter o Node.js 22 (ou mais novo) instalado.
 
-- No GitHub, clicar no botão verde **Code** e depois em **Download ZIP**
 - Extrair o arquivo zip (será criada a pasta `tcc-main`)
 - Entrar no editor de código (exemplo: VS Code)
 - Abrir a pasta `tcc-main` extraída (Arquivo → Abrir Pasta)
@@ -45,10 +44,9 @@ Não fechar esse terminal
 
 Abrir outro terminal (botão + no painel do terminal) e digitar:
 
-- `cd ..` (só se o terminal abrir dentro da pasta `backend`)
 - `npm install`
 - `npm run dev` → para rodar o site
-- O terminal vai mostrar um link (normalmente `http://localhost:5173`)
+- O terminal vai mostrar um link
 - Copiar o link e colar no navegador
 
 Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` só precisa ser feito na primeira vez.
@@ -57,11 +55,11 @@ Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` 
 
 | Perfil | E-mail | Senha |
 | --- | --- | --- |
-| Administrador | admin@vestibulinho.com | Admin123 |
+| Administrador | admin@tenna.com | MNRtenna26 |
 | Aluno | criar uma conta na tela de cadastro | a senha escolhida (mínimo de 6 caracteres) |
 
 ## Como citar o projeto
-MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 50 p.
+MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 49 p.
 
 Em caso de dúvidas entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com
 
