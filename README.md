@@ -35,6 +35,7 @@ Pré-requisito: ter o Node.js 22 (ou mais novo) instalado.
 
 Abrir o terminal (Terminal → Novo Terminal) e digitar:
 
+- `cd tcc-main`
 - `cd backend`
 - `npm install`
 - `cp .env.example .env`
@@ -44,6 +45,7 @@ Não fechar esse terminal
 
 Abrir outro terminal (botão + no painel do terminal) e digitar:
 
+- `cd tcc-main`
 - `npm install`
 - `npm run dev` → para rodar o site
 - O terminal vai mostrar um link
