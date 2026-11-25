@@ -5,8 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "node --test tests/*.test.cjs",
-    "start": "node server.js",
-    "demo:terrario": "node scripts/criarAlunoDemoTerrario.js"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
