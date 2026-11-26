@@ -447,7 +447,7 @@ export default function AdminFlashCards() {
   return (
     <div>
       <div className="page-header">
-        <h1>Flash Cards</h1>
+        <h1>FlashCards</h1>
       </div>
 
       {erro && (
