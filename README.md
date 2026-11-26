@@ -61,7 +61,7 @@ Obs: o back-end e o site precisam estar rodando ao mesmo tempo. O `npm install` 
 | Estudante | criar uma conta na tela de cadastro | a senha escolhida (mínimo de 6 caracteres) |
 
 ## Como citar o projeto
-MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 49 p.
+MOURA, Maria Luiza Duarte de; SILVA, Nícolas da; BANHO, Ruan Pablo Dela Penha. Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes para o Vestibulinho da ETEC de Campo Limpo Paulista. 2026. 47 p.
 
 Em caso de dúvidas entre em contato com nicolaslopessilva2008@gmail.com ou com ruanpablodelapenha@gmail.com
 
