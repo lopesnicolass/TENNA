@@ -4,9 +4,9 @@ Desenvolvimento de uma plataforma web para apoiar a preparação de estudantes p
 ![Logo da TENNA](src/assets/tenna_logo.webp)
 
 ## Descrição
-Muitos estudantes do Ensino Fundamental chegam ao Vestibulinho da ETEC sem uma rotina organizada de estudos, com materiais espalhados e sem saber como estão evoluindo. A TENNA é uma plataforma web que centraliza essa preparação em um só lugar.
+Muitos estudantes do Ensino Fundamental que desejam ingressar na ETEC de Campo Limpo Paulista chegam ao Vestibulinho sem uma rotina de estudos organizada, com materiais espalhados e sem clareza sobre a própria evolução. Diante disso, desenvolveu-se a TENNA, uma plataforma web que centraliza a preparação para o processo seletivo em um só lugar.
 
-O sistema reúne cronograma de estudos, calendário com as datas importantes do Vestibulinho, conteúdos por matéria, flashcards, simulados, provas anteriores e acompanhamento de desempenho. Também conta com recursos de gamificação (XP, conquistas e o Terrário) para incentivar a continuidade dos estudos. A plataforma possui dois perfis: o Estudante, que estuda e acompanha sua evolução, e o Administrador, que gerencia conteúdos, questões, simulados, provas e o calendário.
+O sistema reúne cronograma de estudos, calendário com as datas importantes do Vestibulinho, conteúdos por matéria, flashcards, simulados, provas anteriores e acompanhamento de desempenho. Para incentivar a continuidade dos estudos, conta ainda com recursos de gamificação, como XP, conquistas e o Terrário. A plataforma possui dois perfis de usuário: o Estudante, que organiza seus estudos, pratica com os materiais disponíveis e acompanha sua evolução; e o Administrador, que gerencia todos os materiais de estudo disponibilizados ao estudante, como conteúdos, flashcards, simulados, provas e calendário. Dessa forma, a plataforma visa contribuir para que os candidatos à ETEC de Campo Limpo Paulista estudem de maneira mais estruturada, acompanhem seu progresso com mais autonomia e cheguem mais seguros ao Vestibulinho.
 
 ## Equipe
 - Maria Luiza Duarte de Moura — Documentação
